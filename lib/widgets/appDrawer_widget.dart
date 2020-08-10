@@ -1,7 +1,7 @@
 //import 'package:authapp/view/about_view.dart';
 //import 'package:authapp/view/login_view.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
-import 'package:Tourism_App/screens/login.dart';
+import 'package:SunCity_FlutterApp/screens/login.dart';
 import 'package:flutter/material.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 

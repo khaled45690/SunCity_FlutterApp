@@ -1,5 +1,5 @@
 
-import 'package:Tourism_App/screens/home_screen.dart';
+import 'package:SunCity_FlutterApp/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 //import 'home.dart';

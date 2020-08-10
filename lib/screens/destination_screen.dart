@@ -1,5 +1,5 @@
-import 'package:Tourism_App/models/activity_model.dart';
-import 'package:Tourism_App/models/destination_model.dart';
+import 'package:SunCity_FlutterApp/models/activity_model.dart';
+import 'package:SunCity_FlutterApp/models/destination_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

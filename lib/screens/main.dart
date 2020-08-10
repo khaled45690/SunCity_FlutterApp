@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:Tourism_App/screens/home_screen.dart';
+import 'package:SunCity_FlutterApp/screens/home_screen.dart';
 
 import 'login.dart';
 import 'signup.dart';

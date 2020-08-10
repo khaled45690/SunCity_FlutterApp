@@ -1,7 +1,7 @@
-import 'package:Tourism_App/screens/hotelsList_screen.dart';
-import 'package:Tourism_App/widgets/appDrawer_widget.dart';
-import 'package:Tourism_App/widgets/destination_Carousel.dart';
-import 'package:Tourism_App/widgets/hotel_carousel.dart';
+import 'package:SunCity_FlutterApp/screens/hotelsList_screen.dart';
+import 'package:SunCity_FlutterApp/widgets/appDrawer_widget.dart';
+import 'package:SunCity_FlutterApp/widgets/destination_Carousel.dart';
+import 'package:SunCity_FlutterApp/widgets/hotel_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

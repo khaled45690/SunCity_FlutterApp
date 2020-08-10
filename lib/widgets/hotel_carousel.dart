@@ -1,5 +1,5 @@
-import 'package:Tourism_App/models/hotel_model.dart';
-import 'package:Tourism_App/screens/hotelsList_screen.dart';
+import 'package:SunCity_FlutterApp/models/hotel_model.dart';
+import 'package:SunCity_FlutterApp/screens/hotelsList_screen.dart';
 import 'package:flutter/material.dart';
 
 class HotelCarousel extends StatelessWidget {
