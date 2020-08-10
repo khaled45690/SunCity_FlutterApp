@@ -86,12 +86,12 @@ class _SignUpState extends State<SignUp> {
       padding: const EdgeInsets.all(8.0),
       child: ListTile(title: TextFormField(
         decoration: InputDecoration(
-          hintText: 'البريد الالكتروني',
+          hintText: 'email',
           icon: Icon(Icons.email),
         ),
         validator: (String value) {
           if (value.isEmpty) {
-            return 'من فضلك ادخل البريد الالكتروني';
+            return 'please enter your email';
           }
 
           if (!RegExp(
@@ -115,7 +115,7 @@ class _SignUpState extends State<SignUp> {
         controller: _passwordTextController,
         obscureText: hidepass,
         decoration: InputDecoration(
-          hintText: 'كلمه المرور',
+          hintText: 'password',
           icon: Icon(Icons.lock_outline),
         //  border: InputBorder.none
         ),
@@ -126,6 +126,7 @@ class _SignUpState extends State<SignUp> {
           }else if (value.length<6){
             return"كلمه المرور يجب الا تقل عن 6 ارقام";
           }
+          return "";
         },
         onSaved: (String value) {
           _passworld = value;
@@ -171,15 +172,16 @@ class _SignUpState extends State<SignUp> {
       padding: const EdgeInsets.all(8.0),
       child:ListTile(title: TextFormField(
         decoration: InputDecoration(
-          hintText: 'رقم الهاتف',
+          hintText: 'phone number',
           icon: Icon(Icons.phone),
         ),
         validator: (String value) {
           if (value.isEmpty) {
-            return 'من فضلك ادخل رقم الهاتف';
+            return 'please enter your phone number';
           }else if (value.length<14){
-            return"كلمه المرور يجب الا تقل عن14 ارقام";
+            return"please enter 14 numbers";
           }
+          return "" ;
         },
         onSaved: (String value) {
           _phoneNumber = value;
@@ -195,19 +197,20 @@ class _SignUpState extends State<SignUp> {
         controller: _confirmPassworldController,
         obscureText: hidepass,
         decoration: InputDecoration(
-          hintText: 'تاكيد كلمه المرور',
+          hintText: 'confirm password',
           icon: Icon(Icons.lock_outline),
         ),
         keyboardType: TextInputType.visiblePassword,
         validator: (String value) {
           if (value.isEmpty) {
-            return 'من فضلك ادخل كلمه المرور';
+            return 'please enter your password';
           }else if (value.length<6){
-            return("كلمه المرور يجب الا تقل عن 6 ارقام");
+            return("password can\'t less than 6 characters");
           }
           else if(_confirmPassworldController.text != _passwordTextController.text){
-            return("كلمه المرور غير مطابقه");
+            return("passwords doesn\'t match");
           }
+          return "" ;
         },
         onSaved: (String value) {
           _passworld = value;
@@ -266,7 +269,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 20),
                   RaisedButton(
                     child: Text(
-                      'تسجيل الدخول',
+                      'sign up',
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () {

@@ -27,11 +27,11 @@ class _LoginState extends State<Login> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(title: TextFormField(
-         decoration:InputDecoration(labelText: 'البريد الالكتروني' , icon: IconButton(
+         decoration:InputDecoration(labelText: 'email' , icon: IconButton(
             icon: Icon(Icons.email,color: Colors.blue,), onPressed: (){},),labelStyle: TextStyle(fontSize:25 ,color:Colors.blue) ),
           validator: (String value){
            if(value.isEmpty){
-             return 'من فضلك ادخل كلمه المرور';
+             return 'please enter your password';
             }
 
         if(!RegExp(
@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
            ){
              return 'Please enter a valid email Address';
            }
-          //  return "kk";
+           return "kk";
 
 
           },
@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
        padding: const EdgeInsets.all(8.0),
        child:ListTile(title: TextFormField(
          obscureText: hidepass,
-          decoration: InputDecoration(labelText: 'كلمه المرور' ,
+          decoration: InputDecoration(labelText: 'password' ,
           //  icon: IconButton(
           //   icon: Icon(Icons.visibility_off), onPressed: (){},),
             
@@ -67,6 +67,7 @@ class _LoginState extends State<Login> {
             }else if (value.length<6){
             return"كلمه المرور يجب الا تقل عن 6 ارقام";
           }
+            return "";
           },
           onSaved: (String value){
             _passworld= value;
@@ -118,7 +119,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height:20),
                   RaisedButton(
                     color: Colors.blue,
-                    child: Text('تسجيل الدخول', style: TextStyle(color:Colors.white, fontSize:17
+                    child: Text('sign in', style: TextStyle(color:Colors.white, fontSize:17
                     )
                     ,),
                     onPressed: (){
@@ -135,7 +136,7 @@ class _LoginState extends State<Login> {
                     }
                     ,
                     ), 
-                    FlatButton( child: Text("هل نسيت كلمه السر؟",style: TextStyle(fontSize:20 , fontWeight:FontWeight.bold),), onPressed: (){
+                    FlatButton( child: Text("forgot password?",style: TextStyle(fontSize:20 , fontWeight:FontWeight.bold),), onPressed: (){
                       _handlePressed();
                     },)
                 ],
@@ -155,7 +156,7 @@ class _LoginState extends State<Login> {
             
              Navigator.of(context).pushNamed(SignUp.routeName);
             },
-            child: Text('ليس لدي حساب',style: TextStyle(fontSize:22),),
+            child: Text('don\'t have account',style: TextStyle(fontSize:22),),
             ),
             )
           )
@@ -181,14 +182,14 @@ Future<bool> confirmDialog1(BuildContext context){
     barrierDismissible: false,
     builder: (BuildContext context){
       return new AlertDialog(
-        title:new Text( 'هل نسيت كلمه المرور'),
+        title:new Text( 'forgot password'),
         actions: <Widget>[
-          new FlatButton( child: const Text("لا"),
+          new FlatButton( child: const Text("yes"),
           onPressed: (){
             Navigator.of(context).pop(true);
           },
           ),
-          new FlatButton(child: const Text("نعم"),
+          new FlatButton(child: const Text("no"),
           onPressed: (){
             Navigator.of(context).pop(false);
           },
