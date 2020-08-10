@@ -17,7 +17,7 @@ class SunCity_FlutterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       
-      title: 'TourismApp UI',
+      title: 'SunCity_FlutterApp UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
      //   primaryColor: Color(0xff3EBACE),

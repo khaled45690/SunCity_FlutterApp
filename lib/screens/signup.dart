@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'login.dart';
 import 'dart:io';
-
 import 'dart:async';
-
-//import 'package:image_picker/image_picker.dart';
-
+File _imageFile;
 class SignUp extends StatefulWidget {
     static const routeName = '/signup';
 
@@ -97,7 +96,7 @@ class _SignUpState extends State<SignUp> {
           if (!RegExp(
                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
               .hasMatch(value)) {
-            return 'من فضلك ادخل البريد الالكتروني بشكل صحيح';
+            return 'please enter the  email correctly';
           }
           return null;
         },
@@ -122,9 +121,9 @@ class _SignUpState extends State<SignUp> {
         keyboardType: TextInputType.visiblePassword,
         validator: (String value) {
           if (value.isEmpty) {
-            return 'من فضلك ادخل كلمه المرور';
+            return 'please enter password';
           }else if (value.length<6){
-            return"كلمه المرور يجب الا تقل عن 6 ارقام";
+            return"password shouldn\'t be less than 6 characters";
           }
           return "";
         },
@@ -245,9 +244,6 @@ class _SignUpState extends State<SignUp> {
                   _buildEmail(),
                               SizedBox(height: 20.0),
 
-                  
-
-             
                   _buildPassworld(),
                               SizedBox(height: 20.0),
 
@@ -257,14 +253,16 @@ class _SignUpState extends State<SignUp> {
                   
                   _buildPhoneNumber(),
                               SizedBox(height: 20.0),
+                  FlatButton(onPressed: ()  async{
+                   final picked = await ImagePicker.pickImage(source: ImageSource.gallery);
+                    setState(() {
+                      _imageFile = picked;
+                    });
 
-                  Text("Upload Photo from",style: TextStyle(fontSize:21),),
-                  //FlatButton(onPressed: (ImageSource.gallery), child: Text("Upload Photo")),
+                  }, child: Text("Upload Photo")),
+                  ImageWidget(), // self made image widget,
                 //  _buildPhoto(),
                     Divider(),
-                    
-                
-                  
 
                   SizedBox(height: 20),
                   RaisedButton(
@@ -273,10 +271,8 @@ class _SignUpState extends State<SignUp> {
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () {
-
                           validateForm();
-                          
-                                        
+
                                                },
                                             ),
                           
@@ -321,3 +317,18 @@ class _SignUpState extends State<SignUp> {
                               }
                             }
 }
+
+
+class ImageWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    if(_imageFile != null){
+        return Image.file(_imageFile);
+      }else{
+      return Container();
+}
+
+  }
+}
+
+
