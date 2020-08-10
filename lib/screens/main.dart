@@ -6,6 +6,9 @@ void main() => runApp(TourismApp());
 
 //ugigoiuhi
 
+// the file has been modified and please accept mine
+// i changed this comment to be readable
+// notification trail
 
 class TourismApp extends StatelessWidget {
   @override
