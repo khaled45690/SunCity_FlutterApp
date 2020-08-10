@@ -13,7 +13,7 @@ class HotelCarousel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'افضل الفنادق',
+                'choose your hotel',
                 style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ class HotelCarousel extends StatelessWidget {
             
             },
                 child: Text(
-                  'المزيد',
+                  'more',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16.0,
@@ -92,7 +92,7 @@ class HotelCarousel extends StatelessWidget {
                                     // ),
                                     SizedBox(height: .1),
                                     Text(
-                                      '\$${hotel.price} / الليله',
+                                      '\$${hotel.price} / night',
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.w600,

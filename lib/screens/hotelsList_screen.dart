@@ -19,7 +19,7 @@ class _HotelsListScreenState extends State<HotelsListScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('لا يوجد صور متوفره للفندق الان'),
+          child: Text('there is photos from hotel'),
         ),
 
     )

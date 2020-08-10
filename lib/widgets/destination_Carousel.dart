@@ -16,7 +16,7 @@ class DestinationCarousel extends StatelessWidget {
             children: <Widget>[
               Text(
                 
-                'افضل الاماكن',
+                'best places',
                 textDirection: TextDirection.ltr,
                 style: TextStyle(
                   
@@ -35,7 +35,7 @@ class DestinationCarousel extends StatelessWidget {
             
             },
                 child: Text(
-                  'المزيد',
+                  'more',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16.0,
@@ -83,7 +83,7 @@ class DestinationCarousel extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      '${destination.activities.length} رحلات',
+                                      '${destination.activities.length} trips',
                                       style: TextStyle(
                                           fontSize: 22.0,
                                           fontWeight: FontWeight.w600,

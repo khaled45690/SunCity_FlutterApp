@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 120.0),
               child: Text(
-                'اختر رحلتك',
+                'choose your trip',
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
