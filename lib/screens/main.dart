@@ -5,6 +5,7 @@ import './home_screen.dart';
 void main() => runApp(TourismApp());
 // the file has been modified and please accept mine
 // i changed this comment to be readable
+// notification trail
 
 
 
