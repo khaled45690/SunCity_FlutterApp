@@ -1,5 +1,5 @@
-import 'package:SunCity_FlutterApp/models/hotel_model.dart';
-import 'package:SunCity_FlutterApp/screens/hotelsList_screen.dart';
+import 'package:Tourism_App/models/hotel_model.dart';
+import 'package:Tourism_App/screens/hotelsList_screen.dart';
 import 'package:flutter/material.dart';
 
 class HotelCarousel extends StatelessWidget {
@@ -13,7 +13,7 @@ class HotelCarousel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'Top Hotels',
+                'افضل الفنادق',
                 style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ class HotelCarousel extends StatelessWidget {
             
             },
                 child: Text(
-                  'See All',
+                  'المزيد',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16.0,
@@ -49,11 +49,15 @@ class HotelCarousel extends StatelessWidget {
                 Hotel hotel = hotels[index];
                 return GestureDetector(
 
-                    onTap: () => Navigator.push(
-                    context,
-                     MaterialPageRoute(builder: (context) => HotelsListScreen()),
+                    onTap: () {
+         
+                         Navigator.of(context).pushNamed(HotelsListScreen.routeName);
 
-                  ),
+              
+                      
+                    }
+              
+                  ,
 
                     child: Container(
                     margin: EdgeInsets.all(10.0),
@@ -82,13 +86,13 @@ class HotelCarousel extends StatelessWidget {
                                           letterSpacing: 1.2),
                                     ),
                                     SizedBox(height: 2.0),
+                                    // Text(
+                                    //   hotel.address,
+                                    //   style: TextStyle(color: Colors.grey),
+                                    // ),
+                                    SizedBox(height: .1),
                                     Text(
-                                      hotel.address,
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                    SizedBox(height: 2.0),
-                                    Text(
-                                      '\$${hotel.price} / night',
+                                      '\$${hotel.price} / الليله',
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.w600,

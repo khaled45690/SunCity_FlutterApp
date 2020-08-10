@@ -1,6 +1,6 @@
-import 'package:SunCity_FlutterApp/models/destination_model.dart';
-import 'package:SunCity_FlutterApp/screens/destination_screen.dart';
-import 'package:SunCity_FlutterApp/screens/destinationsList_screen.dart';
+import 'package:Tourism_App/models/destination_model.dart';
+import 'package:Tourism_App/screens/destination_screen.dart';
+import 'package:Tourism_App/screens/destinationsList_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -15,8 +15,11 @@ class DestinationCarousel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'Top Destinations',
+                
+                'افضل الاماكن',
+                textDirection: TextDirection.ltr,
                 style: TextStyle(
+                  
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.5),
@@ -32,7 +35,7 @@ class DestinationCarousel extends StatelessWidget {
             
             },
                 child: Text(
-                  'See All',
+                  'المزيد',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16.0,
@@ -80,7 +83,7 @@ class DestinationCarousel extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      '${destination.activities.length} activities',
+                                      '${destination.activities.length} رحلات',
                                       style: TextStyle(
                                           fontSize: 22.0,
                                           fontWeight: FontWeight.w600,
@@ -125,7 +128,7 @@ class DestinationCarousel extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      destination.city,
+                                      destination.country,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 24.0,
@@ -140,14 +143,14 @@ class DestinationCarousel extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                         SizedBox(width: 5.0),
-                                        Text(
-                                          destination.country,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 24.0,
-                                              fontWeight: FontWeight.w600,
-                                              letterSpacing: 1.2),
-                                        ),
+                                        // Text(
+                                        //   destination.country,
+                                        //   style: TextStyle(
+                                        //       color: Colors.white,
+                                        //       fontSize: 24.0,
+                                        //       fontWeight: FontWeight.w600,
+                                        //       letterSpacing: 1.2),
+                                        // ),
                                       ],
                                     ),
                                   ],

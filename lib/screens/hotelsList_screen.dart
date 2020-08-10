@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 class HotelsListScreen extends StatefulWidget {
+  static const routeName = '/HotelsListScreen';
 
   @override
   _HotelsListScreenState createState() => _HotelsListScreenState();
@@ -18,7 +19,7 @@ class _HotelsListScreenState extends State<HotelsListScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('Under Construction Page'),
+          child: Text('لا يوجد صور متوفره للفندق الان'),
         ),
 
     )

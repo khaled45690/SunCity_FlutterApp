@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HotelsDetailsScreen extends StatefulWidget {
+    static const routeName = '/HotelsDetailsScreen';
+
 
   @override
   _HotelsDetailsScreenState createState() => _HotelsDetailsScreenState();

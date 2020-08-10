@@ -1,6 +1,5 @@
-
-import 'package:SunCity_FlutterApp/models/activity_model.dart';
-import 'package:SunCity_FlutterApp/models/destination_model.dart';
+import 'package:Tourism_App/models/activity_model.dart';
+import 'package:Tourism_App/models/destination_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -27,6 +26,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     // appBar: AppBar(),
       body: Column(children: <Widget>[
         Stack(
           children: <Widget>[
@@ -48,7 +48,10 @@ class _DestinationScreenState extends State<DestinationScreen> {
                   borderRadius: BorderRadius.circular(30.0),
                   child: Image(
                     image: AssetImage(
-                        'assets/Images/beach_23-wallpaper-1366x768.jpg'),
+                      //  'assets/Images/beach_23-wallpaper-1366x768.jpg'
+                     widget.destination.imageUrl
+                        
+                        ),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -67,18 +70,8 @@ class _DestinationScreenState extends State<DestinationScreen> {
                   ),
                   Row(
                     children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.search),
-                        iconSize: 30.0,
-                        color: Colors.black,
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      IconButton(
-                        icon: Icon(FontAwesomeIcons.sortAmountDown),
-                        iconSize: 25.0,
-                        color: Colors.black,
-                        onPressed: () => Navigator.pop(context),
-                      ),
+                
+                    
                     ],
                   ),
                 ],
@@ -91,7 +84,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.destination.city,
+                    widget.destination.country,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 35.0,
@@ -100,20 +93,20 @@ class _DestinationScreenState extends State<DestinationScreen> {
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(
-                        FontAwesomeIcons.locationArrow,
-                        size: 15.0,
-                        color: Colors.white70,
-                      ),
+                      // Icon(
+                      //   FontAwesomeIcons.locationArrow,
+                      //   size: 15.0,
+                      //   color: Colors.white70,
+                      // ),
                       SizedBox(width: 5.0),
-                      Text(
-                        widget.destination.country,
-                        style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.2),
-                      ),
+                      // Text(
+                      //   widget.destination.country,
+                      //   style: TextStyle(
+                      //       color: Colors.white70,
+                      //       fontSize: 20.0,
+                      //       fontWeight: FontWeight.w600,
+                      //       letterSpacing: 1.2),
+                      // ),
                     ],
                   ),
                 ],

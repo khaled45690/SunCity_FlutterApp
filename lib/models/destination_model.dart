@@ -1,5 +1,5 @@
 
-import './activity_model.dart';
+import 'package:Tourism_App/models/activity_model.dart';
 
 class Destination {
   String imageUrl;
@@ -22,7 +22,7 @@ List<Activity> activities = [
 
   Activity(
     imageUrl : 'assets/Images/forest_waterfall_cave-wallpaper-1366x768.jpg',
-    name : 'description',
+    name : 'المعموره',
     type :'walking' ,
     startTimes :['9:00 am' , '11.00 am'],
     rating : 5,
@@ -78,28 +78,32 @@ List<Destination> destinations = [
 
 
 Destination(
-imageUrl: 'assets/Images/forest_waterfall_cave-wallpaper-1366x768.jpg',
+imageUrl: 'assets/Images/alex.jpg',
 city: 'paris',
-country: 'France',
-description: 'Test',
+country: 'الاسكندريه',
+description: 'alex the city where the sea is amazing',
 activities: activities,
 ),
 
 
 Destination(
-imageUrl: 'assets/Images/Godafoss_Iceland .jpg',
+//imageUrl: 'assets/Images/Godafoss_Iceland .jpg',
+imageUrl: 'assets/Images/geza.jpg',
+
 city: 'Rome',
-country: 'Italy',
-description: 'Test',
+country: 'الجيزه',
+description: 'the capital of egypt',
 activities: activities,
 ),
 
 
 Destination(
-imageUrl: 'assets/Images/hd-wallpapers-big-full-moon-image-free-desktop-nature-landscapes-photo-moon-wallpaper-hd.jpg',
+//imageUrl: 'assets/Images/hd-wallpapers-big-full-moon-image-free-desktop-nature-landscapes-photo-moon-wallpaper-hd.jpg',
+imageUrl: 'assets/Images/cairo.jpg',
+
 city: 'Sydney',
-country: 'Australia',
-description: 'Test',
+country: 'الفاهره',
+description: 'geza is the city that famous for pyramids',
 activities: activities,
 ),
 

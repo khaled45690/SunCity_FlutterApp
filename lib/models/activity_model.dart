@@ -15,12 +15,5 @@ class Activity {
   this.rating,
   this.price,
 
-
-
-
-
-
-
-
   });
 }
