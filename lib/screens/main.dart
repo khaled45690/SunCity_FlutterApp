@@ -31,8 +31,6 @@ class SunCity_FlutterApp extends StatelessWidget {
         SignUp.routeName :(ctx) => SignUp(),
         HotelsDetailsScreen.routeName:(ctx) =>HotelsDetailsScreen(),
         HotelsListScreen.routeName :(ctx) =>HotelsListScreen(),
-
-        
         
         
         

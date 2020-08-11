@@ -39,13 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
               : Color(0xFFE7EBEE),
           borderRadius: BorderRadius.circular(30.0),
         ),
-        // child: Icon(
-        //   _icons[index],
-        //   size: 25.0,
-        //   color: _selectedIndex == index
-        //       ? Theme.of(context).primaryColor
-        //       : Color(0xFFB4C1C4),
-        // ),
+//         child: Icon(
+//           _icons[index],
+//           size: 25.0,
+//           color: _selectedIndex == index
+//               ? Theme.of(context).primaryColor
+//               : Color(0xFFB4C1C4),
+//         ),
       ),
     );
   }
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+
       ),
       drawer: AppDrawer(),
       body: SafeArea(
