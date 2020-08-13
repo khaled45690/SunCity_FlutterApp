@@ -302,6 +302,7 @@ class _SignUpState extends State<SignUp> {
                                 fontSize: 20),
                           ),
                           onTap: () {
+                            Navigator.of(context).pop();
                             Navigator.of(context).pushNamed(Login.routeName);
                           },
                         ),

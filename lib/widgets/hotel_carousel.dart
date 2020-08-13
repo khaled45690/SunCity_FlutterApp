@@ -50,11 +50,7 @@ class HotelCarousel extends StatelessWidget {
                 return GestureDetector(
 
                     onTap: () {
-         
                          Navigator.of(context).pushNamed(HotelsListScreen.routeName);
-
-              
-                      
                     }
               
                   ,

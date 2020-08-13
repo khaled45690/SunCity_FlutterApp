@@ -153,7 +153,7 @@ class _LoginState extends State<Login> {
             left:12, right:12, top:8 ,bottom:8),
             child: FlatButton(color:Colors.blue,
             onPressed: (){
-            
+              Navigator.of(context).pop();
              Navigator.of(context).pushNamed(SignUp.routeName);
             },
             child: Text('don\'t have account',style: TextStyle(fontSize:22),),

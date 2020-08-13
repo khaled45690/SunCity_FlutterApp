@@ -1,22 +1,35 @@
 
 import 'package:flutter/material.dart';
 import 'package:SunCity_FlutterApp/screens/home_screen.dart';
-
+import 'package:provider/provider.dart';
+import 'package:SunCity_FlutterApp/models/Provider_File.dart';
 import 'login.dart';
 import 'signup.dart';
 import 'home_screen.dart';
 import 'hotelDetails_screen.dart';
 import 'hotelsList_screen.dart';
-void main() => runApp(SunCity_FlutterApp());
+void main() =>{
+
+  runApp(
+    ChangeNotifierProvider( create: (context) => GlobalProvider(),
+    child: SunCity_FlutterApp(),
+    ),
+
+)
+
+};
 
 //update
 
 
 class SunCity_FlutterApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    var globalProvider = Provider.of<GlobalProvider>(context);
+    globalProvider.getMainData();
     return MaterialApp(
-      
+
       title: 'SunCity_FlutterApp UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -31,10 +44,10 @@ class SunCity_FlutterApp extends StatelessWidget {
         SignUp.routeName :(ctx) => SignUp(),
         HotelsDetailsScreen.routeName:(ctx) =>HotelsDetailsScreen(),
         HotelsListScreen.routeName :(ctx) =>HotelsListScreen(),
-        
-        
-        
-        
+
+
+
+
       },
     );
   }

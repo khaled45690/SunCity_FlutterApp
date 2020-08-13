@@ -4,6 +4,8 @@ import 'package:SunCity_FlutterApp/widgets/destination_Carousel.dart';
 import 'package:SunCity_FlutterApp/widgets/hotel_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:SunCity_FlutterApp/models/Provider_File.dart';
 
 class HomeScreen extends StatefulWidget {
     static const routeName = '/homeScreen';
@@ -13,7 +15,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   int _selectedIndex = 0;
+
   int _currentTab = 0;
   // List<IconData> _icons = [
   //   FontAwesomeIcons.hiking,
