@@ -27,18 +27,18 @@ class _LoginState extends State<Login> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(title: TextFormField(
-         decoration:InputDecoration(labelText: 'email' , icon: IconButton(
+         decoration:InputDecoration(labelText: 'الإيميل' , icon: IconButton(
             icon: Icon(Icons.email,color: Colors.blue,), onPressed: (){},),labelStyle: TextStyle(fontSize:25 ,color:Colors.blue) ),
           validator: (String value){
            if(value.isEmpty){
-             return 'please enter your password';
+             return 'أدخل كلمة المرور';
             }
 
         if(!RegExp(
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
            .hasMatch(value)
            ){
-             return 'Please enter a valid email Address';
+             return 'من فضلك أدخل الإيميل بالشكل الصحيح';
            }
            return "kk";
 
@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
        padding: const EdgeInsets.all(8.0),
        child:ListTile(title: TextFormField(
          obscureText: hidepass,
-          decoration: InputDecoration(labelText: 'password' ,
+          decoration: InputDecoration(labelText: 'كلمة المرور' ,
           //  icon: IconButton(
           //   icon: Icon(Icons.visibility_off), onPressed: (){},),
             
@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar:AppBar(
         backgroundColor: Colors.blue,
-        title: Text("Login"),
+        title: Text("تسجيل الدخول"),
           centerTitle: true,
        
         ),
@@ -119,7 +119,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height:20),
                   RaisedButton(
                     color: Colors.blue,
-                    child: Text('sign in', style: TextStyle(color:Colors.white, fontSize:17
+                    child: Text('تسجيل الدخول', style: TextStyle(color:Colors.white, fontSize:17
                     )
                     ,),
                     onPressed: (){
@@ -136,7 +136,7 @@ class _LoginState extends State<Login> {
                     }
                     ,
                     ), 
-                    FlatButton( child: Text("forgot password?",style: TextStyle(fontSize:20 , fontWeight:FontWeight.bold),), onPressed: (){
+                    FlatButton( child: Text("نسيت كلمة المرور",style: TextStyle(fontSize:20 , fontWeight:FontWeight.bold),), onPressed: (){
                       _handlePressed();
                     },)
                 ],
@@ -156,7 +156,7 @@ class _LoginState extends State<Login> {
               Navigator.of(context).pop();
              Navigator.of(context).pushNamed(SignUp.routeName);
             },
-            child: Text('don\'t have account',style: TextStyle(fontSize:22),),
+            child: Text('ليس لدي حساب',style: TextStyle(fontSize:22),),
             ),
             )
           )
@@ -182,7 +182,7 @@ Future<bool> confirmDialog1(BuildContext context){
     barrierDismissible: false,
     builder: (BuildContext context){
       return new AlertDialog(
-        title:new Text( 'forgot password'),
+        title:new Text( 'إسترجاع كلمة المرور'),
         actions: <Widget>[
           new FlatButton( child: const Text("yes"),
           onPressed: (){

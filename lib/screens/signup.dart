@@ -85,18 +85,18 @@ class _SignUpState extends State<SignUp> {
         child: ListTile(
           title: TextFormField(
             decoration: InputDecoration(
-              hintText: 'email',
+              hintText: 'الإيميل',
               icon: Icon(Icons.email),
             ),
             validator: (String value) {
               if (value.isEmpty) {
-                return 'please enter your email';
+                return 'من فضلك أدخل الإيميل';
               }
 
               if (!RegExp(
                       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                   .hasMatch(value)) {
-                return 'please enter the  email correctly';
+                return 'من فضلك أدخل الإيميل بالشكل الصحيح';
               }
               return null;
             },
@@ -115,16 +115,16 @@ class _SignUpState extends State<SignUp> {
             controller: _passwordTextController,
             obscureText: hidepass,
             decoration: InputDecoration(
-              hintText: 'password',
+              hintText: 'كلمة المرور',
               icon: Icon(Icons.lock_outline),
               //  border: InputBorder.none
             ),
             keyboardType: TextInputType.visiblePassword,
             validator: (String value) {
               if (value.isEmpty) {
-                return 'please enter password';
+                return 'من فضلك أدخل كلمة المرور';
               } else if (value.length < 6) {
-                return "password shouldn\'t be less than 6 characters";
+                return"كلمه المرور يجب الا تقل عن 6 ارقام";
               }
               return "";
             },
@@ -175,14 +175,14 @@ class _SignUpState extends State<SignUp> {
         child: ListTile(
           title: TextFormField(
             decoration: InputDecoration(
-              hintText: 'phone number',
+              hintText: 'رقم الموبايل',
               icon: Icon(Icons.phone),
             ),
             validator: (String value) {
               if (value.isEmpty) {
-                return 'please enter your phone number';
+                return 'من فضلك أدخل رقم المويايل';
               } else if (value.length < 14) {
-                return "please enter 14 numbers";
+                return "من فضلك أدخل 11 رقم";
               }
               return "";
             },
@@ -201,18 +201,18 @@ class _SignUpState extends State<SignUp> {
             controller: _confirmPassworldController,
             obscureText: hidepass,
             decoration: InputDecoration(
-              hintText: 'confirm password',
+              hintText: 'تأكيد كلمة المرور',
               icon: Icon(Icons.lock_outline),
             ),
             keyboardType: TextInputType.visiblePassword,
             validator: (String value) {
               if (value.isEmpty) {
-                return 'please enter your password';
+                return 'تأكيد كلمة المرور';
               } else if (value.length < 6) {
-                return ("password can\'t less than 6 characters");
+                return"كلمه المرور يجب الا تقل عن 6 ارقام";
               } else if (_confirmPassworldController.text !=
                   _passwordTextController.text) {
-                return ("passwords doesn\'t match");
+                return ("كلمة المرور غير متطابقه");
               }
               return "";
             },
@@ -235,7 +235,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('sign up'),
+        title: Text('التسجيل'),
       ),
       body: ListView(
         children: <Widget>[
@@ -270,7 +270,7 @@ class _SignUpState extends State<SignUp> {
                               _imageFile = picked;
                             });
                           },
-                          child: Text("Upload Photo")),
+                          child: Text("رفع صوره")),
                       RoundedImageWidget(imagefile:  _imageFile,),
                     ],
                   ),
@@ -281,7 +281,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 20),
                   RaisedButton(
                     child: Text(
-                      'sign up',
+                      'التسجيل',
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () {
@@ -295,7 +295,7 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.all(40),
                         child: InkWell(
                           child: new Text(
-                            "already have an account",
+                            "لدي حساب بالفعل",
                             style: TextStyle(
                                 color: Colors.red.shade900,
                                 fontWeight: FontWeight.bold,

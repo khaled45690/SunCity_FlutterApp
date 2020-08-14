@@ -22,7 +22,7 @@ class DestinationCarousel extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'best places',
+                  'أفضل المدن',
                   textDirection: TextDirection.ltr,
                   style: TextStyle(
                       fontSize: 22.0,
@@ -38,7 +38,7 @@ class DestinationCarousel extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    'more',
+                    'مشاهدة الكل',
                     style: TextStyle(
                         color: Theme
                             .of(context)
@@ -92,7 +92,7 @@ class DestinationCarousel extends StatelessWidget {
                                         .start,
                                     children: <Widget>[
                                       Text(
-                                        '${destination["cityName"].toString()} trips',
+                                        '${destination["toursCount"].toString()} عدد الرحلات',
                                         style: TextStyle(
                                             fontSize: 22.0,
                                             fontWeight: FontWeight.w600,
@@ -135,10 +135,10 @@ class DestinationCarousel extends StatelessWidget {
                                         .start,
                                     children: <Widget>[
                                       Text(
-                                        destination["country"].toString(),
+                                        destination["cityName"].toString(),
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 24.0,
+                                            fontSize: 18.0,
                                             fontWeight: FontWeight.w600,
                                             letterSpacing: 1.2),
                                       ),
@@ -150,14 +150,14 @@ class DestinationCarousel extends StatelessWidget {
                                             color: Colors.white,
                                           ),
                                           SizedBox(width: 5.0),
-                                          // Text(
-                                          //   destination.country,
-                                          //   style: TextStyle(
-                                          //       color: Colors.white,
-                                          //       fontSize: 24.0,
-                                          //       fontWeight: FontWeight.w600,
-                                          //       letterSpacing: 1.2),
-                                          // ),
+                                          Text(
+                                            destination["countryName"].toString(),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w600,
+                                                letterSpacing: 1.2),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -174,7 +174,8 @@ class DestinationCarousel extends StatelessWidget {
               ))
         ],
       );
-    }else{
+    }
+    else{
       return Container();
     }
   }

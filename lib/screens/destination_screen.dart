@@ -124,7 +124,6 @@ class _DestinationScreenState extends State<DestinationScreen> {
           ],
         ),
         Expanded(
-
           
           child: ListView.builder(
             padding: EdgeInsets.only(top: 10.0, bottom: 15.0),

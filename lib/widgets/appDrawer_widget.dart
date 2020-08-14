@@ -34,8 +34,8 @@ class _AppDrawerState extends State<AppDrawer> {
 
             new UserAccountsDrawerHeader(
               //"${user?.displayName}"
-              accountName: Text("Hi"),
-             accountEmail: Text("abdelrahman@gmail.com"),
+              accountName: Text("مرحباا"),
+             accountEmail: Text("SunCity@User.com"),
              currentAccountPicture: GestureDetector(
                child:   new CircleAvatar(
                  backgroundColor:Colors.white,
@@ -52,19 +52,19 @@ class _AppDrawerState extends State<AppDrawer> {
               //   Navigator.of(context).pushNamed(routeName)
                },
                             child: ListTile(
-                 title: Text("Home"),
+                 title: Text("الرئيسيه"),
                  leading: Icon(Icons.home,color: Colors.blue,),
                ),
              ),
                InkWell(
                             child: ListTile(
-                 title: Text("Setting"),
+                 title: Text("الإعدادات"),
                  leading: Icon(Icons.settings ,color: Colors.blue,),
                ),
              ),
                 InkWell(
                             child: ListTile(
-                 title: Text("support"),
+                 title: Text("الدعم الفني"),
                  leading: Icon(Icons.timeline ,color: Colors.blue,),
                ),
              ),
@@ -75,7 +75,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
                  },
                 child: ListTile(
-                 title: Text("Sign In"),
+                 title: Text("تسجيل الدخول"),
                  leading: Icon(Icons.close,color: Colors.blue,),
                ),
              ),

@@ -1,10 +1,17 @@
+import 'package:SunCity_FlutterApp/models/Provider_File.dart';
 import 'package:SunCity_FlutterApp/models/hotel_model.dart';
 import 'package:SunCity_FlutterApp/screens/hotelsList_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HotelCarousel extends StatelessWidget {
+
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+
   @override
   Widget build(BuildContext context) {
+     var globalProvider = Provider.of<GlobalProvider>(context);
+    if(globalProvider.globalData != null) {
     return Column(
       children: <Widget>[
         Padding(
@@ -13,7 +20,7 @@ class HotelCarousel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'choose your hotel',
+                'أفضل الفنادق',
                 style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -29,7 +36,7 @@ class HotelCarousel extends StatelessWidget {
             
             },
                 child: Text(
-                  'more',
+                  'مشاهدة الكل',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16.0,
@@ -127,5 +134,10 @@ class HotelCarousel extends StatelessWidget {
             ))
       ],
     );
+     }
+    else{
+      return Container();
+    }
   }
+  
 }
