@@ -1,16 +1,17 @@
+import 'package:provider/provider.dart';
 import 'package:SunCity_FlutterApp/models/Provider_File.dart';
 import 'package:SunCity_FlutterApp/screens/hotelsList_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 
 class HotelCarousel extends StatelessWidget {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-
+//String _serverUrl = "https://localhost:44332/";
   @override
   Widget build(BuildContext context) {
      var globalProvider = Provider.of<GlobalProvider>(context);
-    if(globalProvider.topHotels != null) {
+    if(globalProvider.topHotel != null) {
     return Column(
       children: <Widget>[
         Padding(
@@ -50,10 +51,10 @@ class HotelCarousel extends StatelessWidget {
             height: 300.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: globalProvider.topHotels.length,
+              itemCount: globalProvider.topHotel.length,
               //itemCount: hotels.length,
               itemBuilder: (BuildContext context, int index) {
-                Map topHotel = globalProvider.topHotels[index];
+                Map topHotel = globalProvider.topHotel[index];
                // Hotel hotel = hotels[index];
                 return GestureDetector(
 
@@ -100,7 +101,7 @@ class HotelCarousel extends StatelessWidget {
                                     ),
                                     SizedBox(height: .1),
                                     Text(
-                                      topHotel["pricePerNight"].toString(),
+                                      'ج${topHotel["pricePerNight"].toString()}',
                                     // '${topHotel["pricePerNight"]}',
                                       style: TextStyle(
                                         fontSize: 18.0,

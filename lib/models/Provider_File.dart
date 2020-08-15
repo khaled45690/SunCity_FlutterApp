@@ -5,28 +5,26 @@ import 'package:http/http.dart' as http;
 class GlobalProvider with ChangeNotifier {
   // server link
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+  //String _serverUrl = "https://localhost:44332/";
   // private global data
+
   List _data;
   List _hotels;
 
-  List get topHotels => _hotels;
   List get globalData => _data;
-
-  // make global data accessable
+  List get topHotel => _hotels;
 
 //modify the Globaldata  variable and notify all the dependent widgets
-  set globalDataSetter(List newVal  ) {
+  set globalDataSetter(List newVal) {
     _data = newVal;
     notifyListeners();
   }
 
-
-set topHotelsSetter(List hotels ) {
-  
-   _hotels = hotels;
+  // make global data accessable
+  set topHotelSetter(List hotels) {
+    _hotels = hotels;
     notifyListeners();
   }
-
 
 //Http request that get data from server
   Future<List> getMainData() async {
@@ -44,23 +42,16 @@ set topHotelsSetter(List hotels ) {
     }
   }
 
-  // more functions maybe added below this
-
+// more functions maybe added below this
   Future<List> getTopHotels() async {
     final response = await http.get('${_serverUrl}api/Hotel/GetTopHotels');
-   
+
     if (response.statusCode == 200) {
-     
-      topHotelsSetter = json.decode(response.body);
+      topHotelSetter = json.decode(response.body);
 
       return json.decode(response.body);
-
-    } 
-    else
-     {      
+    } else {
       throw Exception('Failed to Get Hotels');
-     }
+    }
   }
-
-
 }

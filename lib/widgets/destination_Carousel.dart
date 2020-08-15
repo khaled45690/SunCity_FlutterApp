@@ -7,7 +7,7 @@ import 'package:SunCity_FlutterApp/models/Provider_File.dart';
 class DestinationCarousel extends StatelessWidget {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-
+//String _serverUrl = "https://localhost:44332/";
   @override
 
   Widget build(BuildContext context) {
