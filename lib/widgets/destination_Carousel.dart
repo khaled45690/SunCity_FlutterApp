@@ -1,5 +1,3 @@
-import 'package:SunCity_FlutterApp/models/destination_model.dart';
-import 'package:SunCity_FlutterApp/screens/destination_screen.dart';
 import 'package:SunCity_FlutterApp/screens/destinationsList_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +9,7 @@ class DestinationCarousel extends StatelessWidget {
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
   @override
+
   Widget build(BuildContext context) {
     var globalProvider = Provider.of<GlobalProvider>(context);
     if(globalProvider.globalData != null) {
@@ -62,13 +61,13 @@ class DestinationCarousel extends StatelessWidget {
                     onTap: () =>
                     {
                       globalProvider.getMainData(),
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                        builder: (_) =>
-//                            DestinationScreen(destinations: destination),
-//                      ),
-//                    )
+                     //Navigator.push(
+                     //context,
+                     //MaterialPageRoute(
+                    // builder: (_) =>
+                    // DestinationScreen(destinations: destination),
+                   // ),
+                   //)
                     },
                     child: Container(
                       margin: EdgeInsets.all(10.0),

@@ -1,5 +1,4 @@
 import 'package:SunCity_FlutterApp/models/Provider_File.dart';
-import 'package:SunCity_FlutterApp/models/hotel_model.dart';
 import 'package:SunCity_FlutterApp/screens/hotelsList_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,7 @@ class HotelCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      var globalProvider = Provider.of<GlobalProvider>(context);
-    if(globalProvider.globalData != null) {
+    if(globalProvider.topHotels != null) {
     return Column(
       children: <Widget>[
         Padding(
@@ -51,13 +50,17 @@ class HotelCarousel extends StatelessWidget {
             height: 300.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: hotels.length,
+              itemCount: globalProvider.topHotels.length,
+              //itemCount: hotels.length,
               itemBuilder: (BuildContext context, int index) {
-                Hotel hotel = hotels[index];
+                Map topHotel = globalProvider.topHotels[index];
+               // Hotel hotel = hotels[index];
                 return GestureDetector(
 
-                    onTap: () {
-                         Navigator.of(context).pushNamed(HotelsListScreen.routeName);
+                    onTap: () => {
+
+                       globalProvider.getTopHotels()
+                        // Navigator.of(context).pushNamed(HotelsListScreen.routeName);
                     }
               
                   ,
@@ -82,20 +85,23 @@ class HotelCarousel extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
                                     Text(
-                                      hotel.name,
+                                      topHotel["hotelName"].toString(),
+                                    //  '${topHotel["hotelName"].toString()}',
                                       style: TextStyle(
                                           fontSize: 22.0,
                                           fontWeight: FontWeight.w600,
                                           letterSpacing: 1.2),
                                     ),
                                     SizedBox(height: 2.0),
-                                    // Text(
-                                    //   hotel.address,
-                                    //   style: TextStyle(color: Colors.grey),
-                                    // ),
+                                    Text(
+                                      topHotel["cityName"].toString(),
+                                     //'${topHotel["cityName"].toString()}',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
                                     SizedBox(height: .1),
                                     Text(
-                                      '\$${hotel.price} / night',
+                                      topHotel["pricePerNight"].toString(),
+                                    // '${topHotel["pricePerNight"]}',
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.w600,
@@ -118,10 +124,11 @@ class HotelCarousel extends StatelessWidget {
                               ]),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
-                            child: Image(
+                            child: Image.network(
+                               _serverUrl + topHotel["hotelMainImage"].toString(),
                               height: 180.0,
                               width: 220.0,
-                              image: AssetImage(hotel.imageUrl),
+                              //image: AssetImage(hotel.imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
