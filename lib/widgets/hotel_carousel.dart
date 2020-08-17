@@ -101,7 +101,7 @@ class HotelCarousel extends StatelessWidget {
                                     ),
                                     SizedBox(height: .1),
                                     Text(
-                                      'ج${topHotel["pricePerNight"].toString()}',
+                                      'ج ${topHotel["pricePerNight"].toString()}',
                                     // '${topHotel["pricePerNight"]}',
                                       style: TextStyle(
                                         fontSize: 18.0,
@@ -126,7 +126,7 @@ class HotelCarousel extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: Image.network(
-                               _serverUrl + topHotel["hotelMainImage"].toString(),
+                               _serverUrl + topHotel["mainHotelImage"].toString(),
                               height: 180.0,
                               width: 220.0,
                               //image: AssetImage(hotel.imageUrl),

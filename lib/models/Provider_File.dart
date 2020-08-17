@@ -6,13 +6,15 @@ class GlobalProvider with ChangeNotifier {
   // server link
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
   //String _serverUrl = "https://localhost:44332/";
-  // private global data
+  //private global data
 
   List _data;
   List _hotels;
+  List _tours;
 
   List get globalData => _data;
   List get topHotel => _hotels;
+  List get toursData => _tours;
 
 //modify the Globaldata  variable and notify all the dependent widgets
   set globalDataSetter(List newVal) {
@@ -23,7 +25,12 @@ class GlobalProvider with ChangeNotifier {
   // make global data accessable
   set topHotelSetter(List hotels) {
     _hotels = hotels;
-    notifyListeners();
+    notifyListeners();    
+  }
+
+  set toursDataSetter(List tours){
+    _tours = tours;
+    notifyListeners();    
   }
 
 //Http request that get data from server
@@ -54,4 +61,17 @@ class GlobalProvider with ChangeNotifier {
       throw Exception('Failed to Get Hotels');
     }
   }
+
+  Future<List> getToursByCityId() async {
+    final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/E86E901B-42F8-4AF5-B97A-0867E31C4E92');
+
+    if (response.statusCode == 200) {
+      toursDataSetter = json.decode(response.body);
+
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to Get Tours');
+    }
+  }
+
 }

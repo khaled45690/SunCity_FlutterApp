@@ -28,7 +28,7 @@ class SunCity_FlutterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var globalProvider = Provider.of<GlobalProvider>(context);
     globalProvider.getMainData();
-     globalProvider.getTopHotels();
+    globalProvider.getTopHotels();
     return MaterialApp(
 
       title: 'SunCity_FlutterApp UI',

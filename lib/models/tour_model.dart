@@ -1,4 +1,6 @@
-class Activity {
+
+class Tour {
+  String id;
   String imageUrl;
   String name ;
   String type;
@@ -7,7 +9,8 @@ class Activity {
   int price;
 
   
-  Activity({
+  Tour({
+  this.id,
   this.imageUrl,
   this.name,
   this.type,
