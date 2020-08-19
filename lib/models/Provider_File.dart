@@ -46,7 +46,7 @@ class GlobalProvider with ChangeNotifier {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+//      throw Exception('Failed to load album');
     }
   }
 
@@ -60,7 +60,7 @@ class GlobalProvider with ChangeNotifier {
 
       return json.decode(response.body);
     } else {
-      throw Exception('Failed to Get Hotels');
+//      throw Exception('Failed to Get Hotels');
     }
   }
 
@@ -84,7 +84,7 @@ class GlobalProvider with ChangeNotifier {
 // )
       return json.decode(response.body);
     } else {
-      throw Exception('Failed to Get Tours');
+//      throw Exception('Failed to Get Tours');
     }
   }
 

@@ -31,7 +31,7 @@ SunCity_FlutterApp({this.cityId});
     var globalProvider = Provider.of<GlobalProvider>(context);
     globalProvider.getMainData();
     globalProvider.getTopHotels();
-    globalProvider.getToursByCityId(cityId);  //'e86e901b-42f8-4af5-b97a-0867e31c4e92'
+    globalProvider.getToursByCityId(cityId.toString());  //'e86e901b-42f8-4af5-b97a-0867e31c4e92'
   
     return MaterialApp(
 

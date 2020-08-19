@@ -68,16 +68,15 @@ String cityId;
 
                   return GestureDetector(
                    onTap: ( ) {
-                 
                        Navigator.push(
-              
+
                     context,
                     MaterialPageRoute(
 
-                      builder: (_) =>  TourScreen(cityId: cities[index].cityId , cityImage: cities[index].image),
-                   
+                      builder: (_) =>  TourScreen(cityId: cities["cityId"] , cityImage: cities["image"]),
+
                     ),
-                    
+
                   );
 
                    } ,

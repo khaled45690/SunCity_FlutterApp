@@ -13,9 +13,9 @@ class TourScreen extends StatefulWidget {
  final String cityImage;
 
    TourScreen({this.cityId ,this.cityImage});
-
   @override
-  _TourScreenState createState() => _TourScreenState();
+  _TourScreenState createState() => _TourScreenState(cityImage: this.cityImage , cityId: this.cityId);
+
 }
 
 class _TourScreenState extends State<TourScreen> {
@@ -23,7 +23,7 @@ class _TourScreenState extends State<TourScreen> {
   String cityId;
   String cityImage ;
  
- _TourScreenState({this.cityId , this.cityImage});
+ _TourScreenState({this.cityId , this.cityImage})
  // List _tours;
 
 //  List get toursData => _tours;
@@ -329,16 +329,16 @@ class _TourScreenState extends State<TourScreen> {
 }
 
 String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-
- Future<TourList> getToursByCityId2(String tourId) async {
-  
-    final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/'+tourId);
-
-    if (response.statusCode == 200) {
-   String jsonToursData = json.decode(response.body);
-
- return TourList.fromJson(jsonToursData);
-    } else {
-      throw Exception('Failed to Get Tours');
-    }
-  }
+//
+// Future<TourList> getToursByCityId2(String tourId) async {
+//
+//    final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/'+tourId);
+//
+//    if (response.statusCode == 200) {
+//   String jsonToursData = json.decode(response.body);
+//
+// return TourList.fromJson(jsonToursData);
+//    } else {
+//      throw Exception('Failed to Get Tours');
+//    }
+//  }
