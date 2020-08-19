@@ -9,7 +9,7 @@ class CityCarousel extends StatelessWidget {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
  //String _serverUrl = "https://localhost:44332/";
-
+String cityId;
   @override
 
   Widget build(BuildContext context) {
@@ -64,17 +64,22 @@ class CityCarousel extends StatelessWidget {
                   Map cities = globalProvider.globalData[index];
 
                 //  Destination tour = globalProvider[index];
+                    
 
                   return GestureDetector(
-                   onTap: () => Navigator.push(
+                   onTap: ( ) {
+                       Navigator.push(
+
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          TourScreen(tour: cities[index]),
-                    ),
-                    
-                  ),
 
+                      builder: (_) =>  TourScreen(cityId: cities["cityId"] , cityImage: cities["image"]),
+
+                    ),
+
+                  );
+
+                   } ,
                     child: Container(
                       margin: EdgeInsets.all(10.0),
                       width: 210.0,

@@ -12,8 +12,7 @@ class _HotelsListScreenState extends State<HotelsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-     
+           
       body: Center(
         child: RaisedButton(
           onPressed: () {

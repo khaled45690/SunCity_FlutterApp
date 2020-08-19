@@ -1,11 +1,11 @@
 import 'package:SunCity_FlutterApp/models/Provider_File.dart';
-import 'package:SunCity_FlutterApp/models/tour_model.dart';
+import 'package:SunCity_FlutterApp/models/tourList_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TourDetailsScreen extends StatefulWidget {
   
-  final Tour tours;
+  final TourList tours;
 
   TourDetailsScreen({this.tours});
 
@@ -40,7 +40,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
     // final loadeddestinationDataactivity=  Provider.of<Activities>(context).findByIId(destinId);
 
     return Scaffold(
-      appBar: AppBar(title: Text('${loadeddCityData.getToursByCityId()}')),
+  //    appBar: AppBar(title: Text('${loadeddCityData.getToursByCityId()}')),
       body: ListView.builder(
           itemCount: 1,
           // Provider.of<Destinations>(context).items.length,

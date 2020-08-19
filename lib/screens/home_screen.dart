@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(vertical: 30.0),
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 120.0),
+              padding: const EdgeInsets.only(left: 120.0, right: 20.0),
               child: Text(
                 'إختر رحلتك',
                 style: TextStyle(
