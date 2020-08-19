@@ -1,17 +1,17 @@
 
-import 'tour_model.dart';
+import 'tourList_model.dart';
 
 class City {
   String id;
-  String imageUrl;
+  String mainTourImage;
   String city;
   String country;
   String description;
-  List<Tour> tours;
+  List<TourList> tours;
 
   City({
     this.id,
-    this.imageUrl,
+    this.mainTourImage,
     this.city,
     this.country,
     this.description,

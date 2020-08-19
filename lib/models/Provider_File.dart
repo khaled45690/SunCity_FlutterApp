@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:SunCity_FlutterApp/models/tourList_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +15,7 @@ class GlobalProvider with ChangeNotifier {
 
   List get globalData => _data;
   List get topHotel => _hotels;
-  List get toursData => _tours;
+  List get toursData => _tours; 
 
 //modify the Globaldata  variable and notify all the dependent widgets
   set globalDataSetter(List newVal) {
@@ -54,6 +55,7 @@ class GlobalProvider with ChangeNotifier {
     final response = await http.get('${_serverUrl}api/Hotel/GetTopHotels');
 
     if (response.statusCode == 200) {
+      
       topHotelSetter = json.decode(response.body);
 
       return json.decode(response.body);
@@ -62,12 +64,24 @@ class GlobalProvider with ChangeNotifier {
     }
   }
 
-  Future<List> getToursByCityId() async {
-    final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/E86E901B-42F8-4AF5-B97A-0867E31C4E92');
+
+  Future<List> getToursByCityId(String tourId) async {
+    final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/'+tourId);
 
     if (response.statusCode == 200) {
-      toursDataSetter = json.decode(response.body);
+    toursDataSetter = json.decode(response.body);
 
+// final tour = List<TourList>(
+//    tourId : toursData['TourId'],
+//    countryName : toursData['CountryName'],
+//    cityName : toursData['CityName'],
+//    tourName : toursData['TourName'],
+//    location : toursData['Location'],
+//    description : toursData['Description'],
+//    pricePerNight : toursData['PricePerNight'],
+//    rating : toursData['Rating'],
+//    mainTourImage : toursData['MainTourImage'],
+// )
       return json.decode(response.body);
     } else {
       throw Exception('Failed to Get Tours');

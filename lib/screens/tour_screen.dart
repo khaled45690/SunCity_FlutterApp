@@ -1,22 +1,68 @@
+import 'dart:convert';
 import 'package:SunCity_FlutterApp/models/Provider_File.dart';
-import 'package:SunCity_FlutterApp/models/tour_model.dart';
+import 'package:SunCity_FlutterApp/models/api_response.dart';
+import 'package:SunCity_FlutterApp/models/tourList_model.dart';
 import 'package:SunCity_FlutterApp/models/city_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'tourDetails_screen.dart';
+import 'package:http/http.dart' as http;
 
 class TourScreen extends StatefulWidget {
-  final City city;
-  final Tour tour;
+  //final City city;
+ final String cityId;
+ final String cityImage;
 
-  TourScreen({this.city, this.tour});
+   TourScreen({this.cityId ,this.cityImage});
 
   @override
   _TourScreenState createState() => _TourScreenState();
 }
 
 class _TourScreenState extends State<TourScreen> {
+ 
+  String cityId;
+  String cityImage ;
+ 
+ _TourScreenState({this.cityId , this.cityImage});
+ // List _tours;
+
+//  List get toursData => _tours;
+
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+
+  // Future<APIResponse<List<TourList>>> getToursByCityId(String cityId) async {
+  //   final response =
+  //       await http.get('${_serverUrl}api/Tour/GetToursByCityId/${cityId}}');
+
+  //   if (response.statusCode == 200) {
+  //     _tours = json.decode(response.body);
+
+  //     final tours = <TourList>[];
+
+  //     for (var item in _tours) {
+  //       final tour = TourList(
+  //         tourId: item['TourId'],
+  //         countryName: item['CountryName'],
+  //         cityName: item['CityName'],
+  //         tourName: item['TourName'],
+  //         location: item['Location'],
+  //         description: item['Description'],
+  //         pricePerNight: item['PricePerNight'],
+  //         rating: item['Rating'],
+  //         mainTourImage: item['MainTourImage'],
+  //       );
+  //       tours.add(tour);
+  //     }
+  //     //json.decode(response.body);
+
+  //     return APIResponse<List<TourList>>(
+  //       data: tours,
+  //     );
+  //   } else {
+  //     throw Exception('Failed to Get Tours');
+  //   }
+  // }
+
   Text _buildRatingStars(int rating) {
     String stars = '';
     for (int i = 0; i < rating; i++) {
@@ -25,13 +71,34 @@ class _TourScreenState extends State<TourScreen> {
     }
     return Text(stars);
   }
-
+// bool _isLoading = false ;
   @override
-  Widget build(BuildContext context) {
-    var globalProvider = Provider.of<GlobalProvider>(context);
-    //  final destin = Provider.of<Destination>(context , listen: false);
+  
+// void initState(){
+//   _fetchTours();
+//   super.initState();
+// }
 
+// _fetchTours() async (){
+//   setState(() {
+//     _isLoading = true;
+//   });
+// }
+
+
+
+
+
+
+
+  Widget build(BuildContext context) {
+   // var globalProvider = Provider.of<GlobalProvider>(context);
+    // getToursByCityId('e86e901b-42f8-4af5-b97a-0867e31c4e92');
+    //  final destin = Provider.of<Destination>(context , listen: false);
+    var globalProvider = Provider.of<GlobalProvider>(context);
+    if(globalProvider.toursData != null) {
     return Scaffold(
+
       // appBar: AppBar(),
       body: Column(children: <Widget>[
         Stack(
@@ -48,16 +115,16 @@ class _TourScreenState extends State<TourScreen> {
                   ),
                 ],
               ),
-              child: Hero(
-                tag: widget.city.imageUrl,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30.0),
-                  child: Image(
-                    image: AssetImage(widget.city.imageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              // child: Hero(
+              //   tag: widget.tour.mainTourImage,
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(30.0),
+              //     child: Image(
+              //       image: AssetImage(widget.tour.mainTourImage),
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
+              // ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
@@ -82,14 +149,14 @@ class _TourScreenState extends State<TourScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    widget.city.country,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 35.0,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2),
-                  ),
+                  // Text(
+                  //   widget.city.country,
+                  //   style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 35.0,
+                  //       fontWeight: FontWeight.w600,
+                  //       letterSpacing: 1.2),
+                  // ),
                   Row(
                     children: <Widget>[
                       // Icon(
@@ -254,5 +321,9 @@ class _TourScreenState extends State<TourScreen> {
         )
       ]),
     );
+    }
+    else{
+      return Container();
+    }
   }
 }

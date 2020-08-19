@@ -24,11 +24,15 @@ void main() =>{
 
 class SunCity_FlutterApp extends StatelessWidget {
 
+String cityId;
+SunCity_FlutterApp({this.cityId});
   @override
   Widget build(BuildContext context) {
     var globalProvider = Provider.of<GlobalProvider>(context);
     globalProvider.getMainData();
     globalProvider.getTopHotels();
+    globalProvider.getToursByCityId(cityId);  //'e86e901b-42f8-4af5-b97a-0867e31c4e92'
+  
     return MaterialApp(
 
       title: 'SunCity_FlutterApp UI',
@@ -45,9 +49,6 @@ class SunCity_FlutterApp extends StatelessWidget {
         SignUp.routeName :(ctx) => SignUp(),
         HotelsDetailsScreen.routeName:(ctx) =>HotelsDetailsScreen(),
         HotelsListScreen.routeName :(ctx) =>HotelsListScreen(),
-
-
-
 
       },
     );
