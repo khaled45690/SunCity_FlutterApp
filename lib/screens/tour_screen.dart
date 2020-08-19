@@ -19,16 +19,18 @@ class TourScreen extends StatefulWidget {
 }
 
 class _TourScreenState extends State<TourScreen> {
+
  
+
   String cityId;
   String cityImage ;
  
- _TourScreenState({this.cityId , this.cityImage})
+ _TourScreenState({this.cityId , this.cityImage});
  // List _tours;
 
 //  List get toursData => _tours;
 
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+String _serverUrl = "http://algosys-001-site16.ctempurl.com/";  
 
   // Future<APIResponse<List<TourList>>> getToursByCityId(String cityId) async {
   //   final response =
@@ -328,7 +330,7 @@ class _TourScreenState extends State<TourScreen> {
   }
 }
 
-String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+//String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 //
 // Future<TourList> getToursByCityId2(String tourId) async {
 //
