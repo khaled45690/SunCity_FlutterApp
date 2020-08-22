@@ -60,8 +60,8 @@ class HotelCarousel extends StatelessWidget {
 
                     onTap: () => {
 
-                       globalProvider.getTopHotels()
-                        // Navigator.of(context).pushNamed(HotelsListScreen.routeName);
+                      // globalProvider.getTopHotels()
+                         Navigator.of(context).pushNamed(HotelsListScreen.routeName),
                     }
               
                   ,

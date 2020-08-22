@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class TourList {
   String tourId;
@@ -10,6 +11,7 @@ class TourList {
   double pricePerNight;
   int rating;
   double mainTourImage;
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
   TourList({
     this.tourId,
@@ -34,5 +36,15 @@ class TourList {
         pricePerNight: json['pricePerNight'],
         rating: json['rating'],
         mainTourImage: json['mainTourImage']);
+  }
+
+  Future<void> getToursByCityId(String cityId) async {
+    try {
+      final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/' + cityId);
+          print(response);
+    } catch (error) {
+      
+      throw (error);
+    }
   }
 }
