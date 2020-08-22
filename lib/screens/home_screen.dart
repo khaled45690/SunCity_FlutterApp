@@ -3,16 +3,14 @@ import 'package:SunCity_FlutterApp/widgets/city_Carousel.dart';
 import 'package:SunCity_FlutterApp/widgets/hotel_carousel.dart';
 import 'package:flutter/material.dart';
 
-
 class HomeScreen extends StatefulWidget {
-    static const routeName = '/HomeScreen';
+  static const routeName = '/HomeScreen';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   int _selectedIndex = 0;
 
   int _currentTab = 0;
@@ -54,9 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-
-      ),
+      appBar: AppBar(),
       drawer: AppDrawer(),
       body: SafeArea(
         child: ListView(
@@ -90,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-     
     );
   }
 }

@@ -124,7 +124,7 @@ class _SignUpState extends State<SignUp> {
               if (value.isEmpty) {
                 return 'من فضلك أدخل كلمة المرور';
               } else if (value.length < 6) {
-                return"كلمه المرور يجب الا تقل عن 6 ارقام";
+                return "كلمه المرور يجب الا تقل عن 6 ارقام";
               }
               return "";
             },
@@ -209,7 +209,7 @@ class _SignUpState extends State<SignUp> {
               if (value.isEmpty) {
                 return 'تأكيد كلمة المرور';
               } else if (value.length < 6) {
-                return"كلمه المرور يجب الا تقل عن 6 ارقام";
+                return "كلمه المرور يجب الا تقل عن 6 ارقام";
               } else if (_confirmPassworldController.text !=
                   _passwordTextController.text) {
                 return ("كلمة المرور غير متطابقه");
@@ -271,7 +271,9 @@ class _SignUpState extends State<SignUp> {
                             });
                           },
                           child: Text("رفع صوره")),
-                      RoundedImageWidget(imagefile:  _imageFile,),
+                      RoundedImageWidget(
+                        imagefile: _imageFile,
+                      ),
                     ],
                   ),
                   // self made image widget,
@@ -325,4 +327,3 @@ class _SignUpState extends State<SignUp> {
     }
   }
 }
-
