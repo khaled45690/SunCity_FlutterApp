@@ -1,29 +1,25 @@
 import 'dart:convert';
-import 'package:SunCity_FlutterApp/models/Provider_File.dart';
-import 'package:SunCity_FlutterApp/models/api_response.dart';
 import 'package:SunCity_FlutterApp/models/tourList_model.dart';
-import 'package:SunCity_FlutterApp/models/city_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
-class TourScreen extends StatefulWidget {
-  
+
+class CityToursScreen extends StatefulWidget {
+    static const routeName = '/CityToursScreen';
   final String cityId;
   final String cityImage;
 
-  TourScreen({this.cityId, this.cityImage});
+  CityToursScreen({this.cityId, this.cityImage});
   @override
-  _TourScreenState createState() =>
-      _TourScreenState(cityImage: this.cityImage, cityId: this.cityId);
+  _CityToursScreenState createState() =>
+      _CityToursScreenState(cityImage: this.cityImage, cityId: this.cityId);
 }
 
-class _TourScreenState extends State<TourScreen> {
+class _CityToursScreenState extends State<CityToursScreen> {
   String cityId;
   String cityImage;
 
-  _TourScreenState({this.cityId, this.cityImage}){
+  _CityToursScreenState({this.cityId, this.cityImage}){
     print(this.cityId);
   }
   

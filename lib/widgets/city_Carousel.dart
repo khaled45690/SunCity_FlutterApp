@@ -1,5 +1,6 @@
-import 'package:SunCity_FlutterApp/screens/tourDetails_screen.dart';
-import 'package:SunCity_FlutterApp/screens/tour_screen.dart';
+import 'package:SunCity_FlutterApp/screens/seeAllCities_screen.dart';
+import '../screens/tourDetails_screen.dart';
+import 'package:SunCity_FlutterApp/screens/cityTours_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ String cityId;
 
   Widget build(BuildContext context) {
     var globalProvider = Provider.of<GlobalProvider>(context);
-    if(globalProvider.globalData != null) {
+    if(globalProvider.topCitiesData != null) {
       return Column(
 
         children: <Widget>[
@@ -37,7 +38,7 @@ String cityId;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => TourScreen()),
+                          builder: (context) => SeeAllCitiesScreen()),
                     );
                   },
                   child: Text(
@@ -58,14 +59,11 @@ String cityId;
               height: 300.0,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: globalProvider.globalData.length,
+                itemCount: globalProvider.topCitiesData.length,
                 itemBuilder: (BuildContext context, int index) {
 
-                  Map cities = globalProvider.globalData[index];
-
-                //  Destination tour = globalProvider[index];
-                    
-
+                  Map cities = globalProvider.topCitiesData[index];
+  
                   return GestureDetector(
                    onTap: ( ) {
                        Navigator.push(
@@ -73,7 +71,7 @@ String cityId;
                     context,
                     MaterialPageRoute(
 
-                      builder: (_) =>  TourScreen(cityId: cities["cityId"] , cityImage: cities["image"]),
+                      builder: (_) =>  CityToursScreen(cityId: cities["cityId"] , cityImage: cities["image"]),
 
                     ),
 

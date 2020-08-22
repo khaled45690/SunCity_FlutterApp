@@ -1,22 +1,24 @@
 import 'package:SunCity_FlutterApp/models/Provider_File.dart';
-import 'package:SunCity_FlutterApp/models/tourList_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TourDetailsScreen extends StatefulWidget {
-  
-  final TourList tours;
+  static const routeName = '/TourDetailsScreen';
+  final String tourId;
+  final String tourImage;
 
-  TourDetailsScreen({this.tours});
-
-  static const routeName = '/city-list';
+  TourDetailsScreen({this.tourId , this.tourImage});
 
   @override
-  _TourDetailsScreenState createState() => _TourDetailsScreenState();
+  _TourDetailsScreenState createState() => _TourDetailsScreenState(tourId : this.tourId, tourImage: this.tourImage);
 }
 
 class _TourDetailsScreenState extends State<TourDetailsScreen> {
-  
+  final String tourId;
+  final String tourImage;
+
+  _TourDetailsScreenState({this.tourId , this.tourImage});
+
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
   Text _buildRatingStars(int rating) {
@@ -95,15 +97,15 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
                   //     child: Text('Stars',style: TextStyle(fontSize:40,fontWeight:FontWeight.bold) ))
                   Card(
                     child: ListTile(
-                      title: (Text(
-                        loadeddCityData.toursData[index].name,
+                      title: (Text('',
+                       // loadeddCityData.toursData[index].name,
                         style: TextStyle(fontSize: 50),
                       )),
-                      subtitle: Text(
-                          loadeddCityData.toursData[index].startTimes.toString(),
+                      subtitle: Text('',
+                       //   loadeddCityData.toursData[index].startTimes.toString(),
                           style: TextStyle(fontSize: 25)),
-                      trailing: Text(
-                          '\$${loadeddCityData.toursData[index].price.toString()}',
+                      trailing: Text('',
+                          //'\$${loadeddCityData.toursData[index].price.toString()}',
                           style: TextStyle(fontSize: 50)),
                     ),
                   )

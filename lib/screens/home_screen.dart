@@ -1,14 +1,11 @@
-import 'package:SunCity_FlutterApp/screens/hotelsList_screen.dart';
 import 'package:SunCity_FlutterApp/widgets/appDrawer_widget.dart';
 import 'package:SunCity_FlutterApp/widgets/city_Carousel.dart';
 import 'package:SunCity_FlutterApp/widgets/hotel_carousel.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:SunCity_FlutterApp/models/Provider_File.dart';
+
 
 class HomeScreen extends StatefulWidget {
-    static const routeName = '/homeScreen';
+    static const routeName = '/HomeScreen';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

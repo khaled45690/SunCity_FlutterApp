@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 
-class HotelsDetailsScreen extends StatefulWidget {
-    static const routeName = '/HotelsDetailsScreen';
+class HotelDetailsScreen extends StatefulWidget {
+  static const routeName = '/HotelsDetailsScreen';
+  final String hotelId;
+  final String hotelImage;
 
+  HotelDetailsScreen({this.hotelId, this.hotelImage});
 
   @override
-  _HotelsDetailsScreenState createState() => _HotelsDetailsScreenState();
+  _HotelDetailsScreenState createState() => _HotelDetailsScreenState(hotelId : this.hotelId, hotelImage: this.hotelImage);
+
 }
 
-class _HotelsDetailsScreenState extends State<HotelsDetailsScreen> {
+class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
+  
+  final String hotelId;
+  final String hotelImage;
+  _HotelDetailsScreenState({this.hotelId, this.hotelImage});
+    
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +29,7 @@ class _HotelsDetailsScreenState extends State<HotelsDetailsScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('Under Construction Page'),
+          child: Text(' hotel Details screen'),
         ),
 
     )

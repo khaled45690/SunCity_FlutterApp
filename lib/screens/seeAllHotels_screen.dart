@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
 
-class HotelsListScreen extends StatefulWidget {
-  static const routeName = '/HotelsListScreen';
+class SeeAllHotelsScreen extends StatefulWidget {
+  static const routeName = '/SeeAllHotelScreen';
 
   @override
-  _HotelsListScreenState createState() => _HotelsListScreenState();
+  _SeeAllHotelsScreenState createState() => _SeeAllHotelsScreenState();
 }
 
-class _HotelsListScreenState extends State<HotelsListScreen> {
+class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _HotelsListScreenState extends State<HotelsListScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('there is photos from hotel'),
+          child: Text('All Hotels screen'),
         ),
 
     )

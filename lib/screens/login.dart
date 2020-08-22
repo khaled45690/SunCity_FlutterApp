@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
 
-  static const routeName = '/login';
+  static const routeName = '/Login';
   @override
   _LoginState createState() => _LoginState();
 }
