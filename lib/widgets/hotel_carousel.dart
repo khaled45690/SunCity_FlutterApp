@@ -5,8 +5,8 @@ import 'package:SunCity_FlutterApp/screens/seeAllHotels_screen.dart';
 import 'package:flutter/material.dart';
 
 class HotelCarousel extends StatelessWidget {
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-//String _serverUrl = "https://localhost:44332/";
+  final String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+
   @override
   Widget build(BuildContext context) {
     var globalProvider = Provider.of<GlobalProvider>(context);
@@ -50,7 +50,6 @@ class HotelCarousel extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: globalProvider.topHotelsData.length,
-                //itemCount: hotels.length,
                 itemBuilder: (BuildContext context, int index) {
                   Map topHotel = globalProvider.topHotelsData[index];
 
@@ -85,7 +84,6 @@ class HotelCarousel extends StatelessWidget {
                                     children: <Widget>[
                                       Text(
                                         topHotel["hotelName"].toString(),
-                                        //  '${topHotel["hotelName"].toString()}',
                                         style: TextStyle(
                                             fontSize: 22.0,
                                             fontWeight: FontWeight.w600,
@@ -94,13 +92,11 @@ class HotelCarousel extends StatelessWidget {
                                       SizedBox(height: 2.0),
                                       Text(
                                         topHotel["cityName"].toString(),
-                                        //'${topHotel["cityName"].toString()}',
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                       SizedBox(height: .1),
                                       Text(
                                         'ج ${topHotel["pricePerNight"].toString()}',
-                                        // '${topHotel["pricePerNight"]}',
                                         style: TextStyle(
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.w600,
@@ -127,7 +123,6 @@ class HotelCarousel extends StatelessWidget {
                                     topHotel["mainHotelImage"].toString(),
                                 height: 180.0,
                                 width: 220.0,
-                                //image: AssetImage(hotel.imageUrl),
                                 fit: BoxFit.cover,
                               ),
                             ),
