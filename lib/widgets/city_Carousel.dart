@@ -19,14 +19,7 @@ class CityCarousel extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  'أفضل المدن',
-                  textDirection: TextDirection.ltr,
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5),
-                ),
+
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -35,7 +28,8 @@ class CityCarousel extends StatelessWidget {
                           builder: (context) => SeeAllCitiesScreen()),
                     );
                   },
-                  child: Text(
+                   
+                  child: Text(   
                     'مشاهدة الكل',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
@@ -43,6 +37,16 @@ class CityCarousel extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.0),
                   ),
+                ),
+
+
+                 Text(
+                  'أفضل المدن',
+                  textDirection: TextDirection.ltr,
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5),
                 ),
               ],
             ),

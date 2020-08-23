@@ -31,7 +31,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
-  Future<String> getHotelDetails(String hotelId) async {
+  Future<void> getHotelDetails(String hotelId) async {
     
     final response = await http.get('${_serverUrl}api/Hotel/GetHotelDetails/' + hotelId);
 
@@ -40,7 +40,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
         _hotel = json.decode(response.body);
       });
 
-      return null;
+     // return null;
     } else {
       throw Exception('Failed to Get hotel Details');
     }
@@ -48,8 +48,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var hotel = getHotelDetails(this.hotelId);
-    if (hotel != null) {
+     getHotelDetails(this.hotelId);
       if (_hotel != null) {
         return Scaffold(
           //    appBar: AppBar(title: Text('${loadeddCityData.getToursByCityId()}')),
@@ -116,11 +115,13 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                     ]);
               }),
         );
-      } else {
-        return Container();
       }
-    } else {
-      return Container();
-    }
+    else {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+    );
   }
 }
+}
+

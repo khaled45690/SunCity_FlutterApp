@@ -18,13 +18,7 @@ class HotelCarousel extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  'أفضل الفنادق',
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5),
-                ),
+               
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -41,6 +35,14 @@ class HotelCarousel extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.0),
                   ),
+                ),
+
+                 Text(
+                  'أفضل الفنادق',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5),
                 ),
               ],
             ),

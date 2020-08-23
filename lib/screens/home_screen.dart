@@ -56,19 +56,19 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: AppDrawer(),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 30.0),
+          padding: const EdgeInsets.symmetric(vertical: 0.0),
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 120.0, right: 20.0),
               child: Text(
-                'إختر رحلتك',
+                'إختر وجهتك',
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 0.0),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceAround,
             //   children: _icons
@@ -79,9 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
             //       )
             //       .toList(),
             // ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 15.0),
             CityCarousel(),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             HotelCarousel(),
           ],
         ),

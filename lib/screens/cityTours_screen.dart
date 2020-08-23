@@ -59,9 +59,11 @@ class _CityToursScreenState extends State<CityToursScreen> {
   }
 
   Widget build(BuildContext context) {
-    var tours = getToursByCityId(this.cityId);
-    if (tours != null) {
+
+    getToursByCityId(this.cityId);
+   
       if (_tours != null) {
+
         return Scaffold(
           // appBar: AppBar(),
           body: Column(children: <Widget>[
@@ -286,10 +288,10 @@ class _CityToursScreenState extends State<CityToursScreen> {
           ]),
         );
       } else {
-        return Container();
-      }
-    } else {
-      return Container();
-    }
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+    );
   }
+ }
 }

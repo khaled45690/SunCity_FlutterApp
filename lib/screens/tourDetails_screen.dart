@@ -59,9 +59,9 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var tour = getTourDetails(this.tourId);
-    print(tour);
-    if (tour != null) {
+
+     getTourDetails(this.tourId);
+
       if (_tour != null) {
         return Scaffold(
           //    appBar: AppBar(title: Text('${loadeddCityData.getToursByCityId()}')),
@@ -128,18 +128,12 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
                     ]);
               }),
         );
-      } else {
-        return Container();
-      }
-    } else {
-      return Container();
-    }
+    }else {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+    );
   }
 }
+}
 
-//   @override
-//   State<StatefulWidget> createState() {
-//     // TODO: implement createState
-//     throw UnimplementedError();
-//   }
-// }
