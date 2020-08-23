@@ -36,8 +36,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
   Future<TourList> getToursByCityId(String cityId) async {
-    final response =
-        await http.get('${_serverUrl}api/Tour/GetToursByCityId/' + cityId);
+    final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/' + cityId);
 
     if (response.statusCode == 200) {
       setState(() {

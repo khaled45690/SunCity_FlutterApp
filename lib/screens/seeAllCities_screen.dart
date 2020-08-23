@@ -39,7 +39,7 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
   @override
   Widget build(BuildContext context) {
     var cities = seeAllCities();
-
+print(cities);
     if (cities = null) {
       if (_cities != null) {
         return Scaffold(

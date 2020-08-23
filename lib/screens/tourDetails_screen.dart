@@ -23,19 +23,19 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
-  String _tour;
+  var _tour;
 
   String get hotelData => _tour;
 
-  set toursDataSetter(String tour) {
+  set toursDataSetter(var tour) {
     setState(() {
       _tour = tour;
     });
   }
 
   Future<String> getTourDetails(String tourId) async {
-    final response =
-        await http.get('${_serverUrl}api/Tour/GetTourDetails' + tourId);
+ 
+    final response = await http.get('${_serverUrl}api/Tour/GetTourDetails/'+tourId );
 
     if (response.statusCode == 200) {
       setState(() {
@@ -60,6 +60,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var tour = getTourDetails(this.tourId);
+    print(tour);
     if (tour != null) {
       if (_tour != null) {
         return Scaffold(

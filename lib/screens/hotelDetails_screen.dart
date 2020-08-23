@@ -19,11 +19,11 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
   final String hotelImage;
   _HotelDetailsScreenState({this.hotelId, this.hotelImage});
 
-  String _hotel;
+  var _hotel;
 
   String get hotelData => _hotel;
 
-  set toursDataSetter(String hotel) {
+  set toursDataSetter(var hotel) {
     setState(() {
       _hotel = hotel;
     });
@@ -31,9 +31,9 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
-  Future<String> getHotelDetails(String hotel) async {
-    final response =
-        await http.get('${_serverUrl}api/Hotel/GetHotelDetails' + hotel);
+  Future<String> getHotelDetails(String hotelId) async {
+    
+    final response = await http.get('${_serverUrl}api/Hotel/GetHotelDetails/' + hotelId);
 
     if (response.statusCode == 200) {
       setState(() {
