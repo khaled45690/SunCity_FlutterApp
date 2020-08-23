@@ -1,7 +1,5 @@
 import 'dart:convert';
-import '../models/Provider_File.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import '../screens/cityTours_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -25,40 +23,35 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
-  // Future<List> seeAllCities() async {
-  //   final response = await http.get('${_serverUrl}api/City/SeeAllCities');
+  Future<List> seeAllCities() async {
+    final response = await http.get('${_serverUrl}api/City/SeeAllCities');
 
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       _cities = json.decode(response.body);
-  //     });
-
-  //    // return null;
-  //   } else {
-  //     throw Exception('Failed to Get hotels');
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      setState(() {
+        _cities = json.decode(response.body);
+      });
+     
+    } else {
+      throw Exception('Failed to Get hotels');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    //var cities = seeAllCities();
-//print(cities);
-   // if (cities = null) {
-     // if (_cities != null) {
+    
+     seeAllCities();
 
-        var globalProvider = Provider.of<GlobalProvider>(context);
-
-    if(globalProvider.topCitiesData != null) {
+    if(_cities != null) {
         return Scaffold(
           appBar: AppBar(title: Text("أفضل المدن")),
           body:  Container(
               height: 800.0,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: globalProvider.topCitiesData.length,
+                itemCount: _cities.length,
                 itemBuilder: (BuildContext context, int index) {
 
-                  Map cities = globalProvider.topCitiesData[index];
+                  Map cities = _cities[index];
   
                   return GestureDetector(
                    onTap: ( ) {
@@ -80,36 +73,7 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: <Widget>[
-                          Positioned(
-                            bottom: 15.0,
-                            child: Container(
-                              height: 120.0,
-                              width: 200.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    children: <Widget>[
-                                      Text(
-                                        '${cities["toursCount"].toString()} عدد الرحلات',
-                                        style: TextStyle(
-                                            fontSize: 22.0,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: 1.2),
-                                      ),
-                                      Text(
-                                        '${cities["description"].toString()}',
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                    ]),
-                              ),
-                            ),
-                          ),
+                          
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -127,7 +91,7 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                                   child: Image.network(
                                    _serverUrl + cities["image"].toString(),
                                     height: 180.0,
-                                    width: 180.0,
+                                    width: 370.0,
                                     fit: BoxFit.cover,
                                   ) ,
                                 ),

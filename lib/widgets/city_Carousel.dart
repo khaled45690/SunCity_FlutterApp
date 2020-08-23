@@ -79,7 +79,7 @@ class CityCarousel extends StatelessWidget {
                               width: 200.0,
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0)),
+                                  borderRadius: BorderRadius.circular(20.0)),
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Column(
