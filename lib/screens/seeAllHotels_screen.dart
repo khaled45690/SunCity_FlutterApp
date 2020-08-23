@@ -33,11 +33,15 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
       throw Exception('Failed to Get hotels');
     }
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    seeAllHotels();
+  }
 
   @override
   Widget build(BuildContext context) {
-    seeAllHotels();
-
     if (_hotels != null) {
       return Scaffold(
         appBar: AppBar(title: Text("أفضل الفنادق")),

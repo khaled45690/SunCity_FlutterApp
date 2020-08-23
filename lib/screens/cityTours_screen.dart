@@ -57,11 +57,13 @@ class _CityToursScreenState extends State<CityToursScreen> {
     }
     return Text(stars);
   }
-
-  Widget build(BuildContext context) {
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     getToursByCityId(this.cityId);
-   
+  }
+  Widget build(BuildContext context) {
       if (_tours != null) {
 
         return Scaffold(

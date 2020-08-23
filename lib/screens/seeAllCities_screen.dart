@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../screens/cityTours_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 class SeeAllCitiesScreen extends StatefulWidget {
   static const routeName = '/SeeAllCitiesScreen';
 
@@ -30,14 +29,20 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
       setState(() {
         _cities = json.decode(response.body);
       });
+      return null;
     } else {
       throw Exception('Failed to Get hotels');
     }
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    seeAllCities();
+  }
   @override
   Widget build(BuildContext context) {
-    seeAllCities();
+
 
     if (_cities != null) {
       return Scaffold(
