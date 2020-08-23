@@ -162,6 +162,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                   return Stack(
                     children: <Widget>[
                       Card(
+                        
                         child: ListTile(
                           onTap: () {
                             Navigator.push(

@@ -30,7 +30,6 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
       setState(() {
         _cities = json.decode(response.body);
       });
-     
     } else {
       throw Exception('Failed to Get hotels');
     }
@@ -38,42 +37,36 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-     seeAllCities();
+    seeAllCities();
 
-    if(_cities != null) {
-        return Scaffold(
+    if (_cities != null) {
+      return Scaffold(
           appBar: AppBar(title: Text("أفضل المدن")),
-          body:  Container(
+          body: Container(
               height: 800.0,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: _cities.length,
                 itemBuilder: (BuildContext context, int index) {
-
                   Map cities = _cities[index];
-  
+
                   return GestureDetector(
-                   onTap: ( ) {
-                       Navigator.push(
-
-                    context,
-                    MaterialPageRoute(
-
-                      builder: (_) =>  CityToursScreen(cityId: cities["cityId"] , cityImage: cities["image"]),
-
-                    ),
-
-                  );
-
-                   } ,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => CityToursScreen(
+                              cityId: cities["cityId"],
+                              cityImage: cities["image"]),
+                        ),
+                      );
+                    },
                     child: Container(
                       margin: EdgeInsets.all(10.0),
                       width: 400.0,
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: <Widget>[
-                          
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -89,18 +82,18 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(20.0),
                                   child: Image.network(
-                                   _serverUrl + cities["image"].toString(),
+                                    _serverUrl + cities["image"].toString(),
                                     height: 180.0,
                                     width: 370.0,
                                     fit: BoxFit.cover,
-                                  ) ,
+                                  ),
                                 ),
                                 Positioned(
                                   left: 10.0,
                                   bottom: 10.0,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
                                         cities["cityName"].toString(),
@@ -139,18 +132,12 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                     ),
                   );
                 },
-              ))
-        );
-      // } else {
-      //   return Container();
-      // }
-      }
+              )));
+    } else {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+      );
     }
   }
-
-//     } 
-//else {
-//       return Container();
-//     }
-//   }
-// }
+}

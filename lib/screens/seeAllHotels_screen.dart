@@ -131,6 +131,11 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
               },
             )),
       );
+    } else {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+      );
     }
   }
 }
