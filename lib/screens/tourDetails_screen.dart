@@ -9,7 +9,7 @@ class TourDetailsScreen extends StatefulWidget {
   final String tourImage;
   final String tourName;
 
-  TourDetailsScreen({this.tourId, this.tourImage , this.tourName});
+  TourDetailsScreen({this.tourId, this.tourImage, this.tourName});
 
   @override
   _TourDetailsScreenState createState() =>
@@ -21,11 +21,12 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   final String tourImage;
   final String tourName;
 
-  _TourDetailsScreenState({ this.tourId , this.tourImage ,this.tourName });
+  _TourDetailsScreenState({this.tourId, this.tourImage, this.tourName});
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
   var _tour;
+  List _tourImages;
 
   String get hotelData => _tour;
 
@@ -42,6 +43,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
     if (response.statusCode == 200) {
       setState(() {
         _tour = json.decode(response.body);
+        _tourImages = _tour["tourImages"];
       });
 
       return null;
@@ -69,40 +71,44 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   Widget build(BuildContext context) {
     if (_tour != null) {
       return Scaffold(
-            appBar: AppBar(title: Text(widget.tourName )),
+        appBar: AppBar(title: Text(widget.tourName)),
         body: ListView.builder(
             itemCount: 1,
             itemBuilder: (BuildContext ctx, int index) {
-            
               return Column(
-                 
                   crossAxisAlignment: CrossAxisAlignment.center,
-                
                   children: <Widget>[
                     Container(
-                       margin: EdgeInsets.all(10.0),
+                      margin: EdgeInsets.all(10.0),
                       child: ClipRRect(
-                        
                         borderRadius: BorderRadius.circular(20.0),
-                         child: Image.network(
-                            _serverUrl + widget.tourImage,
-                           height: 350.0,
-                           width: 350.0,
-                           fit: BoxFit.cover,                     
-                               ),
+                        child: Image.network(
+                          _serverUrl + widget.tourImage,
+                          height: 350.0,
+                          width: 350.0,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                   
                     Container(
-                padding: EdgeInsets.all(16.0),
-          child: GridView.builder(
-         //   itemCount: _tour["hotelImages"].length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
-            itemBuilder: (BuildContext context, int index){
-              return Image.network( _serverUrl + _tour[index]);
-            },
-        )),
-                   
+                        height: 300,
+                        width: 400,
+                        padding: EdgeInsets.all(16.0),
+                        child: GridView.builder(
+                          itemCount: _tourImages.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 4.0,
+                                  mainAxisSpacing: 4.0),
+                          itemBuilder: (BuildContext context, int index) {
+                            Map images = _tourImages[index];
+                            return Image.network(
+                              _serverUrl + images["image"],
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        )),
                   ]);
             }),
       );

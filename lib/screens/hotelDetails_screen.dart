@@ -26,7 +26,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
 
   String get hotelData => _hotel;
 
-  List hotel1images;
+  List _hotelImages;
 
   set toursDataSetter(var hotel) {
     setState(() {
@@ -43,9 +43,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     if (response.statusCode == 200) {
       setState(() {
         _hotel = json.decode(response.body);
-        // print(json.decode(response.body));
-        hotel1images =_hotel["hotelImages"];
-        print(hotel1images.length);
+        _hotelImages = _hotel["hotelImages"];
       });
 
       // return null;
@@ -84,18 +82,22 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                       ),
                     ),
                     Container(
-                      height: 350,
+                        height: 300,
+                        width: 400,
                         padding: EdgeInsets.all(16.0),
                         child: GridView.builder(
-                          itemCount: hotel1images.length,
+                          itemCount: _hotelImages.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
                                   crossAxisSpacing: 4.0,
                                   mainAxisSpacing: 4.0),
                           itemBuilder: (BuildContext context, int index) {
-                        Map images = hotel1images[index];                          
-                          return Image.network(_serverUrl + images["image"].toString(),);
+                            Map images = _hotelImages[index];
+                            return Image.network(
+                              _serverUrl + images["image"],
+                              fit: BoxFit.cover,
+                            );
                           },
                         )),
                   ]);

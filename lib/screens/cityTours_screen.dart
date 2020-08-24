@@ -213,13 +213,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                                       ),
                                       Column(
                                         children: <Widget>[
-                                          Text(
-                                            'لكل فرد',
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
+                                         
                                           Text(
                                             'ج ${tour["pricePerNight"].toString()}',
                                             style: TextStyle(
@@ -227,10 +221,18 @@ class _CityToursScreenState extends State<CityToursScreen> {
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
+                                           Text(
+                                            'لكل فرد',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
                                   ),
+                                   _buildRatingStars(tour["rating"]),
                                   Text(
                                     '${tour["location"].toString()}',
                                     style: TextStyle(
@@ -239,7 +241,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  //  _buildRatingStars(tour.rating),
+                                   
                                   SizedBox(height: 10.0),
                                   // Row(
                                   //   children: <Widget>[
