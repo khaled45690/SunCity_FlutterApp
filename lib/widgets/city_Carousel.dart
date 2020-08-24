@@ -19,7 +19,6 @@ class CityCarousel extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-
                 GestureDetector(
                   onTap: () {
                     Navigator.push(

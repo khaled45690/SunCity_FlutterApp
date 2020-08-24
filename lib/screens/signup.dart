@@ -22,30 +22,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  submitForm(File image) async {
-    String uri = "http://192.168.1.10:3001/api/1";
-     String photo =  image != null ? 'data:image/jpg;base64' +
-            base64Encode(image.readAsBytesSync()) : '';
-
-    final response = await http.post(
-      uri,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      body: jsonEncode(<String, String>{
-        'title': "title",
-        "user" :"user",
-        "image":    'data:image/jpg;base64,' +
-            base64Encode(image.readAsBytesSync()),
-      }),
-    );
-
-
-
-    final responseJson = json.decode(response.body);
-
-    print(responseJson);
-  }
   upload(File imageFile) async {
 
       // Get base file name
@@ -78,6 +54,35 @@ class _SignUpState extends State<SignUp> {
   String _phoneNumber;
   String _confirmPassword;
 
+    submitForm(String name , String email ,String phoneNumber,String password ,String confirmPassword , File image) async {
+    // String uri = "http://192.168.1.27:3001/api/1";
+    String uri = "http://algosys-001-site16.ctempurl.com/api/Client/Registration";
+    // String uri = "http://192.168.1.27:3001/api/1";
+    
+     String photo =  image != null ? 'data:image/jpg;base64' +
+            base64Encode(image.readAsBytesSync()) : '';
+
+    final response = await http.post(
+      uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      body: jsonEncode(<String, String>{
+        "UserName": name,
+        "Email" :email,
+        "Mobile": phoneNumber,
+        "profileImage": null,
+         "Password": password,
+        "ConfirmPassword": confirmPassword,
+      }),
+    );
+
+
+    final responseJson = json.decode(response.body);
+
+    print(responseJson);
+  }
+
   String groupValue = "male";
   bool hidePass = true;
 
@@ -86,6 +91,31 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
+
+Widget _buildUserName() {
+    return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          title: TextFormField(
+            decoration: InputDecoration(
+              hintText: 'إسم المستخدم ',
+              icon: Icon(Icons.pages),
+            ),
+            // validator: (String value) {
+            //   if (value.isEmpty) {
+            //     return 'من فضلك أدخل رقم المويايل';
+            //   } else if (value.length < 14) {
+            //     return "من فضلك أدخل 11 رقم";
+            //   }
+            //   return "";
+            // },
+            onChanged: (String value) {
+              _name = value;
+            },
+          ),
+        ));
+  }
+
 
   Widget _buildEmail() {
     return Padding(
@@ -108,9 +138,10 @@ class _SignUpState extends State<SignUp> {
               }
               return null;
             },
-            onSaved: (String value) {
-              _email = value;
+            onChanged: (String value){
+                 _email = value;
             },
+
           ),
         ));
   }
@@ -136,7 +167,7 @@ class _SignUpState extends State<SignUp> {
               }
               return "";
             },
-            onSaved: (String value) {
+            onChanged: (String value) {
               _password = value;
             },
           ),
@@ -167,6 +198,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+ 
   Widget _buildPhoneNumber() {
     return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -176,15 +208,15 @@ class _SignUpState extends State<SignUp> {
               hintText: 'رقم الموبايل',
               icon: Icon(Icons.phone),
             ),
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'من فضلك أدخل رقم المويايل';
-              } else if (value.length < 14) {
-                return "من فضلك أدخل 11 رقم";
-              }
-              return "";
-            },
-            onSaved: (String value) {
+            // validator: (String value) {
+            //   if (value.isEmpty) {
+            //     return 'من فضلك أدخل رقم المويايل';
+            //   } else if (value.length < 14) {
+            //     return "من فضلك أدخل 11 رقم";
+            //   }
+            //   return "";
+            // },
+            onChanged: (String value) {
               _phoneNumber = value;
             },
           ),
@@ -214,8 +246,8 @@ class _SignUpState extends State<SignUp> {
               }
               return "";
             },
-            onSaved: (String value) {
-              _password = value;
+            onChanged: (String value) {
+              _confirmPassword = value;
             },
           ),
           trailing: IconButton(
@@ -244,7 +276,13 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  _buildUserName(),
+                  SizedBox(height: 20.0),
+
                   _buildEmail(),
+                  SizedBox(height: 20.0),
+                  
+                  _buildPhoneNumber(),
                   SizedBox(height: 20.0),
 
                   _buildPassworld(),
@@ -253,8 +291,7 @@ class _SignUpState extends State<SignUp> {
                   _buildConfirmPassword(),
                   SizedBox(height: 20.0),
 
-                  _buildPhoneNumber(),
-                  SizedBox(height: 20.0),
+                 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -263,7 +300,7 @@ class _SignUpState extends State<SignUp> {
                           onPressed: () async {
                             final picked = await ImagePicker.pickImage(
                                 source: ImageSource.gallery);
-                            submitForm(picked);
+                            // submitForm(picked);
                             setState(() {
                               _imageFile = picked;
                             });
@@ -285,7 +322,7 @@ class _SignUpState extends State<SignUp> {
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () {
-                      validateForm();
+                      submitForm(_name , _email,  _phoneNumber , _password ,_confirmPassword , _imageFile);
                     },
                   ),
 
