@@ -43,7 +43,6 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
   @override
   Widget build(BuildContext context) {
 
-
     if (_cities != null) {
       return Scaffold(
           appBar: AppBar(title: Text("أفضل المدن")),

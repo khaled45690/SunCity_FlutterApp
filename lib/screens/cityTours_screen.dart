@@ -174,7 +174,8 @@ class _CityToursScreenState extends State<CityToursScreen> {
                               MaterialPageRoute(
                                 builder: (_) => TourDetailsScreen(
                                     tourId: tour["tourId"],
-                                    tourImage: tour["mainTourImage"]),
+                                    tourImage: tour["mainTourImage"],
+                                    tourName: tour["tourName"]),
                               ),
                             );
                           },

@@ -62,7 +62,9 @@ class HotelCarousel extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (_) => HotelDetailsScreen(
                                 hotelId: topHotel["hotelId"],
-                                hotelImage: topHotel["mainHotelImage"])),
+                                hotelImage: topHotel["mainHotelImage"],
+                                hotelName: topHotel["hotelName"],
+                                )),
                       );
                     },
                     child: Container(

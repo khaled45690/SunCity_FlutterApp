@@ -7,8 +7,9 @@ class TourDetailsScreen extends StatefulWidget {
   static const routeName = '/TourDetailsScreen';
   final String tourId;
   final String tourImage;
+  final String tourName;
 
-  TourDetailsScreen({this.tourId, this.tourImage});
+  TourDetailsScreen({this.tourId, this.tourImage , this.tourName});
 
   @override
   _TourDetailsScreenState createState() =>
@@ -18,8 +19,9 @@ class TourDetailsScreen extends StatefulWidget {
 class _TourDetailsScreenState extends State<TourDetailsScreen> {
   final String tourId;
   final String tourImage;
+  final String tourName;
 
-  _TourDetailsScreenState({this.tourId, this.tourImage});
+  _TourDetailsScreenState({ this.tourId , this.tourImage ,this.tourName });
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
@@ -34,8 +36,8 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   }
 
   Future<String> getTourDetails(String tourId) async {
- 
-    final response = await http.get('${_serverUrl}api/Tour/GetTourDetails/'+tourId );
+    final response =
+        await http.get('${_serverUrl}api/Tour/GetTourDetails/' + tourId);
 
     if (response.statusCode == 200) {
       setState(() {
@@ -58,82 +60,57 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getTourDetails(this.tourId);
+  }
+
   Widget build(BuildContext context) {
-
-     getTourDetails(this.tourId);
-
-      if (_tour != null) {
-        return Scaffold(
-          //    appBar: AppBar(title: Text('${loadeddCityData.getToursByCityId()}')),
-          body: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (BuildContext ctx, int index) {
-                //     Activity activity = widget.destination.activities[index];
-
-                return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          // child: Image.network(
-
-                          //   _serverUrl + loadeddCityData["mainTourImage"].toString(),
-
-                          //   width: 1100.0,
-                          //   fit: BoxFit.cover,
-
-                          //   //_serverUrl + loadeddestinationDat["mainTourImage"].toString(),
-
-                          //   //loadeddestinationDat.tours[index].),
-
-                          // ),
-
-                          // child: Image.network(
-                          //          _serverUrl + loadeddCityData["mainHotelImage"].toString(),
-                          //         height: 180.0,
-                          //         width: 220.0,
-                          //         //image: AssetImage(hotel.imageUrl),
-                          //         fit: BoxFit.cover,
-                          //       ),
-                        ),
+    if (_tour != null) {
+      return Scaffold(
+            appBar: AppBar(title: Text(widget.tourName )),
+        body: ListView.builder(
+            itemCount: 1,
+            itemBuilder: (BuildContext ctx, int index) {
+            
+              return Column(
+                 
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                
+                  children: <Widget>[
+                    Container(
+                       margin: EdgeInsets.all(10.0),
+                      child: ClipRRect(
+                        
+                        borderRadius: BorderRadius.circular(20.0),
+                         child: Image.network(
+                            _serverUrl + widget.tourImage,
+                           height: 350.0,
+                           width: 350.0,
+                           fit: BoxFit.cover,                     
+                               ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.fromLTRB(100, 30, 1, 50),
-                      //   child: Text(loadeddestinationDat.activities[index].name,style: TextStyle(fontSize:55,fontWeight: FontWeight.w600,),
-                      //   ),
-
-                      //   ),
-                      //   Padding(
-                      //     padding:EdgeInsets.fromLTRB(130, 10, 1, 5) ,
-                      //     child: _buildRatingStars(loadeddestinationDat.activities[index].rating )),
-                      //     Padding(
-                      //     padding:EdgeInsets.fromLTRB(150, 10, 1, 5) ,
-                      //     child: Text('Stars',style: TextStyle(fontSize:40,fontWeight:FontWeight.bold) ))
-                      Card(
-                        child: ListTile(
-                          title: (Text(
-                            '',
-                            // loadeddCityData.toursData[index].name,
-                            style: TextStyle(fontSize: 50),
-                          )),
-                          subtitle: Text('',
-                              //   loadeddCityData.toursData[index].startTimes.toString(),
-                              style: TextStyle(fontSize: 25)),
-                          trailing: Text('',
-                              //'\$${loadeddCityData.toursData[index].price.toString()}',
-                              style: TextStyle(fontSize: 50)),
-                        ),
-                      )
-                    ]);
-              }),
-        );
-    }else {
+                    ),
+                   
+                    Container(
+                padding: EdgeInsets.all(16.0),
+          child: GridView.builder(
+         //   itemCount: _tour["hotelImages"].length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
+            itemBuilder: (BuildContext context, int index){
+              return Image.network( _serverUrl + _tour[index]);
+            },
+        )),
+                   
+                  ]);
+            }),
+      );
+    } else {
       return Container(
         color: Colors.white,
         child: Center(child: CircularProgressIndicator()),
-    );
+      );
+    }
   }
 }
-}
-

@@ -28,7 +28,7 @@ class CityCarousel extends StatelessWidget {
                           builder: (context) => SeeAllCitiesScreen()),
                     );
                   },
-                   
+
                   child: Text(   
                     'مشاهدة الكل',
                     style: TextStyle(
@@ -38,7 +38,6 @@ class CityCarousel extends StatelessWidget {
                         letterSpacing: 1.0),
                   ),
                 ),
-
 
                  Text(
                   'أفضل المدن',
