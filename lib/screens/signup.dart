@@ -1,9 +1,16 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widgets/RoundedImageWidget.dart';
 import 'login.dart';
 import 'dart:io';
-import 'dart:async';
+import 'package:path/path.dart';
+import 'package:async/async.dart';
+import 'package:http/http.dart' as http;
+
 
 File _imageFile;
 
@@ -15,68 +22,69 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  // Future <File> imageFile;
+  submitForm(File image) async {
+    String uri = "http://192.168.1.10:3001/api/1";
+     String photo =  image != null ? 'data:image/jpg;base64' +
+            base64Encode(image.readAsBytesSync()) : '';
 
-  // pickImageFromGallery(ImageSource source){
-  //   setState(() {
-  //         imageFile = ImagePicker.pickImage(source: source);
+    final response = await http.post(
+      uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      body: jsonEncode(<String, String>{
+        'title': "title",
+        "user" :"user",
+        "image":    'data:image/jpg;base64,' +
+            base64Encode(image.readAsBytesSync()),
+      }),
+    );
 
-  //   });
-  // }
 
-  // Widget showImage(){
-  //   return FutureBuilder<File>(
-  //     future: imageFile,
-  //     builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.done && snapshot.data !=null){
-  //         return Image.file(
-  //           snapshot.data,
-  //           width:300,
-  //           height:300
-  //         );
-  //       }else if(snapshot.error != null){
-  //         return const Text(
-  //           'Error picking Image',
-  //           textAlign: TextAlign.center
-  //         );
-  //       }else{
-  //         return const Text(
-  //           'No image Selected',
-  //           textAlign:  TextAlign.center
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
 
-  // Future getImage(bool isCamera) async {
-  //   File image;
-  //     if (isCamera){
-  //       image = await ImagePicker.pickImage(source: ImageSource.camera);
-  //     }else{
-  //       image =await ImagePicker.pickImage(source: ImageSource.gallery);
-  //     }
-  //   setState(() {
-  //       _image = image;
+    final responseJson = json.decode(response.body);
 
-  //     });
+    print(responseJson);
+  }
+  upload(File imageFile) async {
 
-  //   }
+      // Get base file name
+      String fileName = basename(imageFile.path);
+      print("File base name: $fileName");
+
+      try {
+//        "file": 'data:image/jpg;base64,' +
+//    base64Encode(imageFile.readAsBytesSync())
+    FormData formData =
+        new FormData.fromMap({
+        "username":"kkk" ,
+        "password":"sss"
+        }  );
+
+        var response =
+        await Dio().post("http://192.168.1.10:3001/api/1", data: formData);
+        print("File upload response: $response");
+
+        // Show the incoming message in snakbar
+      } catch (e) {
+        print("Exception Caught: $e");
+      }
+  }
 
   String _name;
   String _email;
-  String _passworld;
+  String _password;
   String _url;
   String _phoneNumber;
-  String _confirmpassword;
+  String _confirmPassword;
 
-  String groupvalue = "male";
-  bool hidepass = true;
+  String groupValue = "male";
+  bool hidePass = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _confirmPassworldController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
 
   Widget _buildEmail() {
@@ -113,7 +121,7 @@ class _SignUpState extends State<SignUp> {
         child: ListTile(
           title: TextFormField(
             controller: _passwordTextController,
-            obscureText: hidepass,
+            obscureText: hidePass,
             decoration: InputDecoration(
               hintText: 'كلمة المرور',
               icon: Icon(Icons.lock_outline),
@@ -129,14 +137,14 @@ class _SignUpState extends State<SignUp> {
               return "";
             },
             onSaved: (String value) {
-              _passworld = value;
+              _password = value;
             },
           ),
           trailing: IconButton(
               icon: Icon(Icons.remove_red_eye),
               onPressed: () {
                 setState(() {
-                  hidepass = !hidepass;
+                  hidePass = !hidePass;
                 });
               }),
         ));
@@ -155,16 +163,6 @@ class _SignUpState extends State<SignUp> {
             child: Text('gallery'),
           ),
         ),
-        //       Divider(),
-        //         Padding(
-        //           padding: const EdgeInsets.fromLTRB(1,4,45,4),
-        //           child: FlatButton(color:Colors.blue,
-        //       onPressed: (){
-        //  //         getImage(true);
-        //       },
-        //       child: Text('Camera'),
-        //       ),
-        //         ),
       ],
     );
   }
@@ -193,13 +191,13 @@ class _SignUpState extends State<SignUp> {
         ));
   }
 
-  Widget _buildconfirmPassworld() {
+  Widget _buildConfirmPassword() {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           title: TextFormField(
-            controller: _confirmPassworldController,
-            obscureText: hidepass,
+            controller: _confirmPasswordController,
+            obscureText: hidePass,
             decoration: InputDecoration(
               hintText: 'تأكيد كلمة المرور',
               icon: Icon(Icons.lock_outline),
@@ -210,21 +208,21 @@ class _SignUpState extends State<SignUp> {
                 return 'تأكيد كلمة المرور';
               } else if (value.length < 6) {
                 return "كلمه المرور يجب الا تقل عن 6 ارقام";
-              } else if (_confirmPassworldController.text !=
+              } else if (_confirmPasswordController.text !=
                   _passwordTextController.text) {
                 return ("كلمة المرور غير متطابقه");
               }
               return "";
             },
             onSaved: (String value) {
-              _passworld = value;
+              _password = value;
             },
           ),
           trailing: IconButton(
               icon: Icon(Icons.remove_red_eye),
               onPressed: () {
                 setState(() {
-                  hidepass = !hidepass;
+                  hidePass = !hidePass;
                 });
               }),
         ));
@@ -239,7 +237,6 @@ class _SignUpState extends State<SignUp> {
       ),
       body: ListView(
         children: <Widget>[
-          //    _image ==null? Container() : Image.file(_image, height: 300.0, width:300.0),
           Container(
             margin: EdgeInsets.all(40),
             child: Form(
@@ -253,7 +250,7 @@ class _SignUpState extends State<SignUp> {
                   _buildPassworld(),
                   SizedBox(height: 20.0),
 
-                  _buildconfirmPassworld(),
+                  _buildConfirmPassword(),
                   SizedBox(height: 20.0),
 
                   _buildPhoneNumber(),
@@ -266,9 +263,12 @@ class _SignUpState extends State<SignUp> {
                           onPressed: () async {
                             final picked = await ImagePicker.pickImage(
                                 source: ImageSource.gallery);
+                            submitForm(picked);
                             setState(() {
                               _imageFile = picked;
                             });
+                            print(picked);
+
                           },
                           child: Text("رفع صوره")),
                       RoundedImageWidget(
@@ -276,8 +276,6 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                   ),
-                  // self made image widget,
-                  //  _buildPhoto(),
                   Divider(),
 
                   SizedBox(height: 20),
@@ -323,7 +321,7 @@ class _SignUpState extends State<SignUp> {
   void validateForm() {
     FormState formState = _formKey.currentState;
     if (formState.validate()) {
-      Navigator.of(context).pushNamed(Login.routeName);
+//      Navigator.of(context).pushNamed(Login.routeName);
     }
   }
 }
