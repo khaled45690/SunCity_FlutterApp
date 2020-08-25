@@ -43,7 +43,7 @@ class _AppDrawerState extends State<AppDrawer> {
                ),
              ),
              decoration: new BoxDecoration(
-               color:Colors.blue
+               color:Color(0xff3EBACE)
              ),
              
              ),
