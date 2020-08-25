@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/tourList_model.dart';
 import '../screens/tourDetails_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,20 +7,26 @@ import 'package:http/http.dart' as http;
 
 class CityToursScreen extends StatefulWidget {
   static const routeName = '/CityToursScreen';
+  
+  final String countryName;
+  final String cityName;
   final String cityId;
   final String cityImage;
 
-  CityToursScreen({this.cityId, this.cityImage});
+
+  CityToursScreen({this.countryName , this.cityName ,this.cityId, this.cityImage});
   @override
   _CityToursScreenState createState() =>
       _CityToursScreenState(cityImage: this.cityImage, cityId: this.cityId);
 }
 
 class _CityToursScreenState extends State<CityToursScreen> {
-  String cityId;
-  String cityImage;
+   String countryName;
+   String cityName;
+   String cityId;
+   String cityImage;
 
-  _CityToursScreenState({this.cityId, this.cityImage}) {
+  _CityToursScreenState({this.countryName , this.cityName ,this.cityId, this.cityImage}) {
     print(this.cityId);
   }
 
@@ -116,44 +123,35 @@ class _CityToursScreenState extends State<CityToursScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Text(
-                      //   widget.city.country,
-                      //   style: TextStyle(
-                      //       color: Colors.white,
-                      //       fontSize: 35.0,
-                      //       fontWeight: FontWeight.w600,
-                      //       letterSpacing: 1.2),
-                      // ),
+                      Text(
+                        widget.cityName,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35.0,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.2),
+                      ),
                       Row(
                         children: <Widget>[
-                          // Icon(
-                          //   FontAwesomeIcons.locationArrow,
-                          //   size: 15.0,
-                          //   color: Colors.white70,
-                          // ),
+                          Icon(
+                            FontAwesomeIcons.locationArrow,
+                            size: 15.0,
+                            color: Colors.white70,
+                          ),
                           SizedBox(width: 5.0),
-                          // Text(
-                          //   widget.destination.country,
-                          //   style: TextStyle(
-                          //       color: Colors.white70,
-                          //       fontSize: 20.0,
-                          //       fontWeight: FontWeight.w600,
-                          //       letterSpacing: 1.2),
-                          // ),
+                          Text( widget.countryName,
+                      
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 1.2),
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                Positioned(
-                  right: 20.0,
-                  bottom: 20.0,
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.white70,
-                    size: 25.0,
-                  ),
-                )
               ],
             ),
             Expanded(

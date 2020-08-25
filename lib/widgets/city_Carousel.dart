@@ -63,6 +63,8 @@ class CityCarousel extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (_) => CityToursScreen(
+                               countryName : cities["countryName"],
+                              cityName: cities["cityName"],
                               cityId: cities["cityId"],
                               cityImage: cities["image"]),
                         ),

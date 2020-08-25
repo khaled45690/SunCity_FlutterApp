@@ -1,3 +1,4 @@
+import '../style/const.dart';
 import '../screens/cityTours_screen.dart';
 import '../screens/tourDetails_screen.dart';
 import '../screens/seeAllCities_screen.dart';
@@ -33,13 +34,18 @@ class SunCity_FlutterApp extends StatelessWidget {
     globalProvider.getTopHotels();
 
     return MaterialApp(
-      title: 'SunCity_FlutterApp UI',
+
+       title: Constants.appName,
+      //theme: Constants.lightTheme,
+      //darkTheme: Constants.darkTheme,
+
+     // title: 'SunCity_FlutterApp UI',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: Color(0xff3EBACE),
-        accentColor: Color(0xFFD8ECF1),
-        scaffoldBackgroundColor: Color(0xFFF3F5F7),
-      ),
+       theme: ThemeData(
+           primaryColor: Color(0xff3EBACE),
+         accentColor: Color(0xFFD8ECF1),
+         scaffoldBackgroundColor: Color(0xFFF3F5F7),
+       ),
       home: HomeScreen(),
       routes: {
         HomeScreen.routeName: (ctx) => HomeScreen(),
