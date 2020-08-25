@@ -22,30 +22,20 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  upload(File imageFile) async {
+  upload (String imageFile) async {
+    String url = "http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage";
+  var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      // Get base file name
-      String fileName = basename(imageFile.path);
-      print("File base name: $fileName");
-
-      try {
-//        "file": 'data:image/jpg;base64,' +
-//    base64Encode(imageFile.readAsBytesSync())
-    FormData formData =
-        new FormData.fromMap({
-        "username":"kkk" ,
-        "password":"sss"
-        }  );
-
-        var response =
-        await Dio().post("http://192.168.1.10:3001/api/1", data: formData);
-        print("File upload response: $response");
-
-        // Show the incoming message in snakbar
-      } catch (e) {
-        print("Exception Caught: $e");
-      }
-  }
+  request.files.add(
+  await http.MultipartFile.fromPath(
+  'picture',
+      imageFile
+  )
+  );
+  var res = await request.send();
+    final respStr = await res.stream.bytesToString();
+  print(respStr);
+}
 
   String _name;
   String _email;
@@ -300,7 +290,7 @@ Widget _buildUserName() {
                           onPressed: () async {
                             final picked = await ImagePicker.pickImage(
                                 source: ImageSource.gallery);
-                            // submitForm(picked);
+                            upload(picked.path);
                             setState(() {
                               _imageFile = picked;
                             });
