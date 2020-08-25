@@ -52,6 +52,15 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     }
   }
 
+ Text _buildRatingStars(int rating) {
+    String stars = '';
+    for (int i = 0; i < rating; i++) {
+      stars += '⭐ ';
+      stars.trim();
+    }
+    return Text(stars);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -62,46 +71,145 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
   Widget build(BuildContext context) {
     if (_hotel != null) {
       return Scaffold(
-        appBar: AppBar(title: Text(widget.hotelName)),
-        body: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (BuildContext ctx, int index) {
-              return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+        appBar: AppBar(
+          title: Text("أفضل الفنادق"),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: <Widget>[
+            // IconButton(
+            //   //
+            //   ),
+            //   onPressed: () {},
+            // ),
+          ],
+        ),
+        body: ListView(
+          children: <Widget>[
+            SizedBox(height: 10.0),
+            buildSlider(),
+            SizedBox(height: 20),
+            ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              primary: false,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.all(10.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Image.network(
-                          _serverUrl + widget.hotelImage,
-                          height: 350.0,
-                          width: 350.0,
-                          fit: BoxFit.cover,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "${_hotel["hotelName"].toString()}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
                         ),
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
                       ),
                     ),
+                   
+                    Column(
+                      
+                      children: <Widget>[
+                         _buildRatingStars(_hotel["rating"]),
+                         
+                        Text(
+                          'ج ${_hotel["pricePerNight"].toString()}',
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          'لكل فرد',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.location_on,
+                      size: 14,
+                      color: Colors.blueGrey[300],
+                    ),
+                    SizedBox(width: 3),
                     Container(
-                        height: 300,
-                        width: 400,
-                        padding: EdgeInsets.all(16.0),
-                        child: GridView.builder(
-                          itemCount: _hotelImages.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 4.0,
-                                  mainAxisSpacing: 4.0),
-                          itemBuilder: (BuildContext context, int index) {
-                            Map images = _hotelImages[index];
-                            return Image.network(
-                              _serverUrl + images["image"],
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        )),
-                  ]);
-            }),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "${_hotel["location"].toString()}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: Colors.blueGrey[300],
+                        ),
+                        maxLines: 1,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                // Container(
+                //   alignment: Alignment.centerLeft,
+                //   child: Text(
+                //     "${_tour["pricePerNight"].toString()}",
+                //     style: TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 17,
+                //     ),
+                //     maxLines: 1,
+                //     textAlign: TextAlign.left,
+                //   ),
+                // ),
+                // SizedBox(height: 40),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Details",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "${_hotel["description"].toString()}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15.0,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+              ],
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.book,
+          ),
+          onPressed: () {},
+        ),
       );
     } else {
       return Container(
@@ -109,5 +217,33 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
         child: Center(child: CircularProgressIndicator()),
       );
     }
+  }
+
+  buildSlider() {
+    return Container(
+      padding: EdgeInsets.only(left: 20),
+      height: 250.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        primary: false,
+        itemCount: _hotelImages == null ? 0 : _hotelImages.length,
+        itemBuilder: (BuildContext context, int index) {
+          Map images = _hotelImages[index];
+
+          return Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image.network(
+                "${_serverUrl + images["image"]}",
+                height: 250.0,
+                width: MediaQuery.of(context).size.width - 40.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

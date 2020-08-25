@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class TourDetailsScreen extends StatefulWidget {
-  static const routeName = '/TourDetailsScreen';
+  static const routeName = '/TourDetails2Screen';
   final String tourId;
   final String tourImage;
   final String tourName;
@@ -71,46 +71,145 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   Widget build(BuildContext context) {
     if (_tour != null) {
       return Scaffold(
-        appBar: AppBar(title: Text(widget.tourName)),
-        body: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (BuildContext ctx, int index) {
-              return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+        appBar: AppBar(
+          title: Text("الرحلات"),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: <Widget>[
+            // IconButton(
+            //   //
+            //   ),
+            //   onPressed: () {},
+            // ),
+          ],
+        ),
+        body: ListView(
+          children: <Widget>[
+            SizedBox(height: 10.0),
+            buildSlider(),
+            SizedBox(height: 20),
+            ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              primary: false,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.all(10.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Image.network(
-                          _serverUrl + widget.tourImage,
-                          height: 350.0,
-                          width: 350.0,
-                          fit: BoxFit.cover,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "${_tour["tourName"].toString()}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
                         ),
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
                       ),
                     ),
+                   
+                    Column(
+                      
+                      children: <Widget>[
+                         _buildRatingStars(_tour["rating"]),
+                         
+                        Text(
+                          'ج ${_tour["pricePerNight"].toString()}',
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          'لكل فرد',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.location_on,
+                      size: 14,
+                      color: Colors.blueGrey[300],
+                    ),
+                    SizedBox(width: 3),
                     Container(
-                        height: 300,
-                        width: 400,
-                        padding: EdgeInsets.all(16.0),
-                        child: GridView.builder(
-                          itemCount: _tourImages.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 4.0,
-                                  mainAxisSpacing: 4.0),
-                          itemBuilder: (BuildContext context, int index) {
-                            Map images = _tourImages[index];
-                            return Image.network(
-                              _serverUrl + images["image"],
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        )),
-                  ]);
-            }),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "${_tour["location"].toString()}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: Colors.blueGrey[300],
+                        ),
+                        maxLines: 1,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                // Container(
+                //   alignment: Alignment.centerLeft,
+                //   child: Text(
+                //     "${_tour["pricePerNight"].toString()}",
+                //     style: TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 17,
+                //     ),
+                //     maxLines: 1,
+                //     textAlign: TextAlign.left,
+                //   ),
+                // ),
+                // SizedBox(height: 40),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Details",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "${_tour["description"].toString()}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15.0,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+              ],
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.book,
+          ),
+          onPressed: () {},
+        ),
       );
     } else {
       return Container(
@@ -118,5 +217,33 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
         child: Center(child: CircularProgressIndicator()),
       );
     }
+  }
+
+  buildSlider() {
+    return Container(
+      padding: EdgeInsets.only(left: 20),
+      height: 250.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        primary: false,
+        itemCount: _tourImages == null ? 0 : _tourImages.length,
+        itemBuilder: (BuildContext context, int index) {
+          Map images = _tourImages[index];
+
+          return Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image.network(
+                "${_serverUrl + images["image"]}",
+                height: 250.0,
+                width: MediaQuery.of(context).size.width - 40.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

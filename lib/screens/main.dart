@@ -11,6 +11,7 @@ import 'home_screen.dart';
 import 'hotelDetails_screen.dart';
 import 'seeAllHotels_screen.dart';
 
+
 void main() => {
       runApp(
         ChangeNotifierProvider(
