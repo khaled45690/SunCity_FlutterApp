@@ -24,6 +24,7 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
 
    //String _serverUrl = "https://41.36.71.216:8888/";
   Future<List> seeAllCities() async {
+    
     final response = await http.get('${_serverUrl}api/City/SeeAllCities');
 
     if (response.statusCode == 200) {
@@ -61,8 +62,11 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (_) => CityToursScreen(
+                            countryName: cities["countryName"],
+                              cityName: cities["cityName"],
                               cityId: cities["cityId"],
-                              cityImage: cities["image"]),
+                              cityImage: cities["image"]                              
+                              ),
                         ),
                       );
                     },

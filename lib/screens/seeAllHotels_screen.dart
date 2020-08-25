@@ -59,9 +59,9 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (_) => HotelDetailsScreen(
-                              hotelId: topHotel["hotelId"],
-                              hotelImage: topHotel["mainHotelImage"],
-                               hotelName: topHotel["hotelName"],
+                            hotelName: topHotel["hotelName"],
+                            hotelId: topHotel["hotelId"],
+                            hotelImage: topHotel["mainHotelImage"],   
                               )),
                     );
                   },
