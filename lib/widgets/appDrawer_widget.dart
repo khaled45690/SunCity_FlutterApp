@@ -1,11 +1,10 @@
-//import 'package:authapp/view/about_view.dart';
-//import 'package:authapp/view/login_view.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/profile_screen.dart';
 import '../screens/home_screen.dart';
 import 'package:SunCity_FlutterApp/screens/login.dart';
 import 'package:flutter/material.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -13,32 +12,66 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  //  FirebaseUser user;
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+
+  var _profile;
+
+  String get hotelData => _profile;
+
+  set profileDataSetter(var profile) {
+    setState(() {
+      _profile = profile;
+    });
+  }
+
+  Future<String> appDrawerData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.getString("token");
+    String token = "Bearer " + sharedPreferences.getString("token");
+    print("Token = !!!!!!!!!!!!!!!!!!!!!!!!!!" +token);
+    final response = await http.get('${_serverUrl}/api/Client/AppDrawerData', 
+    headers: <String, String>{
+        'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': '$token',
+      }, );
+print("*********************${response.statusCode}***********************");
+    if (response.statusCode == 200) {
+      setState(() {
+        _profile = json.decode(response.body);
+        print(_profile);
+      });
+
+      return null;
+    } else {
+      throw Exception('Failed to Get profile datta');
+    }
+  }
 
   @override
-  // void initState() {
-  //   super.initState();
-  //   initUser();
-  // }
-  // initUser() async{
-  //   user =await _auth.currentUser();
-  //   setState(() {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    appDrawerData();
+  }
 
-  //   });
-  // }
   @override
   Widget build(BuildContext context) {
     return Drawer(
         child: ListView(children: <Widget>[
       new UserAccountsDrawerHeader(
-        //"${user?.displayName}"
         accountName: Text("مرحباا"),
-        accountEmail: Text("SunCity@User.com"),
+        accountEmail: Text(_profile["clientName"].toString()),
         currentAccountPicture: GestureDetector(
           child: new CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(Icons.person, color: Colors.blue)),
+            backgroundColor: Colors.white,
+            child: Image.network(
+              _serverUrl + _profile["profileImage"].toString(),
+              height: 30.0,
+              width: 30.0,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         decoration: new BoxDecoration(color: Color(0xff3EBACE)),
       ),
