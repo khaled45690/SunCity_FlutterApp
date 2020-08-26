@@ -27,8 +27,7 @@ class CityCarousel extends StatelessWidget {
                           builder: (context) => SeeAllCitiesScreen()),
                     );
                   },
-
-                  child: Text(   
+                  child: Text(
                     'مشاهدة الكل',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
@@ -37,8 +36,7 @@ class CityCarousel extends StatelessWidget {
                         letterSpacing: 1.0),
                   ),
                 ),
-
-                 Text(
+                Text(
                   'أفضل المدن',
                   textDirection: TextDirection.ltr,
                   style: TextStyle(
@@ -63,7 +61,7 @@ class CityCarousel extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (_) => CityToursScreen(
-                               countryName : cities["countryName"],
+                              countryName: cities["countryName"],
                               cityName: cities["cityName"],
                               cityId: cities["cityId"],
                               cityImage: cities["image"]),

@@ -1,4 +1,3 @@
-
 import 'package:http/http.dart' as http;
 
 class TourList {
@@ -40,10 +39,10 @@ class TourList {
 
   Future<void> getToursByCityId(String cityId) async {
     try {
-      final response = await http.get('${_serverUrl}api/Tour/GetToursByCityId/' + cityId);
-          print(response);
+      final response =
+          await http.get('${_serverUrl}api/Tour/GetToursByCityId/' + cityId);
+      print(response);
     } catch (error) {
-      
       throw (error);
     }
   }

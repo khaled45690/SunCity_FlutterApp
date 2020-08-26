@@ -1,3 +1,4 @@
+import './profile_screen.dart';
 import '../style/const.dart';
 import '../screens/cityTours_screen.dart';
 import '../screens/tourDetails_screen.dart';
@@ -11,7 +12,6 @@ import 'signup.dart';
 import 'home_screen.dart';
 import 'hotelDetails_screen.dart';
 import 'seeAllHotels_screen.dart';
-
 
 void main() => {
       runApp(
@@ -34,18 +34,17 @@ class SunCity_FlutterApp extends StatelessWidget {
     globalProvider.getTopHotels();
 
     return MaterialApp(
-
-       title: Constants.appName,
+      title: Constants.appName,
       //theme: Constants.lightTheme,
-     // darkTheme: Constants.darkTheme,
+      // darkTheme: Constants.darkTheme,
 
-     // title: 'SunCity_FlutterApp UI',
+      // title: 'SunCity_FlutterApp UI',
       debugShowCheckedModeBanner: false,
-       theme: ThemeData(
-           primaryColor: Color(0xff3EBACE),
-         accentColor: Color(0xFFD8ECF1),
-         scaffoldBackgroundColor: Color(0xFFF3F5F7),
-       ),
+      theme: ThemeData(
+        primaryColor: Color(0xff3EBACE),
+        accentColor: Color(0xFFD8ECF1),
+        scaffoldBackgroundColor: Color(0xFFF3F5F7),
+      ),
       home: HomeScreen(),
       routes: {
         HomeScreen.routeName: (ctx) => HomeScreen(),
@@ -56,6 +55,7 @@ class SunCity_FlutterApp extends StatelessWidget {
         SeeAllHotelsScreen.routeName: (ctx) => SeeAllHotelsScreen(),
         TourDetailsScreen.routeName: (ctx) => TourDetailsScreen(),
         HotelDetailsScreen.routeName: (ctx) => HotelDetailsScreen(),
+        ProfileScreen.routeName: (ctx) => ProfileScreen(),
       },
     );
   }

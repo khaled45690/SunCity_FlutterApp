@@ -1,6 +1,10 @@
-import 'package:SunCity_FlutterApp/screens/home_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../screens/home_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 //import 'home.dart';
 import 'signup.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +17,46 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String _email;
-  String _passworld;
+  String _password;
+  bool _isLoading = false;
   bool hidepass = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  logIn(String email, String password) async {
+    // String uri = "http://192.168.1.27:3001/api/1";
+    String uri = "http://algosys-001-site16.ctempurl.com/api/User/Login";
+    // String uri = "http://192.168.1.27:3001/api/1";
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var responseJson;
+    final response = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "UserName": email,
+        "password": password,
+      }),
+    );
+    if (response.statusCode == 200) {
+      responseJson = json.decode(response.body);
+      print(responseJson);
+      if (responseJson != null) {
+        setState(() {
+          _isLoading = false;
+        });
+        sharedPreferences.setString("token", responseJson["token"]);
+        print("Bearer " + sharedPreferences.getString("token"));
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+
+      print(responseJson.body);
+    }
+  }
 
   Widget _buildEmail() {
     return Padding(
@@ -28,11 +68,11 @@ class _LoginState extends State<Login> {
                 icon: IconButton(
                   icon: Icon(
                     Icons.email,
-                    color: Colors.blue,
+                    // color: Colors.blue,
                   ),
                   onPressed: () {},
                 ),
-                labelStyle: TextStyle(fontSize: 25, color: Colors.blue)),
+                labelStyle: TextStyle(fontSize: 25)),
             validator: (String value) {
               if (value.isEmpty) {
                 return 'أدخل كلمة المرور';
@@ -43,9 +83,9 @@ class _LoginState extends State<Login> {
                   .hasMatch(value)) {
                 return 'من فضلك أدخل الإيميل بالشكل الصحيح';
               }
-              return "kk";
+              // return "kk";
             },
-            onSaved: (String value) {
+            onChanged: (String value) {
               _email = value;
             },
           ),
@@ -63,24 +103,24 @@ class _LoginState extends State<Login> {
                 //  icon: IconButton(
                 //   icon: Icon(Icons.visibility_off), onPressed: (){},),
 
-                labelStyle: TextStyle(fontSize: 25, color: Colors.blue)),
+                labelStyle: TextStyle(fontSize: 25)),
             keyboardType: TextInputType.visiblePassword,
             validator: (String value) {
               if (value.isEmpty) {
                 return 'من فضلك ادخل كلمه';
-              } else if (value.length < 6) {
-                return "كلمه المرور يجب الا تقل عن 6 ارقام";
+              } else if (value.length < 8) {
+                return "كلمه المرور يجب الا تقل عن 8 ارقام";
               }
-              return "";
+              // return "";
             },
-            onSaved: (String value) {
-              _passworld = value;
+            onChanged: (String value) {
+              _password = value;
             },
           ),
           leading: IconButton(
               icon: Icon(
                 Icons.remove_red_eye,
-                color: Colors.blue,
+                //color: Colors.blue,
               ),
               onPressed: () {
                 setState(() {
@@ -94,13 +134,13 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          //backgroundColor: Colors.blue,
           title: Text("تسجيل الدخول"),
           centerTitle: true,
         ),
         body: ListView(
           children: <Widget>[
-            //    Image.asset('images/products/omar.jpg',fit:BoxFit.cover, width: double.infinity),
+            //  Image.asset('images/products/omar.jpg',fit:BoxFit.cover, width: double.infinity),
 
             Padding(
               padding: const EdgeInsets.all(1.0),
@@ -116,33 +156,38 @@ class _LoginState extends State<Login> {
                       Divider(),
                       SizedBox(height: 20),
                       RaisedButton(
-                        color: Colors.blue,
+                        color: Colors.grey,
                         child: Text(
                           'تسجيل الدخول',
                           style: TextStyle(color: Colors.white, fontSize: 17),
                         ),
                         onPressed: () {
+                          setState(() {
+                            _isLoading = true;
+                          });
                           if (!_formKey.currentState.validate()) {
                             return;
                           }
+
+                          logIn(_email, _password);
                           _formKey.currentState.save();
-                          // Navigator.push(
-                          //       context,
-                          //         MaterialPageRoute(
-                          //           builder: (context) => new HomeScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => new HomeScreen()));
                           Navigator.of(context).pushNamed(HomeScreen.routeName);
                         },
                       ),
-                      FlatButton(
-                        child: Text(
-                          "نسيت كلمة المرور",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          _handlePressed();
-                        },
-                      )
+                      // FlatButton(
+                      //   child: Text(
+                      //     "نسيت كلمة المرور",
+                      //     style: TextStyle(
+                      //         fontSize: 20, fontWeight: FontWeight.bold),
+                      //   ),
+                      //   onPressed: () {
+                      //     _handlePressed();
+                      //   },
+                      // )
                     ],
                   ),
                 ),
@@ -155,47 +200,16 @@ class _LoginState extends State<Login> {
           padding:
               const EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
           child: FlatButton(
-            color: Colors.blue,
+            color: Colors.grey,
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(SignUp.routeName);
             },
             child: Text(
               'ليس لدي حساب',
-              style: TextStyle(fontSize: 22),
+              style: TextStyle(fontSize: 22, color: Colors.white),
             ),
           ),
         )));
   }
-
-  void _handlePressed() {
-    confirmDialog1(context).then((bool value) {
-      print("value is $value");
-    });
-  }
-}
-
-Future<bool> confirmDialog1(BuildContext context) {
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text('إسترجاع كلمة المرور'),
-          actions: <Widget>[
-            new FlatButton(
-              child: const Text("yes"),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-            new FlatButton(
-              child: const Text("no"),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            )
-          ],
-        );
-      });
 }

@@ -73,20 +73,16 @@ class _CityToursScreenState extends State<CityToursScreen> {
     super.initState();
     getToursByCityId(this.cityId);
   }
- 
+
   Widget build(BuildContext context) {
     if (_tours != null) {
       return Scaffold(
         // appBar: AppBar(),
         body: Column(children: <Widget>[
-          
           Stack(
             children: <Widget>[
-              
               Container(
-                
                 height: MediaQuery.of(context).size.width,
-                  
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   boxShadow: [
@@ -158,24 +154,18 @@ class _CityToursScreenState extends State<CityToursScreen> {
             ],
           ),
           Expanded(
-            
-            child : ListView.builder(
-              
+            child: ListView.builder(
               padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
               itemCount: _tours.length,
               itemBuilder: (BuildContext context, int index) {
                 Map tour = _tours[index];
 
                 return Stack(
-                  
                   children: <Widget>[
-                   
                     Container(
-                      
                       color: Colors.transparent,
                       width: 400,
                       height: 180,
-
                       child: ListTile(
                         onTap: () {
                           Navigator.push(
@@ -191,7 +181,6 @@ class _CityToursScreenState extends State<CityToursScreen> {
                         title: Container(
                           margin: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                           height: 170.0,
-                          
                           width: double.infinity,
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -200,12 +189,10 @@ class _CityToursScreenState extends State<CityToursScreen> {
                             padding:
                                 EdgeInsets.fromLTRB(100.0, 20.0, 1.0, 20.0),
                             child: Column(
-                              
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Row(
-                                  
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,12 +261,9 @@ class _CityToursScreenState extends State<CityToursScreen> {
                   ],
                 );
               },
-            ),),
-            
-          
-      
-        
-      ]),
+            ),
+          ),
+        ]),
       );
     } else {
       return Container(

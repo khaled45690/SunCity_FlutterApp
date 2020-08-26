@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../screens/cityTours_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 class SeeAllCitiesScreen extends StatefulWidget {
   static const routeName = '/SeeAllCitiesScreen';
 
@@ -22,9 +23,8 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
 
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
-   //String _serverUrl = "https://41.36.71.216:8888/";
+  //String _serverUrl = "https://41.36.71.216:8888/";
   Future<List> seeAllCities() async {
-    
     final response = await http.get('${_serverUrl}api/City/SeeAllCities');
 
     if (response.statusCode == 200) {
@@ -36,15 +36,16 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
       throw Exception('Failed to Get hotels');
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     seeAllCities();
   }
+
   @override
   Widget build(BuildContext context) {
-
     if (_cities != null) {
       return Scaffold(
           appBar: AppBar(title: Text("أفضل المدن")),
@@ -62,11 +63,10 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (_) => CityToursScreen(
-                            countryName: cities["countryName"],
+                              countryName: cities["countryName"],
                               cityName: cities["cityName"],
                               cityId: cities["cityId"],
-                              cityImage: cities["image"]                              
-                              ),
+                              cityImage: cities["image"]),
                         ),
                       );
                     },
