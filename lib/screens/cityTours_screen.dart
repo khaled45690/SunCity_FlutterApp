@@ -73,7 +73,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
     super.initState();
     getToursByCityId(this.cityId);
   }
-
+ 
   Widget build(BuildContext context) {
     if (_tours != null) {
       return Scaffold(
