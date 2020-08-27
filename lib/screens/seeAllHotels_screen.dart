@@ -33,6 +33,7 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
       throw Exception('Failed to Get hotels');
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -59,9 +60,9 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (_) => HotelDetailsScreen(
-                            hotelName: topHotel["hotelName"],
-                            hotelId: topHotel["hotelId"],
-                            hotelImage: topHotel["mainHotelImage"],   
+                                hotelName: topHotel["hotelName"],
+                                hotelId: topHotel["hotelId"],
+                                hotelImage: topHotel["mainHotelImage"],
                               )),
                     );
                   },

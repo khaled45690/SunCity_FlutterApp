@@ -1,9 +1,10 @@
-//import 'package:authapp/view/about_view.dart';
-//import 'package:authapp/view/login_view.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../screens/profile_screen.dart';
+import '../screens/home_screen.dart';
 import 'package:SunCity_FlutterApp/screens/login.dart';
 import 'package:flutter/material.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -11,77 +12,153 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-      // final FirebaseAuth _auth = FirebaseAuth.instance;
-      //  FirebaseUser user;
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+ 
+  String _token = null;
 
-        @override
-  // void initState() {
-  //   super.initState();
-  //   initUser();
-  // }
-  // initUser() async{
-  //   user =await _auth.currentUser();
-  //   setState(() {
+  String get token => _token;
+
+  var _profile = null;
+
+  String get hotelData => _profile;
+
+  set token(String token)
+  {
+    setState(() {
+       _token = token;
+    });
+  }
+
+  set profileDataSetter(var profile ) {
+    setState(() {
+      _profile = profile;
+     
+    });
+  }
+
+  Future<String> appDrawerData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.getString("token");
+      String  token = "Bearer " + sharedPreferences.getString("token");
       
-  //   });
-  // }
+    print("Token = *****************************************************" +token + "******************************************************");
+    final response = await http.get('${_serverUrl}api/Client/ClientAppDrawerData', 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': token
+      }, 
+      
+      );
+
+     print("****************************************${response.statusCode}***********************************************");
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _profile = json.decode(response.body);
+         _token = token;
+        print(_profile);
+      });
+
+      return null;
+    } else {
+      throw Exception('Failed to Get profile datta');
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    appDrawerData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    
+    appDrawerData();
     return Drawer(
-      child:ListView(
-        children:<Widget>[
+     
+        child: ListView(children: <Widget>[
+     // Image.asset( "assets/Images/beach_23-wallpaper-1366x768.jpg"
+      new UserAccountsDrawerHeader(
+        accountName: Text("مرحباا"),
+        accountEmail: Text( _profile == null ? "SunCity User" :  _profile["clientName"].toString() ),
+        currentAccountPicture: GestureDetector(
+          child: new CircleAvatar(
+            backgroundColor: Colors.white,
+            child: _profile == null ? Icon(Icons.account_circle ,
+            size: 60,
 
-            new UserAccountsDrawerHeader(
-              //"${user?.displayName}"
-              accountName: Text("مرحباا"),
-             accountEmail: Text("SunCity@User.com"),
-             currentAccountPicture: GestureDetector(
-               child:   new CircleAvatar(
-                 backgroundColor:Colors.white,
-                 child:Icon(Icons.person,color:Colors.blue)
-               ),
-             ),
-             decoration: new BoxDecoration(
-               color:Color(0xff3EBACE)
-             ),
-             
-             ),
-             InkWell(
-               onTap: (){
-              //   Navigator.of(context).pushNamed(routeName)
-               },
-                            child: ListTile(
-                 title: Text("الرئيسيه"),
-                 leading: Icon(Icons.home,color: Colors.blue,),
-               ),
-             ),
-               InkWell(
-                            child: ListTile(
-                 title: Text("الإعدادات"),
-                 leading: Icon(Icons.settings ,color: Colors.blue,),
-               ),
-             ),
-                InkWell(
-                            child: ListTile(
-                 title: Text("الدعم الفني"),
-                 leading: Icon(Icons.timeline ,color: Colors.blue,),
-               ),
-             ),
+            )
+            : Image.network( _profile == null ? Icons.image :_serverUrl + _profile["profileImage"].toString(),
 
-               InkWell(
-                 onTap: (){
-                    Navigator.of(context).pushNamed(Login.routeName);
+              height: 30.0,
+              width: 30.0,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        decoration: new BoxDecoration(color: Color(0xff3EBACE)),
+      ),
+      InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => HomeScreen(),
+            ),
+          );
+        },
+        child: ListTile(
+          title: Text("الرئيسيه"),
+          leading: Icon(
+            Icons.home,
+            color: Colors.blue,
+          ),
+        ),
+      ),
+      InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ProfileScreen(),
+            ),
+          );
+        },
+        child: ListTile(
+          title: Text("الحساب"),
+          leading: Icon(
+            Icons.account_circle,
+            color: Colors.blue,
+          ),
+        ),
+      ),
+      InkWell(
+        child: ListTile(
+          title: Text("الدعم الفني"),
+          leading: Icon(
+            Icons.timeline,
+            color: Colors.blue,
+          ),
+        ),
+      ),
+      InkWell(
+        onTap: () {
+          
+          _token != null ? _token = null :
+          Navigator.of(context).pushNamed(Login.routeName);
+        },
+        child: ListTile(
+            
 
-                 },
-                child: ListTile(
-                 title: Text("تسجيل الدخول"),
-                 leading: Icon(Icons.close,color: Colors.blue,),
-               ),
-             ),
-
-        ]
-      )
-    );
+          title: Text(_token != null ? "تسجيل الخروج" : "تسجيل الدخول"),
+          leading: Icon(
+            Icons.close,
+            color: Colors.blue,
+          ),
+        ),
+      ),
+    ]));
   }
 }

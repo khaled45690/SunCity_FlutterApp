@@ -1,4 +1,3 @@
-
 import 'tourList_model.dart';
 
 class City {

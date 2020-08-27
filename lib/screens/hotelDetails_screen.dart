@@ -52,7 +52,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     }
   }
 
- Text _buildRatingStars(int rating) {
+  Text _buildRatingStars(int rating) {
     String stars = '';
     for (int i = 0; i < rating; i++) {
       stars += '⭐ ';
@@ -113,12 +113,9 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                   
                     Column(
-                      
                       children: <Widget>[
-                         _buildRatingStars(_hotel["rating"]),
-                         
+                        _buildRatingStars(_hotel["rating"]),
                         Text(
                           'ج ${_hotel["pricePerNight"].toString()}',
                           style: TextStyle(
@@ -135,7 +132,6 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                         ),
                       ],
                     ),
-                    
                   ],
                 ),
                 Row(

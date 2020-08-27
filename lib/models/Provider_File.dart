@@ -3,9 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class GlobalProvider with ChangeNotifier {
-
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-  
+
   List _cities;
   List _hotels;
 
@@ -50,6 +49,4 @@ class GlobalProvider with ChangeNotifier {
       throw Exception('Failed to Get Hotels');
     }
   }
-
-
 }

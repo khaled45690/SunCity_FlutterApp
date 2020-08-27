@@ -18,7 +18,6 @@ class HotelCarousel extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-               
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -36,8 +35,7 @@ class HotelCarousel extends StatelessWidget {
                         letterSpacing: 1.0),
                   ),
                 ),
-
-                 Text(
+                Text(
                   'أفضل الفنادق',
                   style: TextStyle(
                       fontSize: 20.0,
@@ -61,55 +59,55 @@ class HotelCarousel extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (_) => HotelDetailsScreen(
-                                hotelId: topHotel["hotelId"],
-                                hotelImage: topHotel["mainHotelImage"],
-                                hotelName: topHotel["hotelName"],
+                                  hotelId: topHotel["hotelId"],
+                                  hotelImage: topHotel["mainHotelImage"],
+                                  hotelName: topHotel["hotelName"],
                                 )),
                       );
                     },
                     child: Container(
-                  margin: EdgeInsets.all(5.0),
-                  width: 240.0,
-                   height: 285.0,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: <Widget>[
-                      Positioned(
-                        bottom: 15.0,
-                        child: Container(
-                          height: 120.0,
-                          width: 250.0,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.0)),
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    topHotel["hotelName"].toString(),
-                                    style: TextStyle(
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 1.2),
-                                  ),
-                                  SizedBox(height: 2.0),
-                                  Text(
-                                    topHotel["cityName"].toString(),
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  SizedBox(height: .1),
-                                  Text(
-                                    'ج ${topHotel["pricePerNight"].toString()}',
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                        ),
+                      margin: EdgeInsets.all(5.0),
+                      width: 240.0,
+                      height: 285.0,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: <Widget>[
+                          Positioned(
+                            bottom: 15.0,
+                            child: Container(
+                              height: 120.0,
+                              width: 250.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        topHotel["hotelName"].toString(),
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: 1.2),
+                                      ),
+                                      SizedBox(height: 2.0),
+                                      Text(
+                                        topHotel["cityName"].toString(),
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      SizedBox(height: .1),
+                                      Text(
+                                        'ج ${topHotel["pricePerNight"].toString()}',
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                            ),
                           ),
                           Container(
                             decoration: BoxDecoration(

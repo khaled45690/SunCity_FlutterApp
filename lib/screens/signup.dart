@@ -11,7 +11,6 @@ import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
 
-
 File _imageFile;
 
 class SignUp extends StatefulWidget {
@@ -22,20 +21,15 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  upload (String imageFile) async {
+  upload(String imageFile) async {
     String url = "http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage";
-  var request = http.MultipartRequest('POST', Uri.parse(url));
+    var request = http.MultipartRequest('POST', Uri.parse(url));
 
-  request.files.add(
-  await http.MultipartFile.fromPath(
-  'picture',
-      imageFile
-  )
-  );
-  var res = await request.send();
+    request.files.add(await http.MultipartFile.fromPath('picture', imageFile));
+    var res = await request.send();
     final respStr = await res.stream.bytesToString();
-  print(respStr);
-}
+    print(respStr);
+  }
 
   String _name;
   String _email;
@@ -44,29 +38,31 @@ class _SignUpState extends State<SignUp> {
   String _phoneNumber;
   String _confirmPassword;
 
-    submitForm(String name , String email ,String phoneNumber,String password ,String confirmPassword , File image) async {
+  submitForm(String name, String email, String phoneNumber, String password,
+      String confirmPassword, File image) async {
     // String uri = "http://192.168.1.27:3001/api/1";
-    String uri = "http://algosys-001-site16.ctempurl.com/api/Client/Registration";
+    String uri =
+        "http://algosys-001-site16.ctempurl.com/api/Client/Registration";
     // String uri = "http://192.168.1.27:3001/api/1";
-    
-     String photo =  image != null ? 'data:image/jpg;base64' +
-            base64Encode(image.readAsBytesSync()) : '';
+
+    String photo = image != null
+        ? 'data:image/jpg;base64' + base64Encode(image.readAsBytesSync())
+        : '';
 
     final response = await http.post(
       uri,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
       body: jsonEncode(<String, String>{
         "UserName": name,
-        "Email" :email,
+        "Email": email,
         "Mobile": phoneNumber,
         "profileImage": null,
-         "Password": password,
+        "Password": password,
         "ConfirmPassword": confirmPassword,
       }),
     );
-
 
     final responseJson = json.decode(response.body);
 
@@ -82,7 +78,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _confirmPasswordController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
 
-Widget _buildUserName() {
+  Widget _buildUserName() {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
@@ -106,7 +102,6 @@ Widget _buildUserName() {
         ));
   }
 
-
   Widget _buildEmail() {
     return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -128,10 +123,9 @@ Widget _buildUserName() {
               }
               return null;
             },
-            onChanged: (String value){
-                 _email = value;
+            onChanged: (String value) {
+              _email = value;
             },
-
           ),
         ));
   }
@@ -188,7 +182,6 @@ Widget _buildUserName() {
     );
   }
 
- 
   Widget _buildPhoneNumber() {
     return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -268,20 +261,14 @@ Widget _buildUserName() {
                 children: <Widget>[
                   _buildUserName(),
                   SizedBox(height: 20.0),
-
                   _buildEmail(),
                   SizedBox(height: 20.0),
-                  
                   _buildPhoneNumber(),
                   SizedBox(height: 20.0),
-
                   _buildPassworld(),
                   SizedBox(height: 20.0),
-
                   _buildConfirmPassword(),
                   SizedBox(height: 20.0),
-
-                 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -295,7 +282,6 @@ Widget _buildUserName() {
                               _imageFile = picked;
                             });
                             print(picked);
-
                           },
                           child: Text("رفع صوره")),
                       RoundedImageWidget(
@@ -304,7 +290,6 @@ Widget _buildUserName() {
                     ],
                   ),
                   Divider(),
-
                   SizedBox(height: 20),
                   RaisedButton(
                     child: Text(
@@ -312,10 +297,10 @@ Widget _buildUserName() {
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () {
-                      submitForm(_name , _email,  _phoneNumber , _password ,_confirmPassword , _imageFile);
+                      submitForm(_name, _email, _phoneNumber, _password,
+                          _confirmPassword, _imageFile);
                     },
                   ),
-
                   Row(
                     children: <Widget>[
                       Padding(

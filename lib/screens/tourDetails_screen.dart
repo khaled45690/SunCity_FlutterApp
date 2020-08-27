@@ -113,12 +113,9 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                   
                     Column(
-                      
                       children: <Widget>[
-                         _buildRatingStars(_tour["rating"]),
-                         
+                        _buildRatingStars(_tour["rating"]),
                         Text(
                           'ج ${_tour["pricePerNight"].toString()}',
                           style: TextStyle(
@@ -135,7 +132,6 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
                         ),
                       ],
                     ),
-                    
                   ],
                 ),
                 Row(
