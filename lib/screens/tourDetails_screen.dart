@@ -17,14 +17,17 @@ class TourDetailsScreen extends StatefulWidget {
 }
 
 class _TourDetailsScreenState extends State<TourDetailsScreen> {
+ 
+   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+   //String _serverUrl = "https://192.168.1.107:5001/";
+ 
   final String tourId;
   final String tourImage;
   final String tourName;
 
   _TourDetailsScreenState({this.tourId, this.tourImage, this.tourName});
 
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-
+ 
   var _tour;
   List _tourImages;
 

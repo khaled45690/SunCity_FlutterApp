@@ -11,6 +11,10 @@ class SeeAllHotelsScreen extends StatefulWidget {
 }
 
 class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
+  
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+  //String _serverUrl = "http://192.168.1.107:5001/";
+
   List _hotels;
   List get hotelsData => _hotels;
 
@@ -19,8 +23,6 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
       _hotels = hotels;
     });
   }
-
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
 
   Future<void> seeAllHotels() async {
     final response = await http.get('${_serverUrl}api/Hotel/SeeAllHotels');

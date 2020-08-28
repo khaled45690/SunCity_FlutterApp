@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
   logIn(String email, String password) async {
     // String uri = "http://192.168.1.27:3001/api/1";
     String uri = "http://algosys-001-site16.ctempurl.com/api/User/Login";
-    // String uri = "http://192.168.1.27:3001/api/1";
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var responseJson;
     final response = await http.post(

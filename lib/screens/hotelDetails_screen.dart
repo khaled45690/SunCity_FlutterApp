@@ -17,6 +17,9 @@ class HotelDetailsScreen extends StatefulWidget {
 }
 
 class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
+ 
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+ 
   final String hotelId;
   final String hotelImage;
   final String hotelName;
@@ -34,7 +37,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     });
   }
 
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+ 
 
   Future<void> getHotelDetails(String hotelId) async {
     final response =

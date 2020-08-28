@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../models/tourList_model.dart';
 import '../screens/tourDetails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +20,9 @@ class CityToursScreen extends StatefulWidget {
 }
 
 class _CityToursScreenState extends State<CityToursScreen> {
+  
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+
   String countryName;
   String cityName;
   String cityId;
@@ -41,9 +43,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
     });
   }
 
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-
-  Future<TourList> getToursByCityId(String cityId) async {
+  Future<List> getToursByCityId(String cityId) async {
     final response =
         await http.get('${_serverUrl}api/Tour/GetToursByCityId/' + cityId);
 
