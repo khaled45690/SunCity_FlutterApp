@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
     var length = await imageFile.length();
     print(Uri.parse("http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage"));
     var request = new http.MultipartRequest("POST", Uri.parse("http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage"));
-    var multipartFile = new http.MultipartFile('file', stream, length,
+    var multipartFile = new http.MultipartFile('Image', stream, length,
         filename: basename(imageFile.path));
     request.files.add(multipartFile);
     var response = await request.send();
