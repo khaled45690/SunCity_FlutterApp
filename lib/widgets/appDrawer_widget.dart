@@ -144,9 +144,9 @@ class _AppDrawerState extends State<AppDrawer> {
         ),
       ),
       InkWell(
-        onTap: () {
-          
-          _token != null ? _token = null :
+       onTap: () async{
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          _token != null ? sharedPreferences.remove("token") :
           Navigator.of(context).pushNamed(Login.routeName);
         },
         child: ListTile(
