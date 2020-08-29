@@ -21,14 +21,21 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  upload(String imageFile) async {
-    String url = "http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage";
-    var request = http.MultipartRequest('POST', Uri.parse(url));
+  saveImage(File imageFile) async {
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    print(Uri.parse("http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage"));
+    var request = new http.MultipartRequest("POST", Uri.parse("http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage"));
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
 
-    request.files.add(await http.MultipartFile.fromPath('picture', imageFile));
-    var res = await request.send();
-    final respStr = await res.stream.bytesToString();
-    print(respStr);
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      return true;
+    });
   }
 
   String _name;
@@ -278,7 +285,7 @@ class _SignUpState extends State<SignUp> {
                           onPressed: () async {
                             final picked = await ImagePicker.pickImage(
                                 source: ImageSource.gallery);
-                            upload(picked.path);
+                            saveImage(picked);
                             setState(() {
                               _imageFile = picked;
                             });
