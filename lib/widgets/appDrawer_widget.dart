@@ -15,11 +15,11 @@ class _AppDrawerState extends State<AppDrawer> {
   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
    //String _serverUrl = "http://192.168.1.107:5001/";
  
-  String _token = null;
+  String _token;
 
   String get token => _token;
 
-  var _profile = null;
+  var _profile ;
 
   String get hotelData => _profile;
 
@@ -40,9 +40,9 @@ class _AppDrawerState extends State<AppDrawer> {
   Future<String> appDrawerData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.getString("token");
-      String  token = "Bearer " + sharedPreferences.getString("token");
+      String  token = "Bearer ${sharedPreferences.getString("token")}";
       
-    print("Token = *****************************************************" +token + "******************************************************");
+    print("Token = ***************************************************** $token ******************************************************");
     final response = await http.get('${_serverUrl}api/Client/ClientAppDrawerData', 
     headers: {
         'Content-Type': 'application/json',
@@ -76,7 +76,6 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    appDrawerData();
     return Drawer(
      
         child: ListView(children: <Widget>[
