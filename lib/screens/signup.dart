@@ -49,6 +49,7 @@ class _SignUpState extends State<SignUp> {
         ? 'data:image/jpg;base64' + base64Encode(image.readAsBytesSync())
         : '';
 
+
     final response = await http.post(
       uri,
       headers: <String, String>{
