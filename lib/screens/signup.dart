@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:SunCity_FlutterApp/screens/home_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/RoundedImageWidget.dart';
 import 'login.dart';
 import 'dart:io';
@@ -21,63 +23,49 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  saveImage(File imageFile) async {
+ 
+  String _name;
+  String _email;
+  String _password;
+  String _phoneNumber;
+  String _confirmPassword;
+  
+  submitForm(String name, String email, String phoneNumber, String password,String confirmPassword, File imageFile) async {
+
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    print(Uri.parse("http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage"));
-    var request = new http.MultipartRequest("POST", Uri.parse("http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage"));
-    var multipartFile = new http.MultipartFile('Image', stream, length,
-        filename: basename(imageFile.path));
+   
+    //print(Uri.parse("http://algosys-001-site16.ctempurl.com/api/Client/Registration"));
+
+    var request = new http.MultipartRequest("POST", Uri.parse("http://algosys-001-site16.ctempurl.com/api/Client/Registration"));
+    var multipartFile = new http.MultipartFile('profileImage', stream, length,
+    filename: basename(imageFile.path));
     request.files.add(multipartFile);
+    request.fields["UserName"] = _name;
+    request.fields["Email"] = _email;
+    request.fields["Mobile"] = _phoneNumber;
+    request.fields["Password"] = _password;
+    request.fields["ConfirmPassword"] = _confirmPassword;
     var response = await request.send();
+   
     print(response.statusCode);
 
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
-      return true;
+      final responseJson = json.decode(value);
+      sharedPreferences.setString("token", responseJson["token"]);
+     
+    
+      return response.statusCode;
+
     });
+
+    
   }
 
-  String _name;
-  String _email;
-  String _password;
-  String _url;
-  String _phoneNumber;
-  String _confirmPassword;
 
-  submitForm(String name, String email, String phoneNumber, String password,
-      String confirmPassword, File image) async {
-    // String uri = "http://192.168.1.27:3001/api/1";
-    String uri =
-        "http://algosys-001-site16.ctempurl.com/api/Client/Registration";
-    // String uri = "http://192.168.1.27:3001/api/1";
-
-    String photo = image != null
-        ? 'data:image/jpg;base64' + base64Encode(image.readAsBytesSync())
-        : '';
-
-
-    final response = await http.post(
-      uri,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        "UserName": name,
-        "Email": email,
-        "Mobile": phoneNumber,
-        "profileImage": null,
-        "Password": password,
-        "ConfirmPassword": confirmPassword,
-      }),
-    );
-
-    final responseJson = json.decode(response.body);
-
-    print(responseJson);
-  }
-
-  String groupValue = "male";
   bool hidePass = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -285,7 +273,7 @@ class _SignUpState extends State<SignUp> {
                           onPressed: () async {
                             final picked = await ImagePicker.pickImage(
                                 source: ImageSource.gallery);
-                            saveImage(picked);
+                          //  saveImage(picked);
                             setState(() {
                               _imageFile = picked;
                             });
@@ -305,8 +293,17 @@ class _SignUpState extends State<SignUp> {
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () {
-                      submitForm(_name, _email, _phoneNumber, _password,
+                    var result =  submitForm(_name, _email, _phoneNumber, _password,
                           _confirmPassword, _imageFile);
+                           
+                           if (result.statusCode == 200) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => new HomeScreen()));
+                              Navigator.of(context)
+                                  .pushNamed(HomeScreen.routeName);
+                            }
                     },
                   ),
                   Row(

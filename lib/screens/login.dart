@@ -49,17 +49,23 @@ class _LoginState extends State<Login> {
         sharedPreferences.setString("token", responseJson["token"]);
         print("Bearer " + sharedPreferences.getString("token"));
       }
+
     } else {
       setState(() {
         _isLoading = false;
       });
 
       print(responseJson.body);
+      print(response.statusCode);
     }
+
+    return response;
   }
 
   Widget _buildEmail() {
+
     return Padding(
+
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           title: TextFormField(
@@ -140,7 +146,7 @@ class _LoginState extends State<Login> {
         ),
         body: ListView(
           children: <Widget>[
-            //  Image.asset('images/products/omar.jpg',fit:BoxFit.cover, width: double.infinity),
+            //Image.asset('images/products/omar.jpg',fit:BoxFit.cover, width: double.infinity),
 
             Padding(
               padding: const EdgeInsets.all(1.0),
@@ -156,28 +162,32 @@ class _LoginState extends State<Login> {
                       Divider(),
                       SizedBox(height: 20),
                       RaisedButton(
-                        color: Colors.grey,
-                        child: Text(
-                          'تسجيل الدخول',
-                          style: TextStyle(color: Colors.white, fontSize: 17),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          if (!_formKey.currentState.validate()) {
-                            return;
-                          }
+                          color: Colors.grey,
+                          child: Text(
+                            'تسجيل الدخول',
+                            style: TextStyle(color: Colors.white, fontSize: 17),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            if (!_formKey.currentState.validate()) {
+                              return;
+                            }
 
-                          logIn(_email, _password);
-                          _formKey.currentState.save();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => new HomeScreen()));
-                          Navigator.of(context).pushNamed(HomeScreen.routeName);
-                        },
-                      ),
+                            var result = logIn(_email, _password);
+                             print(result.statusCode);
+                            _formKey.currentState.save();
+                            if (result.statusCode == 200) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => new HomeScreen()));
+                              Navigator.of(context)
+                                  .pushNamed(HomeScreen.routeName);
+                            }
+                          }),
+
                       // FlatButton(
                       //   child: Text(
                       //     "نسيت كلمة المرور",
