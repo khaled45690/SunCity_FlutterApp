@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class GlobalProvider with ChangeNotifier {
-   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
- //String _serverUrl = "http://192.168.1.107:5001/";
+
+  String  _serverUrl = URL.serverUrl; 
+
   List _cities;
   List _hotels;
 

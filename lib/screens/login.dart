@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/home_screen.dart';
@@ -17,9 +18,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
    
-  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-     String _serverUrl = "http://192.168.1.107:5001/";
-
+  String  _serverUrl = URL.serverUrl; 
+  
   int _statusCode;
   String _email;
   String _password;

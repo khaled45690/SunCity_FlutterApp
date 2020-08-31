@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
+
 import '../screens/hotelDetails_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -12,8 +14,7 @@ class SeeAllHotelsScreen extends StatefulWidget {
 
 class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
   
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-  //String _serverUrl = "http://192.168.1.107:5001/";
+  String  _serverUrl = URL.serverUrl; 
 
   List _hotels;
   List get hotelsData => _hotels;

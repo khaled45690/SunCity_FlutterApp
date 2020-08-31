@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:SunCity_FlutterApp/screens/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -20,10 +21,8 @@ class HotelDetailsScreen extends StatefulWidget {
 }
 
 class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
- 
 
-  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-     String _serverUrl = "http://192.168.1.5:5001/";
+   String  _serverUrl = URL.serverUrl; 
  
   final String hotelId;
   final String hotelImage;
@@ -47,7 +46,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
      String token = sharedPreferences.getString("token");
 
-     final response = await http.post('${_serverUrl}/api/HotelBooking/BookNow/'+ hotelId,
+     final response = await http.post('${_serverUrl}api/HotelBooking/BookNow/'+ hotelId,
     
           headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
       

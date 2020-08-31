@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/profile_screen.dart';
 import '../screens/home_screen.dart';
@@ -12,8 +13,8 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-  String _serverUrl = "http://192.168.1.107:5001/";
+  
+   String  _serverUrl = URL.serverUrl; 
 
   String _token;
 
@@ -90,7 +91,7 @@ class _AppDrawerState extends State<AppDrawer> {
                  
           ): CircleAvatar(
              
-            backgroundImage: AssetImage("assets/Images/beach_23-wallpaper-1366x768.jpg"),
+            backgroundImage: AssetImage("assets/Images/splash_icon.png"),
 
                  
           ),

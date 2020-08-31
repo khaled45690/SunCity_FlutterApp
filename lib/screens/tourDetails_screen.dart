@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:SunCity_FlutterApp/screens/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -21,9 +22,8 @@ class TourDetailsScreen extends StatefulWidget {
 
 class _TourDetailsScreenState extends State<TourDetailsScreen> {
  
-  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-  String _serverUrl = "http://192.168.1.107:5001/";
-
+  String  _serverUrl = URL.serverUrl; 
+  
   final String tourId;
   final String tourImage;
   final String tourName;

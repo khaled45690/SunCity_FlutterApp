@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../screens/tourDetails_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class CityToursScreen extends StatefulWidget {
 
 class _CityToursScreenState extends State<CityToursScreen> {
   
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+  String  _serverUrl = URL.serverUrl; 
 
   String countryName;
   String cityName;
