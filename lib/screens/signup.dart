@@ -23,25 +23,28 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
- 
+  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+  //String _serverUrl = "http://192.168.1.107:5001/";
+
+  int _statusCode;
   String _name;
   String _email;
   String _password;
   String _phoneNumber;
   String _confirmPassword;
-  
-  submitForm(String name, String email, String phoneNumber, String password,String confirmPassword, File imageFile) async {
 
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        
-    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+  submitForm(String name, String email, String phoneNumber, String password,
+      String confirmPassword, File imageFile) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-   
-    //print(Uri.parse("http://algosys-001-site16.ctempurl.com/api/Client/Registration"));
 
-    var request = new http.MultipartRequest("POST", Uri.parse("http://algosys-001-site16.ctempurl.com/api/Client/Registration"));
+    var request = new http.MultipartRequest(
+        "POST", Uri.parse("${_serverUrl}api/Client/Registration"));
     var multipartFile = new http.MultipartFile('profileImage', stream, length,
-    filename: basename(imageFile.path));
+        filename: basename(imageFile.path));
     request.files.add(multipartFile);
     request.fields["UserName"] = _name;
     request.fields["Email"] = _email;
@@ -49,22 +52,19 @@ class _SignUpState extends State<SignUp> {
     request.fields["Password"] = _password;
     request.fields["ConfirmPassword"] = _confirmPassword;
     var response = await request.send();
-   
-    print(response.statusCode);
+
+    setState(() {
+      _statusCode = response.statusCode;
+    });
 
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
       final responseJson = json.decode(value);
       sharedPreferences.setString("token", responseJson["token"]);
-     
-    
-      return response.statusCode;
 
+    
     });
-
-    
   }
-
 
   bool hidePass = true;
 
@@ -273,7 +273,7 @@ class _SignUpState extends State<SignUp> {
                           onPressed: () async {
                             final picked = await ImagePicker.pickImage(
                                 source: ImageSource.gallery);
-                          //  saveImage(picked);
+                            //  saveImage(picked);
                             setState(() {
                               _imageFile = picked;
                             });
@@ -293,17 +293,19 @@ class _SignUpState extends State<SignUp> {
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () {
-                    var result =  submitForm(_name, _email, _phoneNumber, _password,
-                          _confirmPassword, _imageFile);
-                           
-                           if (result.statusCode == 200) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => new HomeScreen()));
-                              Navigator.of(context)
-                                  .pushNamed(HomeScreen.routeName);
-                            }
+                  submitForm(_name, _email, _phoneNumber,
+                          _password, _confirmPassword, _imageFile);
+
+                           print(_statusCode);
+
+                       if (_statusCode == 200) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => new HomeScreen()));
+                          Navigator.of(context)
+                              .pushNamed(HomeScreen.routeName);
+                        }
                     },
                   ),
                   Row(

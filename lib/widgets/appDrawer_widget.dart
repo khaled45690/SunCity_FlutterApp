@@ -12,8 +12,8 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-  //String _serverUrl = "http://192.168.1.107:5001/";
+  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+  String _serverUrl = "http://192.168.1.107:5001/";
 
   String _token;
 
@@ -84,21 +84,15 @@ class _AppDrawerState extends State<AppDrawer> {
             ? "SunCity User"
             : _profile["clientName"].toString()),
         currentAccountPicture: GestureDetector(
-          child: new CircleAvatar(
-            backgroundColor: Colors.white,
-            child: _profile == null
-                ? Icon(
-                    Icons.account_circle,
-                    size: 60,
-                  )
-                : Image.network(
-                    _profile == null
-                        ? Icons.image
-                        : _serverUrl + _profile["profileImage"].toString(),
-                    height: 30.0,
-                    width: 30.0,
-                    fit: BoxFit.cover,
-                  ),
+          child: _profile != null ?  CircleAvatar(
+             
+            backgroundImage: NetworkImage(_serverUrl + _profile["profileImage"].toString())
+                 
+          ): CircleAvatar(
+             
+            backgroundImage: AssetImage("assets/Images/beach_23-wallpaper-1366x768.jpg"),
+
+                 
           ),
         ),
         decoration: new BoxDecoration(color: Color(0xff3EBACE)),

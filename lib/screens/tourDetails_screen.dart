@@ -1,10 +1,13 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:SunCity_FlutterApp/screens/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class TourDetailsScreen extends StatefulWidget {
-  static const routeName = '/TourDetails2Screen';
+  static const routeName = '/TourDetailsScreen';
   final String tourId;
   final String tourImage;
   final String tourName;
@@ -18,16 +21,31 @@ class TourDetailsScreen extends StatefulWidget {
 
 class _TourDetailsScreenState extends State<TourDetailsScreen> {
  
-   String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-   //String _serverUrl = "https://192.168.1.107:5001/";
- 
+  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+  String _serverUrl = "http://192.168.1.107:5001/";
+
   final String tourId;
   final String tourImage;
   final String tourName;
 
   _TourDetailsScreenState({this.tourId, this.tourImage, this.tourName});
 
- 
+  Future bookNow(String tourId) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token");
+
+    final response = await http.post(
+      '${_serverUrl}api/TourBooking/BookNow/'+ tourId,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+    } else {
+      throw Exception('An Error occurred');
+    }
+  }
+
   var _tour;
   List _tourImages;
 
@@ -69,6 +87,13 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
     // TODO: implement initState
     super.initState();
     getTourDetails(this.tourId);
+  }
+
+ @override
+  void initState2() {
+    // TODO: implement initState
+    super.initState();
+    bookNow(this.tourId);
   }
 
   Widget build(BuildContext context) {
@@ -207,7 +232,18 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
           child: Icon(
             Icons.book,
           ),
-          onPressed: () {},
+          onPressed: () async{
+            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+            String token = sharedPreferences.getString("token");
+            if(token != null) 
+            {
+              
+              bookNow(_tour["tourId"].toString());
+            }
+            else{
+             Navigator.of(context).pushNamed(Login.routeName);
+           }
+          },
         ),
       );
     } else {

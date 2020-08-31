@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:SunCity_FlutterApp/screens/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HotelDetailsScreen extends StatefulWidget {
   static const routeName = '/HotelsDetailsScreen';
@@ -18,7 +21,9 @@ class HotelDetailsScreen extends StatefulWidget {
 
 class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
  
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+
+  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+     String _serverUrl = "http://192.168.1.5:5001/";
  
   final String hotelId;
   final String hotelImage;
@@ -36,12 +41,28 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
       _hotel = hotel;
     });
   }
+  
 
- 
+ Future bookNow(String hotelId) async {
+     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+     String token = sharedPreferences.getString("token");
+
+     final response = await http.post('${_serverUrl}/api/HotelBooking/BookNow/'+ hotelId,
+    
+          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+      
+      );
+  print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+    } else {
+      throw Exception('An Error occurred');
+    }
+  }
 
   Future<void> getHotelDetails(String hotelId) async {
     final response =
-        await http.get('${_serverUrl}api/Hotel/GetHotelDetails/' + hotelId);
+        await http.get('${_serverUrl}api/Hotel/GetHotelDetails/'+ hotelId);
 
     if (response.statusCode == 200) {
       setState(() {
@@ -69,6 +90,13 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     // TODO: implement initState
     super.initState();
     getHotelDetails(this.hotelId);
+  }
+
+ @override
+  void initState2() {
+    // TODO: implement initState
+    super.initState();
+    bookNow(this.hotelId);
   }
 
   Widget build(BuildContext context) {
@@ -207,7 +235,18 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
           child: Icon(
             Icons.book,
           ),
-          onPressed: () {},
+          onPressed: () async{
+            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+            String token = sharedPreferences.getString("token");
+            if(token != null) 
+            {
+              
+              bookNow(_hotel["hotelId"].toString());
+           }
+            else{
+             Navigator.of(context).pushNamed(Login.routeName);
+           }
+          },
         ),
       );
     } else {

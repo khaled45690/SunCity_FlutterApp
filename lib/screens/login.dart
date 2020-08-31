@@ -16,6 +16,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+   
+  //String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
+     String _serverUrl = "http://192.168.1.107:5001/";
+
+  int _statusCode;
   String _email;
   String _password;
   bool _isLoading = false;
@@ -24,19 +29,20 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   logIn(String email, String password) async {
-    // String uri = "http://192.168.1.27:3001/api/1";
-    String uri = "http://algosys-001-site16.ctempurl.com/api/User/Login";
+
+      String uri = "${_serverUrl}api/User/Login";
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var responseJson;
+
     final response = await http.post(
       uri,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        "UserName": email,
-        "password": password,
+        "UserName": _email,
+        "password": _password,
       }),
     );
     if (response.statusCode == 200) {
@@ -45,9 +51,13 @@ class _LoginState extends State<Login> {
       if (responseJson != null) {
         setState(() {
           _isLoading = false;
+          _statusCode = response.statusCode;
         });
+
         sharedPreferences.setString("token", responseJson["token"]);
         print("Bearer " + sharedPreferences.getString("token"));
+
+    
       }
 
     } else {
@@ -140,14 +150,13 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          //backgroundColor: Colors.blue,
+          
           title: Text("تسجيل الدخول"),
           centerTitle: true,
         ),
         body: ListView(
           children: <Widget>[
-            //Image.asset('images/products/omar.jpg',fit:BoxFit.cover, width: double.infinity),
-
+            
             Padding(
               padding: const EdgeInsets.all(1.0),
               child: Container(
@@ -168,17 +177,17 @@ class _LoginState extends State<Login> {
                             style: TextStyle(color: Colors.white, fontSize: 17),
                           ),
                           onPressed: () {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            }
-
-                            var result = logIn(_email, _password);
-                             print(result.statusCode);
+                            // setState(() {
+                            //   _isLoading = true;
+                            // });
+                            // if (!_formKey.currentState.validate()) {
+                            //   return;
+                            // }
+                            
+                           logIn(_email, _password);
+                           
                             _formKey.currentState.save();
-                            if (result.statusCode == 200) {
+                            if (_statusCode == 200) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
