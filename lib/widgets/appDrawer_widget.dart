@@ -115,23 +115,23 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ),
       ),
-      InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => ProfileScreen(),
-            ),
-          );
-        },
-        child: ListTile(
-          title: Text("الحساب"),
-          leading: Icon(
-            Icons.account_circle,
-            color: Colors.blue,
-          ),
-        ),
-      ),
+      // InkWell(
+      //   onTap: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (_) => ProfileScreen(),
+      //       ),
+      //     );
+      //   },
+      //   child: ListTile(
+      //     title: Text("الحساب"),
+      //     leading: Icon(
+      //       Icons.account_circle,
+      //       color: Colors.blue,
+      //     ),
+      //   ),
+      // ),
       // InkWell(
       //   child: ListTile(
       //     title: Text("الدعم الفني"),

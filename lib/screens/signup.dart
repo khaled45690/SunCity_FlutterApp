@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:SunCity_FlutterApp/screens/home_screen.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/RoundedImageWidget.dart';
@@ -17,14 +14,15 @@ import 'package:http/http.dart' as http;
 File _imageFile;
 
 class SignUp extends StatefulWidget {
-  static const routeName = '/signup';
+  static const routeName = '/Signup';
 
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
-  
+
+ 
   String  _serverUrl = URL.serverUrl; 
 
   int _statusCode;
@@ -34,15 +32,20 @@ class _SignUpState extends State<SignUp> {
   String _phoneNumber;
   String _confirmPassword;
 
+
+  
+
   submitForm(String name, String email, String phoneNumber, String password,
-      String confirmPassword, File imageFile) async {
+      
+    String confirmPassword, File imageFile) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+  
     var length = await imageFile.length();
 
     var request = new http.MultipartRequest(
+
         "POST", Uri.parse("${_serverUrl}api/Client/Registration"));
     var multipartFile = new http.MultipartFile('profileImage', stream, length,
         filename: basename(imageFile.path));
@@ -53,7 +56,7 @@ class _SignUpState extends State<SignUp> {
     request.fields["Password"] = _password;
     request.fields["ConfirmPassword"] = _confirmPassword;
     var response = await request.send();
-
+print("***************************************${response.statusCode}******************************************");
     setState(() {
       _statusCode = response.statusCode;
     });
@@ -188,14 +191,14 @@ class _SignUpState extends State<SignUp> {
               hintText: 'رقم الموبايل',
               icon: Icon(Icons.phone),
             ),
-            // validator: (String value) {
-            //   if (value.isEmpty) {
-            //     return 'من فضلك أدخل رقم المويايل';
-            //   } else if (value.length < 14) {
-            //     return "من فضلك أدخل 11 رقم";
-            //   }
-            //   return "";
-            // },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'من فضلك أدخل رقم المويايل';
+              } else if (value.length < 14 || value.length > 14 ) {
+                return "من فضلك أدخل 11 رقم";
+              }
+              return "";
+            },
             onChanged: (String value) {
               _phoneNumber = value;
             },
@@ -242,6 +245,31 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+
+    void _exceptionHandler() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("لقد حدث خطأ"),
+          content: _statusCode == 400 ? new Text("برجاء إدخال البيانات بالشكل الصحيح") : new Text("لقد حدث خطأ برجاء الإتصال بالدعم الفني"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("إغلاق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -307,6 +335,9 @@ class _SignUpState extends State<SignUp> {
                           Navigator.of(context)
                               .pushNamed(HomeScreen.routeName);
                         }
+                        // else{
+                        //   _exceptionHandler();
+                        // }
                     },
                   ),
                   Row(
@@ -316,6 +347,7 @@ class _SignUpState extends State<SignUp> {
                         child: InkWell(
                           child: new Text(
                             "لدي حساب بالفعل",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.red.shade900,
                                 fontWeight: FontWeight.bold,

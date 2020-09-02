@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class GlobalProvider with ChangeNotifier {
@@ -51,4 +52,5 @@ class GlobalProvider with ChangeNotifier {
       throw Exception('Failed to Get Hotels');
     }
   }
+
 }

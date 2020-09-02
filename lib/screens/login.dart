@@ -17,9 +17,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-   
-  String  _serverUrl = URL.serverUrl; 
-  
+  String _serverUrl = URL.serverUrl;
+
   int _statusCode;
   String _email;
   String _password;
@@ -28,9 +27,33 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  logIn(String email, String password) async {
+  void _exceptionHandler() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("لقد حدث خطأ"),
+          content: ((_statusCode == null) || _statusCode == 400)
+              ? new Text("برجاءالتأكد من إسم المستخدم وكلمة المرور")
+              : new Text("لقد حدث خطأ برجاء الإتصال بالدعم الفني"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("إغلاق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-      String uri = "${_serverUrl}api/User/Login";
+  logIn(String email, String password) async {
+    String uri = "${_serverUrl}api/User/Login";
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var responseJson;
@@ -45,21 +68,20 @@ class _LoginState extends State<Login> {
         "password": _password,
       }),
     );
+
+    setState(() {
+      _isLoading = false;
+      _statusCode = response.statusCode;
+    });
+    print(_statusCode);
+
     if (response.statusCode == 200) {
       responseJson = json.decode(response.body);
       print(responseJson);
-      if (responseJson != null) {
-        setState(() {
-          _isLoading = false;
-          _statusCode = response.statusCode;
-        });
-
+      if (response != null) {
         sharedPreferences.setString("token", responseJson["token"]);
         print("Bearer " + sharedPreferences.getString("token"));
-
-    
       }
-
     } else {
       setState(() {
         _isLoading = false;
@@ -73,9 +95,7 @@ class _LoginState extends State<Login> {
   }
 
   Widget _buildEmail() {
-
     return Padding(
-
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           title: TextFormField(
@@ -91,7 +111,7 @@ class _LoginState extends State<Login> {
                 labelStyle: TextStyle(fontSize: 25)),
             validator: (String value) {
               if (value.isEmpty) {
-                return 'أدخل كلمة المرور';
+                return 'من فضلك أدخل الإيميل';
               }
 
               if (!RegExp(
@@ -123,9 +143,9 @@ class _LoginState extends State<Login> {
             keyboardType: TextInputType.visiblePassword,
             validator: (String value) {
               if (value.isEmpty) {
-                return 'من فضلك ادخل كلمه';
-              } else if (value.length < 8) {
-                return "كلمه المرور يجب الا تقل عن 8 ارقام";
+                return 'من فضلك أدخل كلمة المرور';
+              } else if (value.length < 6) {
+                return "كلمه المرور يجب الا تقل عن 6 ارقام";
               }
               // return "";
             },
@@ -150,13 +170,11 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          
           title: Text("تسجيل الدخول"),
           centerTitle: true,
         ),
         body: ListView(
           children: <Widget>[
-            
             Padding(
               padding: const EdgeInsets.all(1.0),
               child: Container(
@@ -177,15 +195,23 @@ class _LoginState extends State<Login> {
                             style: TextStyle(color: Colors.white, fontSize: 17),
                           ),
                           onPressed: () {
-                            // setState(() {
-                            //   _isLoading = true;
-                            // });
-                            // if (!_formKey.currentState.validate()) {
-                            //   return;
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            if (!_formKey.currentState.validate()) {
+                              return _formKey;
+                            }
+
+                            logIn(_email, _password);
+                            // if (_statusCode == null) {
+                            //   print("*****************************${_statusCode}**********************************");
+                            //   return 
+                            //     //color: Colors.white,
+                                
+                            //         Center(child: CircularProgressIndicator());
+                              
                             // }
-                            
-                           logIn(_email, _password);
-                           
+
                             _formKey.currentState.save();
                             if (_statusCode == 200) {
                               Navigator.push(
@@ -194,7 +220,10 @@ class _LoginState extends State<Login> {
                                       builder: (context) => new HomeScreen()));
                               Navigator.of(context)
                                   .pushNamed(HomeScreen.routeName);
-                            }
+                             } 
+                             //else {
+                            //   _exceptionHandler();
+                            // }
                           }),
 
                       // FlatButton(

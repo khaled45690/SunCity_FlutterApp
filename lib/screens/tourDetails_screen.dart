@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class TourDetailsScreen extends StatefulWidget {
   static const routeName = '/TourDetailsScreen';
   final String tourId;
@@ -21,9 +20,8 @@ class TourDetailsScreen extends StatefulWidget {
 }
 
 class _TourDetailsScreenState extends State<TourDetailsScreen> {
- 
-  String  _serverUrl = URL.serverUrl; 
-  
+  String _serverUrl = URL.serverUrl;
+
   final String tourId;
   final String tourImage;
   final String tourName;
@@ -35,7 +33,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
     String token = sharedPreferences.getString("token");
 
     final response = await http.post(
-      '${_serverUrl}api/TourBooking/BookNow/'+ tourId,
+      '${_serverUrl}api/TourBooking/BookNow/' + tourId,
       headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
     );
     print(response.statusCode);
@@ -89,7 +87,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
     getTourDetails(this.tourId);
   }
 
- @override
+  @override
   void initState2() {
     // TODO: implement initState
     super.initState();
@@ -186,19 +184,6 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
                   ],
                 ),
                 SizedBox(height: 20),
-                // Container(
-                //   alignment: Alignment.centerLeft,
-                //   child: Text(
-                //     "${_tour["pricePerNight"].toString()}",
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 17,
-                //     ),
-                //     maxLines: 1,
-                //     textAlign: TextAlign.left,
-                //   ),
-                // ),
-                // SizedBox(height: 40),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -228,23 +213,32 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.book,
+        persistentFooterButtons: [
+          RaisedButton(
+            onPressed: () async {
+              SharedPreferences sharedPreferences =
+                  await SharedPreferences.getInstance();
+              String token = sharedPreferences.getString("token");
+              if (token != null) {
+                bookNow(_tour["tourId"].toString());
+              } else {
+                Navigator.of(context).pushNamed(Login.routeName);
+              }
+            },
+            padding: const EdgeInsets.all(0.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: <Color>[Colors.blueAccent, Colors.greenAccent],
+                ),
+              ),
+              padding: const EdgeInsets.all(10.0),
+              child: const Text('إحجز الآن',
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+            ),
           ),
-          onPressed: () async{
-            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-            String token = sharedPreferences.getString("token");
-            if(token != null) 
-            {
-              
-              bookNow(_tour["tourId"].toString());
-            }
-            else{
-             Navigator.of(context).pushNamed(Login.routeName);
-           }
-          },
-        ),
+        ],
       );
     } else {
       return Container(

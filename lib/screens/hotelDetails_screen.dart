@@ -21,9 +21,8 @@ class HotelDetailsScreen extends StatefulWidget {
 }
 
 class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
+  String _serverUrl = URL.serverUrl;
 
-   String  _serverUrl = URL.serverUrl; 
- 
   final String hotelId;
   final String hotelImage;
   final String hotelName;
@@ -40,18 +39,16 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
       _hotel = hotel;
     });
   }
-  
 
- Future bookNow(String hotelId) async {
-     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-     String token = sharedPreferences.getString("token");
+  Future bookNow(String hotelId) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token");
 
-     final response = await http.post('${_serverUrl}api/HotelBooking/BookNow/'+ hotelId,
-    
-          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
-      
-      );
-  print(response.statusCode);
+    final response = await http.post(
+      '${_serverUrl}api/HotelBooking/BookNow/' + hotelId,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       print(response.statusCode);
     } else {
@@ -61,7 +58,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
 
   Future<void> getHotelDetails(String hotelId) async {
     final response =
-        await http.get('${_serverUrl}api/Hotel/GetHotelDetails/'+ hotelId);
+        await http.get('${_serverUrl}api/Hotel/GetHotelDetails/' + hotelId);
 
     if (response.statusCode == 200) {
       setState(() {
@@ -91,7 +88,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     getHotelDetails(this.hotelId);
   }
 
- @override
+  @override
   void initState2() {
     // TODO: implement initState
     super.initState();
@@ -109,13 +106,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          actions: <Widget>[
-            // IconButton(
-            //   //
-            //   ),
-            //   onPressed: () {},
-            // ),
-          ],
+         
         ),
         body: ListView(
           children: <Widget>[
@@ -188,19 +179,6 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   ],
                 ),
                 SizedBox(height: 20),
-                // Container(
-                //   alignment: Alignment.centerLeft,
-                //   child: Text(
-                //     "${_tour["pricePerNight"].toString()}",
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 17,
-                //     ),
-                //     maxLines: 1,
-                //     textAlign: TextAlign.left,
-                //   ),
-                // ),
-                // SizedBox(height: 40),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -230,23 +208,32 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.book,
+        persistentFooterButtons: [
+          RaisedButton(
+            onPressed: () async {
+              SharedPreferences sharedPreferences =
+                  await SharedPreferences.getInstance();
+              String token = sharedPreferences.getString("token");
+              if (token != null) {
+                bookNow(_hotel["hotelId"].toString());
+              } else {
+                Navigator.of(context).pushNamed(Login.routeName);
+              }
+            },
+            padding: const EdgeInsets.all(0.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: <Color>[Colors.blueAccent, Colors.greenAccent],
+                ),
+              ),
+              padding: const EdgeInsets.all(10.0),
+              child: const Text('إحجز الآن',
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+            ),
           ),
-          onPressed: () async{
-            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-            String token = sharedPreferences.getString("token");
-            if(token != null) 
-            {
-              
-              bookNow(_hotel["hotelId"].toString());
-           }
-            else{
-             Navigator.of(context).pushNamed(Login.routeName);
-           }
-          },
-        ),
+        ],
       );
     } else {
       return Container(
