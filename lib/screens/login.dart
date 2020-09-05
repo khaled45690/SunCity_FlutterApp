@@ -27,15 +27,20 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  //final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+
   void _exceptionHandler() {
     // flutter defined function
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("لقد حدث خطأ"),
-          content: ((_statusCode == null) || _statusCode == 400)
+          content: ((_statusCode == null) ||
+                  (_statusCode == 400) ||
+                  (_statusCode == 401))
               ? new Text("برجاءالتأكد من إسم المستخدم وكلمة المرور")
               : new Text("لقد حدث خطأ برجاء الإتصال بالدعم الفني"),
           actions: <Widget>[
@@ -54,7 +59,9 @@ class _LoginState extends State<Login> {
 
   logIn(String email, String password) async {
     String uri = "${_serverUrl}api/User/Login";
-
+    setState(() {
+      _isLoading = true;
+    });
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var responseJson;
 
@@ -70,12 +77,14 @@ class _LoginState extends State<Login> {
     );
 
     setState(() {
-      _isLoading = false;
       _statusCode = response.statusCode;
     });
-    print(_statusCode);
 
     if (response.statusCode == 200) {
+       setState(() {
+      _isLoading = false;
+    });
+
       responseJson = json.decode(response.body);
       print(responseJson);
       if (response != null) {
@@ -84,11 +93,8 @@ class _LoginState extends State<Login> {
       }
     } else {
       setState(() {
-        _isLoading = false;
-      });
-
-      print(responseJson.body);
-      print(response.statusCode);
+      _isLoading = false;
+    });
     }
 
     return response;
@@ -168,96 +174,81 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("تسجيل الدخول"),
-          centerTitle: true,
-        ),
-        body: ListView(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(1.0),
-              child: Container(
-                margin: EdgeInsets.all(25),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      _buildEmail(),
-                      _buildPassworld(),
-                      Divider(),
-                      SizedBox(height: 20),
-                      RaisedButton(
-                          color: Colors.grey,
-                          child: Text(
-                            'تسجيل الدخول',
-                            style: TextStyle(color: Colors.white, fontSize: 17),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            if (!_formKey.currentState.validate()) {
-                              return _formKey;
-                            }
+    if (_isLoading == false) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text("تسجيل الدخول"),
+            centerTitle: true,
+          ),
+          body: ListView(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: Container(
+                  margin: EdgeInsets.all(25),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _buildEmail(),
+                        _buildPassworld(),
+                        Divider(),
+                        SizedBox(height: 20),
+                        RaisedButton(
+                            color: Colors.grey,
+                            child: Text(
+                              'تسجيل الدخول',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 17),
+                            ),
+                            onPressed: () async {
+                      
+                              if (!_formKey.currentState.validate()) {
+                                return _formKey;
+                              }
 
-                            logIn(_email, _password);
-                            // if (_statusCode == null) {
-                            //   print("*****************************${_statusCode}**********************************");
-                            //   return 
-                            //     //color: Colors.white,
-                                
-                            //         Center(child: CircularProgressIndicator());
-                              
-                            // }
+                              await logIn(_email, _password);
 
-                            _formKey.currentState.save();
-                            if (_statusCode == 200) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => new HomeScreen()));
-                              Navigator.of(context)
-                                  .pushNamed(HomeScreen.routeName);
-                             } 
-                             //else {
-                            //   _exceptionHandler();
-                            // }
-                          }),
-
-                      // FlatButton(
-                      //   child: Text(
-                      //     "نسيت كلمة المرور",
-                      //     style: TextStyle(
-                      //         fontSize: 20, fontWeight: FontWeight.bold),
-                      //   ),
-                      //   onPressed: () {
-                      //     _handlePressed();
-                      //   },
-                      // )
-                    ],
+                                   if (_statusCode == 200) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => new HomeScreen()));
+                                    Navigator.of(context)
+                                        .pushNamed(HomeScreen.routeName);
+                                  } else {
+                                    _exceptionHandler();
+                                  }
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: Container(
-            child: Padding(
-          padding:
-              const EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
-          child: FlatButton(
-            color: Colors.grey,
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(SignUp.routeName);
-            },
-            child: Text(
-              'ليس لدي حساب',
-              style: TextStyle(fontSize: 22, color: Colors.white),
-            ),
+            ],
           ),
-        )));
+          bottomNavigationBar: Container(
+              child: Padding(
+            padding:
+                const EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
+            child: FlatButton(
+              color: Colors.grey,
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(SignUp.routeName);
+              },
+              child: Text(
+                'ليس لدي حساب',
+                style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
+            ),
+          )));
+    } else {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
   }
 }

@@ -21,31 +21,30 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-
- 
-  String  _serverUrl = URL.serverUrl; 
+  String _serverUrl = URL.serverUrl;
 
   int _statusCode;
+  bool _isLoading = false;
   String _name;
   String _email;
   String _password;
   String _phoneNumber;
   String _confirmPassword;
 
-
-  
-
   submitForm(String name, String email, String phoneNumber, String password,
-      
-    String confirmPassword, File imageFile) async {
+      String confirmPassword, File imageFile) async {
+    setState(() {
+      _isLoading = true;
+    });
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-  
+    var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+
     var length = await imageFile.length();
 
     var request = new http.MultipartRequest(
-
         "POST", Uri.parse("${_serverUrl}api/Client/Registration"));
     var multipartFile = new http.MultipartFile('profileImage', stream, length,
         filename: basename(imageFile.path));
@@ -56,18 +55,27 @@ class _SignUpState extends State<SignUp> {
     request.fields["Password"] = _password;
     request.fields["ConfirmPassword"] = _confirmPassword;
     var response = await request.send();
-print("***************************************${response.statusCode}******************************************");
+    print(
+        "***************************************${response.statusCode}******************************************");
     setState(() {
       _statusCode = response.statusCode;
     });
 
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-      final responseJson = json.decode(value);
-      sharedPreferences.setString("token", responseJson["token"]);
+    if (_statusCode == 200) {
+      setState(() {
+        _isLoading = false;
+      });
 
-    
-    });
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+        final responseJson = json.decode(value);
+        sharedPreferences.setString("token", responseJson["token"]);
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   bool hidePass = true;
@@ -194,7 +202,7 @@ print("***************************************${response.statusCode}************
             validator: (String value) {
               if (value.isEmpty) {
                 return 'من فضلك أدخل رقم المويايل';
-              } else if (value.length < 14 || value.length > 14 ) {
+              } else if (value.length < 14 || value.length > 14) {
                 return "من فضلك أدخل 11 رقم";
               }
               return "";
@@ -245,16 +253,21 @@ print("***************************************${response.statusCode}************
 
   @override
   Widget build(BuildContext context) {
-
+   
     void _exceptionHandler() {
     // flutter defined function
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("لقد حدث خطأ"),
-          content: _statusCode == 400 ? new Text("برجاء إدخال البيانات بالشكل الصحيح") : new Text("لقد حدث خطأ برجاء الإتصال بالدعم الفني"),
+          content: ((_statusCode == null) ||
+                  (_statusCode == 400) ||
+                  (_statusCode == 401))
+              ? new Text("برجاء التأكد من ملئ البيانات بالشكل الصحيح")
+              : new Text("لقد حدث خطأ برجاءالإتصال بالدعم الفني"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -268,8 +281,7 @@ print("***************************************${response.statusCode}************
       },
     );
   }
-
-
+if(_isLoading == false){
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -321,23 +333,21 @@ print("***************************************${response.statusCode}************
                       'التسجيل',
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
-                    onPressed: () {
-                  submitForm(_name, _email, _phoneNumber,
-                          _password, _confirmPassword, _imageFile);
+                    onPressed: () async {
+                     await submitForm(_name, _email, _phoneNumber, _password,
+                          _confirmPassword, _imageFile);
 
-                           print(_statusCode);
+                      if (_statusCode == 200) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new HomeScreen()));
+                        Navigator.of(context).pushNamed(HomeScreen.routeName);
+                      }
 
-                       if (_statusCode == 200) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => new HomeScreen()));
-                          Navigator.of(context)
-                              .pushNamed(HomeScreen.routeName);
-                        }
-                        // else{
-                        //   _exceptionHandler();
-                        // }
+                      else {
+                        _exceptionHandler();
+                      }
                     },
                   ),
                   Row(
@@ -367,13 +377,33 @@ print("***************************************${response.statusCode}************
           ),
         ],
       ),
+      
     );
+  //    void validateForm() {
+  //   FormState formState = _formKey.currentState;
+  //   if (formState.validate()) {
+  //     Navigator.of(context).pushNamed(Login.routeName);
+  //   }
+  // }
+   
   }
-
-  void validateForm() {
-    FormState formState = _formKey.currentState;
-    if (formState.validate()) {
-//      Navigator.of(context).pushNamed(Login.routeName);
+  
+  else {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+      );
     }
+
   }
-}
+ 
+  }
+  
+  
+
+
+ 
+  
+
+
+
