@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:SunCity_FlutterApp/screens/login.dart';
+//import 'package:flutter_launch/flutter_launch.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -211,11 +212,14 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
         persistentFooterButtons: [
           RaisedButton(
             onPressed: () async {
+           
+ 
               SharedPreferences sharedPreferences =
                   await SharedPreferences.getInstance();
               String token = sharedPreferences.getString("token");
               if (token != null) {
                 bookNow(_hotel["hotelId"].toString());
+               // await FlutterLaunch.launchWathsApp(phone: "01279899478", message: "Hello");
               } else {
                 Navigator.of(context).pushNamed(Login.routeName);
               }

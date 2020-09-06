@@ -25,6 +25,58 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   final String tourId;
   final String tourImage;
   final String tourName;
+  int _statusCode;
+  bool _isLoading = false;
+
+void _exceptionHandler(int statusCode , String tourName) {
+    // flutter defined function
+if(statusCode == 200){
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("تم الحجز"),
+          content: Text(" بنجاح  $tourName : تم حجز الرحله"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("إغلاق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );}
+    else
+    {
+       showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("لقد حدث خطأ"),
+          content: (_statusCode == 400)
+              ? new Text("تم حجز هذه الرحله اليوم بالفعل")
+              : new Text("لقد حدث خطأ برجاء الإتصال بالدعم الفني"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("إغلاق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    }
+    
+  }
+
 
   _TourDetailsScreenState({this.tourId, this.tourImage, this.tourName});
 
@@ -37,6 +89,11 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
       headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
     );
     print(response.statusCode);
+      
+      setState(() {
+        _statusCode = response.statusCode;
+      });
+
     if (response.statusCode == 200) {
       print(response.statusCode);
     } else {
@@ -95,7 +152,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   }
 
   Widget build(BuildContext context) {
-    if (_tour != null) {
+    if (_tour != null || _isLoading == true) {
       return Scaffold(
         appBar: AppBar(
           title: Text("الرحلات"),
@@ -216,11 +273,21 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
         persistentFooterButtons: [
           RaisedButton(
             onPressed: () async {
+               setState(() {
+                 _isLoading = true;
+                });
               SharedPreferences sharedPreferences =
                   await SharedPreferences.getInstance();
               String token = sharedPreferences.getString("token");
               if (token != null) {
                 bookNow(_tour["tourId"].toString());
+                // print(" **************************************** ${_statusCode} ****************************************");
+                //  if (_statusCode == 200 || _statusCode == 400 ) {
+                // _exceptionHandler(_statusCode, _tour["tourName"].toString());
+                // setState(() {
+                //   _statusCode = null;
+                // });
+               //  }
               } else {
                 Navigator.of(context).pushNamed(Login.routeName);
               }
@@ -247,6 +314,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
       );
     }
   }
+
 
   buildSlider() {
     return Container(

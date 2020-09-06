@@ -236,7 +236,6 @@ class _LoginState extends State<Login> {
               color: Colors.grey,
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed(SignUp.routeName);
               },
               child: Text(
                 'ليس لدي حساب',

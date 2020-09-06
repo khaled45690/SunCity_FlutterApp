@@ -80,7 +80,7 @@ class _AppDrawerState extends State<AppDrawer> {
         child: ListView(children: <Widget>[
       // Image.asset( "assets/Images/beach_23-wallpaper-1366x768.jpg"
       new UserAccountsDrawerHeader(
-        accountName: Text("مرحباا"),
+        accountName: Text("مرحباا" ,style: TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold)),
         accountEmail: Text(_profile == null
             ? "SunCity User"
             : _profile["clientName"].toString()),

@@ -77,7 +77,7 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
                       alignment: Alignment.topCenter,
                       children: <Widget>[
                         Positioned(
-                          bottom: 15.0,
+                          bottom: 5.0,
                           child: Container(
                             height: 120.0,
                             width: 350.0,
@@ -101,7 +101,7 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
                                       topHotel["cityName"].toString(),
                                       style: TextStyle(color: Colors.grey),
                                     ),
-                                    SizedBox(height: .1),
+                                 //   SizedBox(height: .1),
                                     Text(
                                       'ج ${topHotel["pricePerNight"].toString()}',
                                       style: TextStyle(
