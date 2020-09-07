@@ -1,6 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
+import 'package:SunCity_FlutterApp/screens/login.dart';
+//import 'package:flutter_launch/flutter_launch.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HotelDetailsScreen extends StatefulWidget {
   static const routeName = '/HotelsDetailsScreen';
@@ -17,9 +22,8 @@ class HotelDetailsScreen extends StatefulWidget {
 }
 
 class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
- 
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
- 
+  String _serverUrl = URL.serverUrl;
+
   final String hotelId;
   final String hotelImage;
   final String hotelName;
@@ -37,7 +41,21 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     });
   }
 
- 
+  Future bookNow(String hotelId) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token");
+
+    final response = await http.post(
+      '${_serverUrl}api/HotelBooking/BookNow/' + hotelId,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+    } else {
+      throw Exception('An Error occurred');
+    }
+  }
 
   Future<void> getHotelDetails(String hotelId) async {
     final response =
@@ -71,6 +89,13 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     getHotelDetails(this.hotelId);
   }
 
+  @override
+  void initState2() {
+    // TODO: implement initState
+    super.initState();
+    bookNow(this.hotelId);
+  }
+
   Widget build(BuildContext context) {
     if (_hotel != null) {
       return Scaffold(
@@ -82,13 +107,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          actions: <Widget>[
-            // IconButton(
-            //   //
-            //   ),
-            //   onPressed: () {},
-            // ),
-          ],
+         
         ),
         body: ListView(
           children: <Widget>[
@@ -161,19 +180,6 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   ],
                 ),
                 SizedBox(height: 20),
-                // Container(
-                //   alignment: Alignment.centerLeft,
-                //   child: Text(
-                //     "${_tour["pricePerNight"].toString()}",
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 17,
-                //     ),
-                //     maxLines: 1,
-                //     textAlign: TextAlign.left,
-                //   ),
-                // ),
-                // SizedBox(height: 40),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -203,12 +209,35 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.book,
+        persistentFooterButtons: [
+          RaisedButton(
+            onPressed: () async {
+           
+ 
+              SharedPreferences sharedPreferences =
+                  await SharedPreferences.getInstance();
+              String token = sharedPreferences.getString("token");
+              if (token != null) {
+                bookNow(_hotel["hotelId"].toString());
+               // await FlutterLaunch.launchWathsApp(phone: "01279899478", message: "Hello");
+              } else {
+                Navigator.of(context).pushNamed(Login.routeName);
+              }
+            },
+            padding: const EdgeInsets.all(0.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: <Color>[Colors.blueAccent, Colors.greenAccent],
+                ),
+              ),
+              padding: const EdgeInsets.all(10.0),
+              child: const Text('إحجز الآن',
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+            ),
           ),
-          onPressed: () {},
-        ),
+        ],
       );
     } else {
       return Container(

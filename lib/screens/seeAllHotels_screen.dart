@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
+
 import '../screens/hotelDetails_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -12,8 +14,7 @@ class SeeAllHotelsScreen extends StatefulWidget {
 
 class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
   
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-  //String _serverUrl = "http://192.168.1.107:5001/";
+  String  _serverUrl = URL.serverUrl; 
 
   List _hotels;
   List get hotelsData => _hotels;
@@ -76,7 +77,7 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
                       alignment: Alignment.topCenter,
                       children: <Widget>[
                         Positioned(
-                          bottom: 15.0,
+                          bottom: 5.0,
                           child: Container(
                             height: 120.0,
                             width: 350.0,
@@ -100,7 +101,7 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
                                       topHotel["cityName"].toString(),
                                       style: TextStyle(color: Colors.grey),
                                     ),
-                                    SizedBox(height: .1),
+                                 //   SizedBox(height: .1),
                                     Text(
                                       'ج ${topHotel["pricePerNight"].toString()}',
                                       style: TextStyle(

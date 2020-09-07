@@ -1,3 +1,5 @@
+import 'package:SunCity_FlutterApp/models/url_File.dart';
+
 import '../screens/hotelDetails_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:SunCity_FlutterApp/models/Provider_File.dart';
@@ -5,8 +7,9 @@ import 'package:SunCity_FlutterApp/screens/seeAllHotels_screen.dart';
 import 'package:flutter/material.dart';
 
 class HotelCarousel extends StatelessWidget {
-  final String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-  //final String _serverUrl = "http://192.168.1.107:5001/";
+  
+   String  _serverUrl = URL.serverUrl; 
+   
   @override
   Widget build(BuildContext context) {
     var globalProvider = Provider.of<GlobalProvider>(context);
@@ -30,6 +33,7 @@ class HotelCarousel extends StatelessWidget {
                     'مشاهدة الكل',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
+                        fontFamily: "Cairo",
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.0),
@@ -38,6 +42,7 @@ class HotelCarousel extends StatelessWidget {
                 Text(
                   'أفضل الفنادق',
                   style: TextStyle(
+                    fontFamily: "Cairo",
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.5),
@@ -46,7 +51,7 @@ class HotelCarousel extends StatelessWidget {
             ),
           ),
           Container(
-              height: 300.0,
+              height: 290.0,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: globalProvider.topHotelsData.length,
@@ -65,23 +70,22 @@ class HotelCarousel extends StatelessWidget {
                                 )),
                       );
                     },
-                    child: Container(
-                      margin: EdgeInsets.all(5.0),
-                      width: 240.0,
-                      height: 285.0,
+                   child: Container(
+                      margin: EdgeInsets.all(3.0),
+                      width: 190.0,
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: <Widget>[
                           Positioned(
-                            bottom: 15.0,
+                            bottom: 0.0,
                             child: Container(
                               height: 120.0,
-                              width: 250.0,
+                              width: 200.0,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20.0)),
                               child: Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: EdgeInsets.all(5.0),
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
@@ -89,15 +93,16 @@ class HotelCarousel extends StatelessWidget {
                                         topHotel["hotelName"].toString(),
                                         style: TextStyle(
                                             fontSize: 22.0,
+                                            fontFamily: "Cairo",
                                             fontWeight: FontWeight.w600,
                                             letterSpacing: 1.2),
                                       ),
-                                      SizedBox(height: 2.0),
+                                     // SizedBox(height: 0.0),
                                       Text(
                                         topHotel["cityName"].toString(),
                                         style: TextStyle(color: Colors.grey),
                                       ),
-                                      SizedBox(height: .1),
+                                      //SizedBox(height: 5.0),
                                       Text(
                                         'ج ${topHotel["pricePerNight"].toString()}',
                                         style: TextStyle(
@@ -125,7 +130,7 @@ class HotelCarousel extends StatelessWidget {
                                 _serverUrl +
                                     topHotel["mainHotelImage"].toString(),
                                 height: 180.0,
-                                width: 220.0,
+                                width: 180.0,
                                 fit: BoxFit.cover,
                               ),
                             ),

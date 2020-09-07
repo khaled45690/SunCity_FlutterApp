@@ -3,6 +3,7 @@ import 'package:SunCity_FlutterApp/widgets/city_Carousel.dart';
 import 'package:SunCity_FlutterApp/widgets/hotel_carousel.dart';
 import 'package:flutter/material.dart';
 
+
 class HomeScreen extends StatefulWidget {
   static const routeName = '/HomeScreen';
 
@@ -14,13 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   int _currentTab = 0;
-  // List<IconData> _icons = [
-  //   FontAwesomeIcons.hiking,
-  //   FontAwesomeIcons.biking,
-  //   FontAwesomeIcons.walking,
-  //   FontAwesomeIcons.biking,
-  //   FontAwesomeIcons.walking,
-  // ];
 
   Widget _buildIcon(int index) {
     return GestureDetector(
@@ -64,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 'إختر وجهتك',
                 style: TextStyle(
                   fontSize: 30.0,
+                  fontFamily: "Cairo",
                   fontWeight: FontWeight.bold,
                 ),
               ),

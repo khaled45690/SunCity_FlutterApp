@@ -36,7 +36,7 @@ class SunCity_FlutterApp extends StatelessWidget {
     return MaterialApp(
       title: Constants.appName,
       //theme: Constants.lightTheme,
-      // darkTheme: Constants.darkTheme,
+     //darkTheme: Constants.darkTheme,
 
       // title: 'SunCity_FlutterApp UI',
       debugShowCheckedModeBanner: false,

@@ -1,3 +1,5 @@
+import 'package:SunCity_FlutterApp/models/url_File.dart';
+
 import '../screens/seeAllCities_screen.dart';
 import '../screens/cityTours_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:SunCity_FlutterApp/models/Provider_File.dart';
 
 class CityCarousel extends StatelessWidget {
-  final String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-//final String _serverUrl = "http://192.168.1.107:5001/";
+  
+   String  _serverUrl = URL.serverUrl; 
+
   @override
   Widget build(BuildContext context) {
     var globalProvider = Provider.of<GlobalProvider>(context);
@@ -31,6 +34,7 @@ class CityCarousel extends StatelessWidget {
                     'مشاهدة الكل',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
+                        fontFamily: "Cairo",
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.0),
@@ -41,6 +45,7 @@ class CityCarousel extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   style: TextStyle(
                       fontSize: 20.0,
+                      fontFamily: "Cairo",                      
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.5),
                 ),
@@ -48,7 +53,7 @@ class CityCarousel extends StatelessWidget {
             ),
           ),
           Container(
-              height: 300.0,
+              height: 275.0,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: globalProvider.topCitiesData.length,
@@ -69,15 +74,15 @@ class CityCarousel extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      margin: EdgeInsets.all(10.0),
-                      width: 210.0,
+                      margin: EdgeInsets.all(3.0),
+                      width: 190.0,
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: <Widget>[
                           Positioned(
-                            bottom: 15.0,
+                            bottom: 10.0,
                             child: Container(
-                              height: 120.0,
+                              height: 100.0,
                               width: 200.0,
                               decoration: BoxDecoration(
                                   color: Colors.white,
@@ -93,6 +98,7 @@ class CityCarousel extends StatelessWidget {
                                         '${cities["toursCount"].toString()} عدد الرحلات',
                                         style: TextStyle(
                                             fontSize: 22.0,
+                                            fontFamily: "Cairo",
                                             fontWeight: FontWeight.w600,
                                             letterSpacing: 1.2),
                                       ),

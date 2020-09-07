@@ -1,9 +1,9 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
+import 'package:SunCity_FlutterApp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/RoundedImageWidget.dart';
 import 'login.dart';
 import 'dart:io';
@@ -14,62 +14,70 @@ import 'package:http/http.dart' as http;
 File _imageFile;
 
 class SignUp extends StatefulWidget {
-  static const routeName = '/signup';
+  static const routeName = '/Signup';
 
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
-  upload(String imageFile) async {
-    String url = "http://algosys-001-site16.ctempurl.com/api/Admin/SaveImage";
-    var request = http.MultipartRequest('POST', Uri.parse(url));
+  String _serverUrl = URL.serverUrl;
 
-    request.files.add(await http.MultipartFile.fromPath('picture', imageFile));
-    var res = await request.send();
-    final respStr = await res.stream.bytesToString();
-    print(respStr);
-  }
-
+  int _statusCode;
+  bool _isLoading = false;
   String _name;
   String _email;
   String _password;
-  String _url;
   String _phoneNumber;
   String _confirmPassword;
 
   submitForm(String name, String email, String phoneNumber, String password,
-      String confirmPassword, File image) async {
-    // String uri = "http://192.168.1.27:3001/api/1";
-    String uri =
-        "http://algosys-001-site16.ctempurl.com/api/Client/Registration";
-    // String uri = "http://192.168.1.27:3001/api/1";
+      String confirmPassword, File imageFile) async {
+    setState(() {
+      _isLoading = true;
+    });
 
-    String photo = image != null
-        ? 'data:image/jpg;base64' + base64Encode(image.readAsBytesSync())
-        : '';
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    final response = await http.post(
-      uri,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        "UserName": name,
-        "Email": email,
-        "Mobile": phoneNumber,
-        "profileImage": null,
-        "Password": password,
-        "ConfirmPassword": confirmPassword,
-      }),
-    );
+    var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
 
-    final responseJson = json.decode(response.body);
+    var length = await imageFile.length();
 
-    print(responseJson);
+    var request = new http.MultipartRequest(
+        "POST", Uri.parse("${_serverUrl}api/Client/Registration"));
+    var multipartFile = new http.MultipartFile('profileImage', stream, length,
+        filename: basename(imageFile.path));
+    request.files.add(multipartFile);
+    request.fields["UserName"] = _name;
+    request.fields["Email"] = _email;
+    request.fields["Mobile"] = _phoneNumber;
+    request.fields["Password"] = _password;
+    request.fields["ConfirmPassword"] = _confirmPassword;
+    var response = await request.send();
+    print(
+        "***************************************${response.statusCode}******************************************");
+    setState(() {
+      _statusCode = response.statusCode;
+    });
+
+    if (_statusCode == 200) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+        final responseJson = json.decode(value);
+        sharedPreferences.setString("token", responseJson["token"]);
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
-  String groupValue = "male";
   bool hidePass = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -191,14 +199,14 @@ class _SignUpState extends State<SignUp> {
               hintText: 'رقم الموبايل',
               icon: Icon(Icons.phone),
             ),
-            // validator: (String value) {
-            //   if (value.isEmpty) {
-            //     return 'من فضلك أدخل رقم المويايل';
-            //   } else if (value.length < 14) {
-            //     return "من فضلك أدخل 11 رقم";
-            //   }
-            //   return "";
-            // },
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'من فضلك أدخل رقم المويايل';
+              } else if (value.length < 14 || value.length > 14) {
+                return "من فضلك أدخل 11 رقم";
+              }
+              return "";
+            },
             onChanged: (String value) {
               _phoneNumber = value;
             },
@@ -245,6 +253,35 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+   
+    void _exceptionHandler() {
+    // flutter defined function
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("لقد حدث خطأ"),
+          content: ((_statusCode == null) ||
+                  (_statusCode == 400) ||
+                  (_statusCode == 401))
+              ? new Text("برجاء التأكد من ملئ البيانات بالشكل الصحيح")
+              : new Text("لقد حدث خطأ برجاءالإتصال بالدعم الفني"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("إغلاق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+if(_isLoading == false){
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -277,7 +314,7 @@ class _SignUpState extends State<SignUp> {
                           onPressed: () async {
                             final picked = await ImagePicker.pickImage(
                                 source: ImageSource.gallery);
-                            upload(picked.path);
+                            //  saveImage(picked);
                             setState(() {
                               _imageFile = picked;
                             });
@@ -296,9 +333,21 @@ class _SignUpState extends State<SignUp> {
                       'التسجيل',
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
-                    onPressed: () {
-                      submitForm(_name, _email, _phoneNumber, _password,
+                    onPressed: () async {
+                     await submitForm(_name, _email, _phoneNumber, _password,
                           _confirmPassword, _imageFile);
+
+                      if (_statusCode == 200) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new HomeScreen()));
+                        Navigator.of(context).pushNamed(HomeScreen.routeName);
+                      }
+
+                      else {
+                        _exceptionHandler();
+                      }
                     },
                   ),
                   Row(
@@ -308,6 +357,7 @@ class _SignUpState extends State<SignUp> {
                         child: InkWell(
                           child: new Text(
                             "لدي حساب بالفعل",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.red.shade900,
                                 fontWeight: FontWeight.bold,
@@ -327,13 +377,33 @@ class _SignUpState extends State<SignUp> {
           ),
         ],
       ),
+      
     );
+  //    void validateForm() {
+  //   FormState formState = _formKey.currentState;
+  //   if (formState.validate()) {
+  //     Navigator.of(context).pushNamed(Login.routeName);
+  //   }
+  // }
+   
   }
-
-  void validateForm() {
-    FormState formState = _formKey.currentState;
-    if (formState.validate()) {
-//      Navigator.of(context).pushNamed(Login.routeName);
+  
+  else {
+      return Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+      );
     }
+
   }
-}
+ 
+  }
+  
+  
+
+
+ 
+  
+
+
+

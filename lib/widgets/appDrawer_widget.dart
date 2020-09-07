@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:SunCity_FlutterApp/models/url_File.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/profile_screen.dart';
 import '../screens/home_screen.dart';
@@ -12,56 +13,55 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  String _serverUrl = "http://algosys-001-site16.ctempurl.com/";
-   //String _serverUrl = "http://192.168.1.107:5001/";
- 
-  String _token = null;
+  
+   String  _serverUrl = URL.serverUrl; 
+
+  String _token;
 
   String get token => _token;
 
-  var _profile = null;
+  var _profile;
 
   String get hotelData => _profile;
 
-  set token(String token)
-  {
+  set token(String token) {
     setState(() {
-       _token = token;
+      _token = token;
     });
   }
 
-  set profileDataSetter(var profile ) {
+  set profileDataSetter(var profile) {
     setState(() {
       _profile = profile;
-     
     });
   }
 
   Future<String> appDrawerData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.getString("token");
-      String  token = "Bearer " + sharedPreferences.getString("token");
-      
-    print("Token = *****************************************************" +token + "******************************************************");
-    final response = await http.get('${_serverUrl}api/Client/ClientAppDrawerData', 
-    headers: {
+    String token = "Bearer ${sharedPreferences.getString("token")}";
+
+    print(
+        "Token = ***************************************************** $token ******************************************************");
+    final response = await http.get(
+      '${_serverUrl}api/Client/ClientAppDrawerData',
+      headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': token
-      }, 
-      
-      );
+      },
+    );
 
-     print("****************************************${response.statusCode}***********************************************");
+    print("****************************************${response.statusCode}***********************************************");
 
     if (response.statusCode == 200) {
       setState(() {
         _profile = json.decode(response.body);
-         _token = token;
+        _token = token;
         print(_profile);
       });
 
-      return null;
+      //return response.toString();
     } else {
       throw Exception('Failed to Get profile datta');
     }
@@ -76,27 +76,24 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    appDrawerData();
     return Drawer(
-     
         child: ListView(children: <Widget>[
-     // Image.asset( "assets/Images/beach_23-wallpaper-1366x768.jpg"
+      // Image.asset( "assets/Images/beach_23-wallpaper-1366x768.jpg"
       new UserAccountsDrawerHeader(
-        accountName: Text("مرحباا"),
-        accountEmail: Text( _profile == null ? "SunCity User" :  _profile["clientName"].toString() ),
+        accountName: Text("مرحباا" ,style: TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold)),
+        accountEmail: Text(_profile == null
+            ? "SunCity User"
+            : _profile["clientName"].toString()),
         currentAccountPicture: GestureDetector(
-          child: new CircleAvatar(
-            backgroundColor: Colors.white,
-            child: _profile == null ? Icon(Icons.account_circle ,
-            size: 60,
+          child: _profile != null ?  CircleAvatar(
+             
+            backgroundImage: NetworkImage(_serverUrl + _profile["profileImage"].toString())
+                 
+          ): CircleAvatar(
+             
+            backgroundImage: AssetImage("assets/Images/splash_icon.png"),
 
-            )
-            : Image.network( _profile == null ? Icons.image :_serverUrl + _profile["profileImage"].toString(),
-
-              height: 30.0,
-              width: 30.0,
-              fit: BoxFit.cover,
-            ),
+                 
           ),
         ),
         decoration: new BoxDecoration(color: Color(0xff3EBACE)),
@@ -118,41 +115,41 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ),
       ),
+      // InkWell(
+      //   onTap: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (_) => ProfileScreen(),
+      //       ),
+      //     );
+      //   },
+      //   child: ListTile(
+      //     title: Text("الحساب"),
+      //     leading: Icon(
+      //       Icons.account_circle,
+      //       color: Colors.blue,
+      //     ),
+      //   ),
+      // ),
+      // InkWell(
+      //   child: ListTile(
+      //     title: Text("الدعم الفني"),
+      //     leading: Icon(
+      //       Icons.timeline,
+      //       color: Colors.blue,
+      //     ),
+      //   ),
+      // ),
       InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => ProfileScreen(),
-            ),
-          );
+        onTap: () async {
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          _token != null
+              ? sharedPreferences.remove("token")
+              : Navigator.of(context).pushNamed(Login.routeName);
         },
         child: ListTile(
-          title: Text("الحساب"),
-          leading: Icon(
-            Icons.account_circle,
-            color: Colors.blue,
-          ),
-        ),
-      ),
-      InkWell(
-        child: ListTile(
-          title: Text("الدعم الفني"),
-          leading: Icon(
-            Icons.timeline,
-            color: Colors.blue,
-          ),
-        ),
-      ),
-      InkWell(
-        onTap: () {
-          
-          _token != null ? _token = null :
-          Navigator.of(context).pushNamed(Login.routeName);
-        },
-        child: ListTile(
-            
-
           title: Text(_token != null ? "تسجيل الخروج" : "تسجيل الدخول"),
           leading: Icon(
             Icons.close,
