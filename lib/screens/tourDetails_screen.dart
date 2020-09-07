@@ -28,7 +28,7 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
   int _statusCode;
   bool _isLoading = false;
 
-void _exceptionHandler(int statusCode , String tourName) {
+void _exceptionHandler(int statusCode) {
     // flutter defined function
 if(statusCode == 200){
   showDialog(
@@ -36,8 +36,8 @@ if(statusCode == 200){
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("تم الحجز"),
-          content: Text(" بنجاح  $tourName : تم حجز الرحله"),
+          title: new Text("تم الحجز" , textAlign: TextAlign.center),
+          content: Text("لقد تم حجز الرحله بنجاح"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -57,7 +57,7 @@ if(statusCode == 200){
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("لقد حدث خطأ"),
+          title: new Text("لقد حدث خطأ" , textAlign: TextAlign.center),
           content: (_statusCode == 400)
               ? new Text("تم حجز هذه الرحله اليوم بالفعل")
               : new Text("لقد حدث خطأ برجاء الإتصال بالدعم الفني"),
@@ -79,8 +79,12 @@ if(statusCode == 200){
 
 
   _TourDetailsScreenState({this.tourId, this.tourImage, this.tourName});
-
+ 
   Future bookNow(String tourId) async {
+    setState(() {
+      _isLoading = true;
+    });
+    
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString("token");
 
@@ -91,6 +95,7 @@ if(statusCode == 200){
     print(response.statusCode);
       
       setState(() {
+        _isLoading = false;
         _statusCode = response.statusCode;
       });
 
@@ -152,10 +157,10 @@ if(statusCode == 200){
   }
 
   Widget build(BuildContext context) {
-    if (_tour != null || _isLoading == true) {
+    if (_tour != null ) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("الرحلات"),
+          title: Text("الرحلات" , style: TextStyle( fontFamily: "Cairo",),),
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
@@ -187,8 +192,9 @@ if(statusCode == 200){
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "${_tour["tourName"].toString()}",
+                        '${_tour["tourName"].toString()}',
                         style: TextStyle(
+                           fontFamily: "Cairo",
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
                         ),
@@ -203,12 +209,14 @@ if(statusCode == 200){
                           'ج ${_tour["pricePerNight"].toString()}',
                           style: TextStyle(
                             fontSize: 22.0,
+                             fontFamily: "Cairo",
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         Text(
                           'لكل فرد',
                           style: TextStyle(
+                             fontFamily: "Cairo",
                             color: Colors.grey,
                             fontWeight: FontWeight.w600,
                           ),
@@ -230,6 +238,7 @@ if(statusCode == 200){
                       child: Text(
                         "${_tour["location"].toString()}",
                         style: TextStyle(
+                          fontFamily: "Cairo",
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
                           color: Colors.blueGrey[300],
@@ -246,6 +255,7 @@ if(statusCode == 200){
                   child: Text(
                     "Details",
                     style: TextStyle(
+                       fontFamily: "Cairo",
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -259,6 +269,7 @@ if(statusCode == 200){
                   child: Text(
                     "${_tour["description"].toString()}",
                     style: TextStyle(
+                       fontFamily: "Cairo",
                       fontWeight: FontWeight.normal,
                       fontSize: 15.0,
                     ),
@@ -273,21 +284,40 @@ if(statusCode == 200){
         persistentFooterButtons: [
           RaisedButton(
             onPressed: () async {
-               setState(() {
-                 _isLoading = true;
-                });
+            
               SharedPreferences sharedPreferences =
                   await SharedPreferences.getInstance();
               String token = sharedPreferences.getString("token");
               if (token != null) {
                 bookNow(_tour["tourId"].toString());
+
+                showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("تم الحجز" , textAlign: TextAlign.center),
+          content: Text("لقد تم حجز الرحله بنجاح" , textAlign: TextAlign.center ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("إغلاق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
                 // print(" **************************************** ${_statusCode} ****************************************");
                 //  if (_statusCode == 200 || _statusCode == 400 ) {
-                // _exceptionHandler(_statusCode, _tour["tourName"].toString());
-                // setState(() {
-                //   _statusCode = null;
-                // });
-               //  }
+                // _exceptionHandler(_statusCode);
+                // // setState(() {
+                // //   _statusCode = null;
+                  
+                // // });
+                // }
               } else {
                 Navigator.of(context).pushNamed(Login.routeName);
               }
@@ -302,7 +332,7 @@ if(statusCode == 200){
               ),
               padding: const EdgeInsets.all(10.0),
               child: const Text('إحجز الآن',
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20 , fontFamily: "Cairo",)),
             ),
           ),
         ],

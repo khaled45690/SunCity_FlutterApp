@@ -100,13 +100,14 @@ class HotelCarousel extends StatelessWidget {
                                      // SizedBox(height: 0.0),
                                       Text(
                                         topHotel["cityName"].toString(),
-                                        style: TextStyle(color: Colors.grey),
+                                        style: TextStyle(fontFamily: "Cairo", color: Colors.grey),
                                       ),
                                       //SizedBox(height: 5.0),
                                       Text(
                                         'ج ${topHotel["pricePerNight"].toString()}',
                                         style: TextStyle(
                                           fontSize: 18.0,
+                                          fontFamily: "Cairo",
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),

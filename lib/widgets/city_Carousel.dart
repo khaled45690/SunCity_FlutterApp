@@ -104,7 +104,7 @@ class CityCarousel extends StatelessWidget {
                                       ),
                                       Text(
                                         '${cities["description"].toString()}',
-                                        style: TextStyle(color: Colors.grey),
+                                        style: TextStyle(fontFamily: "Cairo", color: Colors.grey),
                                       ),
                                     ]),
                               ),
@@ -143,6 +143,7 @@ class CityCarousel extends StatelessWidget {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18.0,
+                                            fontFamily: "Cairo",
                                             fontWeight: FontWeight.w600,
                                             letterSpacing: 1.2),
                                       ),
@@ -159,6 +160,7 @@ class CityCarousel extends StatelessWidget {
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 14.0,
+                                                fontFamily: "Cairo",
                                                 fontWeight: FontWeight.w600,
                                                 letterSpacing: 1.2),
                                           ),

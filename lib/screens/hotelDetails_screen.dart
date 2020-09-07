@@ -100,7 +100,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     if (_hotel != null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("أفضل الفنادق"),
+          title: Text("أفضل الفنادق" , style: TextStyle( fontFamily: "Cairo",),),
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
@@ -128,6 +128,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                       child: Text(
                         "${_hotel["hotelName"].toString()}",
                         style: TextStyle(
+                          fontFamily: "Cairo",
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
                         ),
@@ -142,6 +143,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                           'ج ${_hotel["pricePerNight"].toString()}',
                           style: TextStyle(
                             fontSize: 22.0,
+                            fontFamily: "Cairo",
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -149,6 +151,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                           'لكل فرد',
                           style: TextStyle(
                             color: Colors.grey,
+                            fontFamily: "Cairo",
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -169,6 +172,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                       child: Text(
                         "${_hotel["location"].toString()}",
                         style: TextStyle(
+                          fontFamily: "Cairo",
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
                           color: Colors.blueGrey[300],
@@ -185,6 +189,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   child: Text(
                     "Details",
                     style: TextStyle(
+                      fontFamily: "Cairo",
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -198,6 +203,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   child: Text(
                     "${_hotel["description"].toString()}",
                     style: TextStyle(
+                      fontFamily: "Cairo",
                       fontWeight: FontWeight.normal,
                       fontSize: 15.0,
                     ),
@@ -219,6 +225,25 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
               String token = sharedPreferences.getString("token");
               if (token != null) {
                 bookNow(_hotel["hotelId"].toString());
+                                showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("تم الحجز" , textAlign: TextAlign.center),
+          content: Text("لقد تم حجز الفندق بنجاح" , textAlign: TextAlign.center ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("إغلاق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
                // await FlutterLaunch.launchWathsApp(phone: "01279899478", message: "Hello");
               } else {
                 Navigator.of(context).pushNamed(Login.routeName);
@@ -234,7 +259,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
               ),
               padding: const EdgeInsets.all(10.0),
               child: const Text('إحجز الآن',
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+                  textAlign: TextAlign.center, style: TextStyle(fontFamily: "Cairo",fontSize: 20)),
             ),
           ),
         ],

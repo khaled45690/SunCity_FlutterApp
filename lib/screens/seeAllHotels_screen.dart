@@ -48,7 +48,7 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
   Widget build(BuildContext context) {
     if (_hotels != null) {
       return Scaffold(
-        appBar: AppBar(title: Text("أفضل الفنادق")),
+        appBar: AppBar(title: Text("أفضل الفنادق" , style: TextStyle( fontFamily: "Cairo",),)),
         body: Container(
             height: 800.0,
             child: ListView.builder(
@@ -93,19 +93,21 @@ class _SeeAllHotelsScreenState extends State<SeeAllHotelsScreen> {
                                       topHotel["hotelName"].toString(),
                                       style: TextStyle(
                                           fontSize: 22.0,
+                                           fontFamily: "Cairo",
                                           fontWeight: FontWeight.w600,
                                           letterSpacing: 1.2),
                                     ),
                                     SizedBox(height: 2.0),
                                     Text(
                                       topHotel["cityName"].toString(),
-                                      style: TextStyle(color: Colors.grey),
+                                      style: TextStyle(color: Colors.grey ,  fontFamily: "Cairo",),
                                     ),
                                  //   SizedBox(height: .1),
                                     Text(
                                       'ج ${topHotel["pricePerNight"].toString()}',
                                       style: TextStyle(
                                         fontSize: 18.0,
+                                         fontFamily: "Cairo",
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),

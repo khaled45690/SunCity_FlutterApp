@@ -51,7 +51,7 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
   Widget build(BuildContext context) {
     if (_cities != null) {
       return Scaffold(
-          appBar: AppBar(title: Text("أفضل المدن")),
+          appBar: AppBar(title: Text("أفضل المدن" ,style: TextStyle(fontFamily: "Cairo",),)),
           body: Container(
               height: 800.0,
               child: ListView.builder(
@@ -110,6 +110,7 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                                       Text(
                                         cities["cityName"].toString(),
                                         style: TextStyle(
+                                          fontFamily: "Cairo",
                                             color: Colors.white,
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.w600,
@@ -126,6 +127,7 @@ class _SeeAllCitiesScreenState extends State<SeeAllCitiesScreen> {
                                           Text(
                                             cities["countryName"].toString(),
                                             style: TextStyle(
+                                              fontFamily: "Cairo",
                                                 color: Colors.white,
                                                 fontSize: 14.0,
                                                 fontWeight: FontWeight.w600,

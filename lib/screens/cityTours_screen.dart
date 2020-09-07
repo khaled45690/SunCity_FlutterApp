@@ -128,6 +128,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 35.0,
+                          fontFamily: "Cairo",
                           fontWeight: FontWeight.w600,
                           letterSpacing: 1.2),
                     ),
@@ -144,6 +145,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                           style: TextStyle(
                               color: Colors.white70,
                               fontSize: 20.0,
+                               fontFamily: "Cairo",
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.2),
                         ),
@@ -204,6 +206,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                                         '${tour["tourName"].toString()}',
                                         style: TextStyle(
                                           fontSize: 18.0,
+                                           fontFamily: "Cairo",
                                           fontWeight: FontWeight.w600,
                                         ),
                                         overflow: TextOverflow.ellipsis,
@@ -216,6 +219,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                                           'ج ${tour["pricePerNight"].toString()}',
                                           style: TextStyle(
                                             fontSize: 22.0,
+                                             fontFamily: "Cairo",
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -223,6 +227,7 @@ class _CityToursScreenState extends State<CityToursScreen> {
                                           'لكل فرد',
                                           style: TextStyle(
                                             color: Colors.grey,
+                                             fontFamily: "Cairo",
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -231,11 +236,13 @@ class _CityToursScreenState extends State<CityToursScreen> {
                                   ],
                                 ),
                                 _buildRatingStars(tour["rating"]),
+                            
                                 Text(
                                   '${tour["location"].toString()}',
                                   style: TextStyle(
                                     color: Colors.grey,
-                                    fontSize: 22.0,
+                                     fontFamily: "Cairo",
+                                    fontSize: 18.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),

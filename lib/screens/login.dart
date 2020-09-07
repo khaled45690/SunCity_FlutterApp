@@ -235,7 +235,8 @@ class _LoginState extends State<Login> {
             child: FlatButton(
               color: Colors.grey,
               onPressed: () {
-                Navigator.of(context).pop();
+               // Navigator.of(context).pop();
+               Navigator.of(context).pushNamed(SignUp.routeName);
               },
               child: Text(
                 'ليس لدي حساب',
