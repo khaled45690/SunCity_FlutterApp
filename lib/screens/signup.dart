@@ -93,7 +93,7 @@ class _SignUpState extends State<SignUp> {
           title: TextFormField(
             decoration: InputDecoration(
               hintText: 'إسم المستخدم ',
-              icon: Icon(Icons.pages),
+              icon: Icon(Icons.person),
             ),
             // validator: (String value) {
             //   if (value.isEmpty) {
